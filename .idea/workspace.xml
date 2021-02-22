@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f34c7fb-7011-4783-86bc-4af05caf33d7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/app.controller.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/rest/app.controller.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/rest/app.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/service/app.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/infrastructure/app/app.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/infrastructure/config/config.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/service/app.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/app/service/app.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/http/rest/app.controller.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/rest/app.controller.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/http/rest/app.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/rest/app.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/app.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/test/app.e2e-spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +33,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/application" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/infrastructure/config" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -37,9 +42,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/infrastructure/config" />
       <recent name="$PROJECT_DIR$/src/application" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/infrastructure/app" />
       <recent name="$PROJECT_DIR$/src/infrastructure/service" />
       <recent name="$PROJECT_DIR$/src/infrastructure" />
       <recent name="$PROJECT_DIR$/src/ui/http/rest" />
@@ -54,11 +61,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1614028118574</updated>
-      <workItem from="1614028119617" duration="466000" />
+      <workItem from="1614028119617" duration="3520000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="443" y="258" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1614028540347">
+      <screen x="0" y="23" width="1440" height="852" />
+    </state>
+    <state x="443" y="258" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.852@0.23.1440.852" timestamp="1614028540347" />
   </component>
 </project>
