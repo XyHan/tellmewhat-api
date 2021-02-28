@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5f34c7fb-7011-4783-86bc-4af05caf33d7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/app/entity/ticket.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/entity/ticket.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/app/service/app.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/config/config.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/config/config.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/http/rest/app.controller.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/rest/app.controller.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/http/rest/app.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/rest/app.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/http/ui-http.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/ui-http.module.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,24 +25,25 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/ui/http" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/ui/http/rest/ticket" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/jest" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/ui/http/rest/ticket" />
       <recent name="$PROJECT_DIR$/src/ui/http" />
       <recent name="$PROJECT_DIR$/src/infrastructure/ticket" />
       <recent name="$PROJECT_DIR$/src/infrastructure/app/repository/ticket" />
       <recent name="$PROJECT_DIR$/src/domain/repository/ticket" />
-      <recent name="$PROJECT_DIR$/src/infrastructure/config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/infrastructure/app" />
@@ -59,7 +53,7 @@
       <recent name="$PROJECT_DIR$/src/infrastructure/service" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Jest.TicketController">
     <configuration name="AppController" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -73,8 +67,22 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="TicketController" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/ui/http/rest/ticket/ticket.controller.spec.ts" />
+      <test-names>
+        <test-name value="TicketController" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.TicketController" />
         <item itemvalue="Jest.AppController" />
       </list>
     </recent_temporary>
@@ -88,7 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1614028118574</updated>
       <workItem from="1614028119617" duration="3520000" />
-      <workItem from="1614506238600" duration="6458000" />
+      <workItem from="1614506238600" duration="7634000" />
     </task>
     <servers />
   </component>
