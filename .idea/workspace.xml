@@ -2,17 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f34c7fb-7011-4783-86bc-4af05caf33d7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket/get-one-ticket.query.handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket/get-one-ticket.query.handler.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket/get-one-ticket.query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket/get-one-ticket.query.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/repository/ticket/ticket.query-repository.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/repository/ticket/ticket.query-repository.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/entity/ticket.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/entity/ticket.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/query/get-one-ticket.query.handler.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/query/get-one-ticket.query.handler.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/query/ticket/list-all-tickets/list-all-tickets.query.handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/query/ticket/list-all-tickets/list-all-tickets.query.handler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/query/get-one-ticket.query.handler.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/query/get-one-ticket.query.handler.adapter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/query/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/query/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/query/list-all-tickets.query.handler.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/query/list-all-tickets.query.handler.adapter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.command-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.command-repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.not-found.exception.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.query-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.query-repository.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/ticket.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/ticket.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/http/rest/ticket/ticket.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/rest/ticket/ticket.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +180,7 @@
       <option name="presentableId" value="Default" />
       <updated>1614028118574</updated>
       <workItem from="1614028119617" duration="3520000" />
-      <workItem from="1614506238600" duration="17698000" />
+      <workItem from="1614506238600" duration="19788000" />
     </task>
     <servers />
   </component>

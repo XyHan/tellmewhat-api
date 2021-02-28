@@ -3,17 +3,28 @@ import { TicketInterface } from '../../../../domain/model/ticket.model';
 import { TicketRepository } from './ticket.repository';
 import { TicketRepositoryException } from './ticket.repository.exception';
 import { TicketEntity } from '../../entity/ticket.entity';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
 
 @Injectable()
 export class TicketCommandRepository implements TicketCommandRepositoryInterface {
-  constructor(private readonly repository: TicketRepository) {}
+  private readonly _logger: LoggerInterface
+
+  constructor(
+    private readonly repository: TicketRepository,
+    @Inject(LoggerAdapterService) logger: LoggerInterface
+  ) {
+    this._logger = logger;
+  }
 
   public async create(ticket: TicketInterface): Promise<void> {
     try {
       await this.repository.save(ticket);
     } catch (e) {
-      throw new TicketRepositoryException(`TicketCommandRepository - Error on create ticket '${ticket.uuid}'`);
+      const message: string = `TicketCommandRepository - Error on create ticket '${ticket.uuid}'`;
+      this._logger.error(message);
+      throw new TicketRepositoryException(message);
     }
   }
 
@@ -21,7 +32,9 @@ export class TicketCommandRepository implements TicketCommandRepositoryInterface
     try {
       await this.repository.remove(ticket);
     } catch (e) {
-      throw new TicketRepositoryException(`TicketCommandRepository - Error on delete ticket '${ticket.uuid}'`);
+      const message: string = `TicketCommandRepository - Error on delete ticket '${ticket.uuid}'`;
+      this._logger.error(message);
+      throw new TicketRepositoryException(message);
     }
   }
 
@@ -29,7 +42,9 @@ export class TicketCommandRepository implements TicketCommandRepositoryInterface
     try {
       await this.repository.save(ticket);
     } catch (e) {
-      throw new TicketRepositoryException(`TicketCommandRepository - Error on update ticket '${ticket.uuid}'`);
+      const message: string = `TicketCommandRepository - Error on update ticket '${ticket.uuid}'`;
+      this._logger.error(message);
+      throw new TicketRepositoryException(message);
     }
   }
 }

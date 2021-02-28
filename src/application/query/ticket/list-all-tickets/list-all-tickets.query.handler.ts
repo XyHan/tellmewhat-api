@@ -3,19 +3,27 @@ import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ti
 import { TicketInterface } from '../../../../domain/model/ticket.model';
 import { ListAllTicketsQueryHandlerException } from './list-all-tickets.query.handler.exception';
 import { ListAllTicketsQuery } from './list-all-tickets.query';
+import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 
 export class ListAllTicketsQueryHandler implements QueryHandlerInterface {
   protected readonly _repository: TicketQueryRepositoryInterface;
+  protected readonly _logger: LoggerInterface;
 
-  constructor(repository: TicketQueryRepositoryInterface) {
+  constructor(
+    repository: TicketQueryRepositoryInterface,
+    logger: LoggerInterface
+  ) {
     this._repository = repository;
+    this._logger = logger;
   }
 
   async handle(query: ListAllTicketsQuery): Promise<[TicketInterface[], number]> {
     try {
       return await this._repository.findAll({ size: query.size, offsetStart: query.offsetStart });
     } catch (e) {
-      throw new ListAllTicketsQueryHandlerException(`ListAllTicketsQueryHandler - error: ${e.message}`);
+      const message: string = `ListAllTicketsQueryHandler - error: ${e.message}`;
+      this._logger.error(message);
+      throw new ListAllTicketsQueryHandlerException(message);
     }
   }
 }

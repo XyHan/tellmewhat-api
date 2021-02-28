@@ -1,7 +1,7 @@
-import { GetOneTicketQueryHandlerService } from './get-one-ticket.query.handler.service';
-import { ListAllTicketsQueryHandlerService } from './list-all-tickets.query.handler.service';
+import { GetOneTicketQueryHandlerAdapter } from './get-one-ticket.query.handler.adapter';
+import { ListAllTicketsQueryHandlerAdapter } from './list-all-tickets.query.handler.adapter';
 
 export const TicketQueryHandlers = [
-  GetOneTicketQueryHandlerService,
-  ListAllTicketsQueryHandlerService
+  GetOneTicketQueryHandlerAdapter,
+  ListAllTicketsQueryHandlerAdapter
 ];

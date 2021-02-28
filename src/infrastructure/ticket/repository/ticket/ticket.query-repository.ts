@@ -2,19 +2,29 @@ import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ti
 import { TicketRepository } from './ticket.repository';
 import { TicketInterface } from '../../../../domain/model/ticket.model';
 import { TicketRepositoryException } from './ticket.repository.exception';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { findAllOptions } from '../../../../domain/repository/find-all-options.type';
-import { TicketNotFoundException } from './ticket.not-found.exception';
+import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
+import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 
 @Injectable()
 export class TicketQueryRepository implements TicketQueryRepositoryInterface {
-  constructor(private readonly repository: TicketRepository) {}
+  private readonly _logger: LoggerInterface
+
+  constructor(
+    private readonly repository: TicketRepository,
+    @Inject(LoggerAdapterService) logger: LoggerInterface
+  ) {
+    this._logger = logger;
+  }
 
   public async findAll(options: findAllOptions): Promise<[TicketInterface[], number]> {
     try {
       return await this.repository.findAndCount({ skip: options.offsetStart, take: options.size });
     } catch (e) {
-      throw new TicketRepositoryException(`TicketCommandRepository - Error on findAll tickets`);
+      const message: string = `TicketCommandRepository - Error on findAll tickets`;
+      this._logger.error(message);
+      throw new TicketRepositoryException(message);
     }
   }
 
@@ -23,9 +33,12 @@ export class TicketQueryRepository implements TicketQueryRepositoryInterface {
       return await this.repository.findOneOrFail({ uuid });
     } catch (e) {
       if (e.name === 'EntityNotFound') {
+        this._logger.warn(`TicketCommandRepository - findOne - Ticket ${uuid} not found`);
         return null;
       }
-      throw new TicketRepositoryException(`TicketCommandRepository - Error on findOne ticket '${uuid}'`);
+      const message: string = `TicketCommandRepository - Error on findOne ticket '${uuid}'`;
+      this._logger.error(message);
+      throw new TicketRepositoryException(message);
     }
   }
 }

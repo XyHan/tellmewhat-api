@@ -4,6 +4,7 @@ import { ConfigModule } from '../config/config.module';
 import { ConfigService } from '../config/config.service';
 import { ConfigInterface } from '../config/config.interface';
 import { CqrsModule } from '@nestjs/cqrs';
+import { LoggerModule } from '../logger/logger.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CqrsModule } from '@nestjs/cqrs';
         return config.getMysqlConfig();
       }
     }),
+    LoggerModule
   ],
 })
 export class AppModule {}

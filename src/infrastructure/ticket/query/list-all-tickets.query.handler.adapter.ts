@@ -5,13 +5,16 @@ import { TicketQueryRepository } from '../repository/ticket/ticket.query-reposit
 import { TicketQueryRepositoryInterface } from '../../../domain/repository/ticket/ticket.query-repository.interface';
 import { ListAllTicketsQuery } from '../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
 import { ListAllTicketsQueryHandler } from '../../../application/query/ticket/list-all-tickets/list-all-tickets.query.handler';
+import { LoggerAdapterService } from '../../logger/logger-adapter.service';
+import { LoggerInterface } from '../../../domain/utils/logger.interface';
 
 @QueryHandler(ListAllTicketsQuery)
-export class ListAllTicketsQueryHandlerService extends ListAllTicketsQueryHandler implements IQueryHandler {
+export class ListAllTicketsQueryHandlerAdapter extends ListAllTicketsQueryHandler implements IQueryHandler {
   constructor(
-    @Inject(TicketQueryRepository) repository: TicketQueryRepositoryInterface
+    @Inject(TicketQueryRepository) repository: TicketQueryRepositoryInterface,
+    @Inject(LoggerAdapterService) logger: LoggerInterface
   ) {
-    super(repository);
+    super(repository, logger);
   }
 
   async execute(query: ListAllTicketsQuery): Promise<[TicketInterface[], number]> {
