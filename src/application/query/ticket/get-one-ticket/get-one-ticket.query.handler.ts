@@ -11,7 +11,7 @@ export class GetOneTicketHandler implements QueryHandlerInterface {
     this._repository = repository;
   }
 
-  async handle(query: GetOneTicketQuery): Promise<TicketInterface> {
+  async handle(query: GetOneTicketQuery): Promise<TicketInterface | null> {
     try {
       return await this._repository.findOne(query.uuid);
     } catch (e) {

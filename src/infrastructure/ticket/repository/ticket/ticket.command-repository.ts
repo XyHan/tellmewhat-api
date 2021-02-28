@@ -7,15 +7,11 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class TicketCommandRepository implements TicketCommandRepositoryInterface {
-  private readonly _ticketRepository: TicketRepository
-
-  constructor(ticketRepository: TicketRepository) {
-    this._ticketRepository = ticketRepository
-  }
+  constructor(private readonly repository: TicketRepository) {}
 
   public async create(ticket: TicketInterface): Promise<void> {
     try {
-      await this._ticketRepository.save(ticket);
+      await this.repository.save(ticket);
     } catch (e) {
       throw new TicketRepositoryException(`TicketCommandRepository - Error on create ticket '${ticket.uuid}'`);
     }
@@ -23,7 +19,7 @@ export class TicketCommandRepository implements TicketCommandRepositoryInterface
 
   public async delete(ticket: TicketEntity): Promise<void> {
     try {
-      await this._ticketRepository.remove(ticket);
+      await this.repository.remove(ticket);
     } catch (e) {
       throw new TicketRepositoryException(`TicketCommandRepository - Error on delete ticket '${ticket.uuid}'`);
     }
@@ -31,7 +27,7 @@ export class TicketCommandRepository implements TicketCommandRepositoryInterface
 
   public async update(ticket: TicketInterface): Promise<void> {
     try {
-      await this._ticketRepository.save(ticket);
+      await this.repository.save(ticket);
     } catch (e) {
       throw new TicketRepositoryException(`TicketCommandRepository - Error on update ticket '${ticket.uuid}'`);
     }

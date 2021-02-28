@@ -3,15 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="5f34c7fb-7011-4783-86bc-4af05caf33d7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/infrastructure/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket/get-one-ticket.query.handler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket/get-one-ticket.query.handler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket/get-one-ticket.query.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket/get-one-ticket.query.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/repository/ticket/ticket.query-repository.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/repository/ticket/ticket.query-repository.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/entity/ticket.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/entity/ticket.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/query/get-one-ticket.query.handler.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/query/get-one-ticket.query.handler.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/query/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/query/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.command-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.command-repository.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.query-repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket/ticket.query-repository.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/infrastructure/ticket/ticket.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/infrastructure/ticket/ticket.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ui/http/rest/ticket/ticket.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/rest/ticket/ticket.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/http/ui-http.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/http/ui-http.module.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +34,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -41,27 +42,28 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/jest" />
+    <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/infrastructure/ticket/repository/ticket" />
+      <recent name="$PROJECT_DIR$/src/infrastructure/ticket/query" />
+      <recent name="$PROJECT_DIR$/src/application/query/ticket/list-all-tickets" />
       <recent name="$PROJECT_DIR$/src/application/query/ticket/get-one-ticket" />
       <recent name="$PROJECT_DIR$/src/application/query" />
-      <recent name="$PROJECT_DIR$/src/ui/http/rest/ticket" />
-      <recent name="$PROJECT_DIR$/src/ui/http" />
-      <recent name="$PROJECT_DIR$/src/infrastructure/ticket" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/domain/repository" />
+      <recent name="$PROJECT_DIR$/src/application/query" />
       <recent name="$PROJECT_DIR$/src/infrastructure/app" />
       <recent name="$PROJECT_DIR$/src/infrastructure" />
       <recent name="$PROJECT_DIR$/src/infrastructure/ticket" />
-      <recent name="$PROJECT_DIR$/src/infrastructure/app/repository/ticket" />
-      <recent name="$PROJECT_DIR$/src/infrastructure/service" />
     </key>
   </component>
-  <component name="RunManager" selected="Jest.get one ticket handler test">
+  <component name="RunManager" selected="npm.start:dev">
     <configuration name="AppController" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -101,8 +103,65 @@
       </test-names>
       <method v="2" />
     </configuration>
+    <configuration name="list all tickets handler test" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/application/query/ticket/list-all-tickets/list-all-tickets.query.handler.spec.ts" />
+      <test-names>
+        <test-name value="list all tickets handler test" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="list all tickets handler test.list all tickets error" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/application/query/ticket/list-all-tickets/list-all-tickets.query.handler.spec.ts" />
+      <test-names>
+        <test-name value="list all tickets handler test" />
+        <test-name value="list all tickets error" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="NodeJSConfigurationType" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="start:dev" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs>
+        <env name="DB_HOST" value="172.10.0.4" />
+        <env name="DB_DATABASE" value="tellmewhat" />
+        <env name="DB_PORT" value="3306" />
+        <env name="DB_USER" value="root" />
+        <env name="DB_PASSWORD" value="toor" />
+      </envs>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Jest.AppController" />
+      <item itemvalue="Jest.get one ticket handler test" />
+      <item itemvalue="Jest.list all tickets handler test" />
+      <item itemvalue="Jest.list all tickets handler test.list all tickets error" />
+      <item itemvalue="Jest.TicketController" />
+      <item itemvalue="Node.js.start" />
+      <item itemvalue="npm.start:dev" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Jest.list all tickets handler test" />
+        <item itemvalue="Jest.list all tickets handler test.list all tickets error" />
         <item itemvalue="Jest.get one ticket handler test" />
         <item itemvalue="Jest.TicketController" />
         <item itemvalue="Jest.AppController" />
@@ -118,7 +177,7 @@
       <option name="presentableId" value="Default" />
       <updated>1614028118574</updated>
       <workItem from="1614028119617" duration="3520000" />
-      <workItem from="1614506238600" duration="13509000" />
+      <workItem from="1614506238600" duration="17698000" />
     </task>
     <servers />
   </component>

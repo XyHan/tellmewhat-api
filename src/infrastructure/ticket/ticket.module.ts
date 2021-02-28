@@ -10,13 +10,11 @@ import { TicketCommandRepository } from './repository/ticket/ticket.command-repo
     TypeOrmModule.forFeature([TicketRepository]),
   ],
   providers: [
-    TicketRepository,
     TicketQueryRepository,
     TicketCommandRepository,
     ...TicketQueryHandlers
   ],
   exports: [
-    TicketRepository,
     TicketQueryRepository,
     TicketCommandRepository,
   ]

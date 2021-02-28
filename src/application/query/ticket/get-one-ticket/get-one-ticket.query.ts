@@ -1,6 +1,6 @@
 import { QueryInterface } from '../../query.interface';
 
-export class GetOneTicketQuery implements QueryInterface{
+export class GetOneTicketQuery implements QueryInterface {
   private readonly _name: string;
   private readonly _version: number;
   private readonly _uuid: string;
