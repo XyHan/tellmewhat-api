@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigInterface } from './config.interface';
-import { TicketEntity } from '../app/entity/ticket.entity';
+import { TicketEntity } from '../ticket/entity/ticket.entity';
 
 @Injectable()
 export class ConfigService implements ConfigInterface {
