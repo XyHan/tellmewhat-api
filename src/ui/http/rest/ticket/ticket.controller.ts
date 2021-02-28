@@ -126,7 +126,7 @@ export class TicketController {
   protected getPaginatedResponse(size: number, page: number, results: [TicketInterface[] , number]): PaginatedResponseInterface {
     const total: number = results && results.length > 1 && typeof results[1] === 'number' ? results[1] : 0;
     const tickets: TicketInterface[] = results && results.length > 1 ? results[0].map((ticket: TicketInterface) => classToClass(ticket)) : [];
-    const pages: number = Math.ceil(total / size - 1);
-    return { page, pages, total, tickets };
+    const pages: number = Math.ceil(total / size);
+    return { page, pages, total, collection: tickets };
   }
 }
