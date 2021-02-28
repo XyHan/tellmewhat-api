@@ -13,8 +13,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return "Hi folks ! Tell me what !"', () => {
+      expect(appController.getHello()).toBe('Hi folks ! Tell me what !');
     });
   });
 });

@@ -5,6 +5,7 @@ import { TicketQueryHandlers } from './query';
 import { TicketQueryRepository } from './repository/ticket/ticket.query-repository';
 import { TicketCommandRepository } from './repository/ticket/ticket.command-repository';
 import { LoggerModule } from '../logger/logger.module';
+import { TicketCommandHandlers } from './command';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { LoggerModule } from '../logger/logger.module';
   providers: [
     TicketQueryRepository,
     TicketCommandRepository,
-    ...TicketQueryHandlers
+    ...TicketQueryHandlers,
+    ...TicketCommandHandlers,
   ],
   exports: [
     TicketQueryRepository,

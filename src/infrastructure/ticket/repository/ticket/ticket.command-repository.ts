@@ -18,9 +18,9 @@ export class TicketCommandRepository implements TicketCommandRepositoryInterface
     this._logger = logger;
   }
 
-  public async create(ticket: TicketInterface): Promise<void> {
+  public async create(ticket: TicketInterface): Promise<TicketInterface> {
     try {
-      await this.repository.save(ticket);
+      return await this.repository.save(ticket);
     } catch (e) {
       const message: string = `TicketCommandRepository - Error on create ticket '${ticket.uuid}'`;
       this._logger.error(message);
@@ -28,9 +28,9 @@ export class TicketCommandRepository implements TicketCommandRepositoryInterface
     }
   }
 
-  public async delete(ticket: TicketEntity): Promise<void> {
+  public async delete(ticket: TicketEntity): Promise<TicketInterface> {
     try {
-      await this.repository.remove(ticket);
+      return await this.repository.remove(ticket);
     } catch (e) {
       const message: string = `TicketCommandRepository - Error on delete ticket '${ticket.uuid}'`;
       this._logger.error(message);
@@ -38,9 +38,9 @@ export class TicketCommandRepository implements TicketCommandRepositoryInterface
     }
   }
 
-  public async update(ticket: TicketInterface): Promise<void> {
+  public async update(ticket: TicketInterface): Promise<TicketInterface> {
     try {
-      await this.repository.save(ticket);
+      return await this.repository.save(ticket);
     } catch (e) {
       const message: string = `TicketCommandRepository - Error on update ticket '${ticket.uuid}'`;
       this._logger.error(message);
