@@ -33,7 +33,7 @@ export class TicketFixtures {
   }
 
   public static addTicket(ticket: TicketInterface): void {
-    this._ticketCollection.push(  new TicketFactory(new TicketEntity()).generate(
+    this._ticketCollection.push(new TicketFactory(new TicketEntity()).generate(
       ticket.uuid,
       ticket.status,
       ticket.createdAt,
@@ -42,6 +42,6 @@ export class TicketFixtures {
       ticket.updatedBy,
       ticket.subject,
       ticket.description
-    ),);
+    ));
   }
 }
