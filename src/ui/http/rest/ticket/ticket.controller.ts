@@ -9,7 +9,7 @@ import {
   Put,
   Query
 } from '@nestjs/common';
-import { TicketInterface, TicketModel } from '../../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../../domain/model/ticket.model';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
 import { GetOneTicketQuery } from '../../../../application/query/ticket/get-one-ticket/get-one-ticket.query';
 import { ListAllTicketsQuery } from '../../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
@@ -21,7 +21,8 @@ import { v4 } from 'uuid';
 import { classToClass } from 'class-transformer';
 import { BaseController, PaginatedResponse } from '../base.controller';
 import { UpdateATicketDto } from './dto/update-a-ticket.dto';
-import {UpdateATicketCommand} from "../../../../application/command/ticket/update/update-a-ticket.command";
+import { UpdateATicketCommand } from '../../../../application/command/ticket/update/update-a-ticket.command';
+import { DeleteATicketCommand } from '../../../../application/command/ticket/delete/delete-a-ticket.command';
 
 @Controller('/tickets')
 export class TicketController extends BaseController {
@@ -100,18 +101,18 @@ export class TicketController extends BaseController {
   }
 
   @Delete('/:uuid')
-  public async delete(@Param() params): Promise<TicketInterface> {
+  public async delete(@Param('uuid') uuid: string): Promise<{}> {
     try {
-      const ticket: TicketInterface = new TicketModel();
-      ticket.uuid = '94b671e9-9990-488e-b92b-5770eafec5f7';
-      return ticket;
+      const command = new DeleteATicketCommand(uuid);
+      await this._commandBus.execute(command);
+      return {};
     } catch (e) {
-      const message: string = `TicketController - Delete ticket ${params.uuid} error`;
+      const message: string = `TicketController - Delete ticket ${uuid} error`;
       this.http500Response(message);
     }
   }
 
-  private async findOneTicketByUuid(uuid: string): Promise<TicketInterface> {
+  private async findOneTicketByUuid(uuid: string, nullable: boolean = false): Promise<TicketInterface | null> {
     let ticket: TicketInterface | null = null;
     try {
       const query = new GetOneTicketQuery(uuid);
@@ -120,7 +121,7 @@ export class TicketController extends BaseController {
       const message: string = `TicketController - findOneTicket ${uuid} error. Previous: ${e.message}`;
       this.http500Response(message);
     }
-    if (!ticket) {
+    if (!ticket && !nullable) {
       const message: string = `TicketController - Ticket ${uuid} not found`;
       this.http404Response(message);
     }
