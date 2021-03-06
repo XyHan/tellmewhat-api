@@ -32,6 +32,7 @@ export class CreateATicketCommandHandler implements CommandHandlerInterface {
       );
       const ticketEntity: TicketInterface = await this._repository.create(ticket);
       this._logger.info(`CreateATicketCommandHandler - Ticket ${ticket.uuid} created`);
+
       return ticketEntity;
     } catch (e) {
       const message: string = `CreateATicketCommandHandler - Ticket creation error: ${e.message}`;

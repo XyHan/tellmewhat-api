@@ -24,7 +24,7 @@ describe('create a ticket handler test', () => {
       update: jest.fn(),
       delete: jest.fn(),
     };
-    const command = new CreateATicketCommand(SUBJECT, DESCRIPTION);
+    const command = new CreateATicketCommand(UUID, SUBJECT, DESCRIPTION);
     const handler = new CreateATicketCommandHandler(repository, logger);
     const ticket: TicketInterface = await handler.handle(command);
     expect(ticket.uuid).toBeDefined();
@@ -53,7 +53,7 @@ describe('create a ticket handler test', () => {
       update: jest.fn(),
       delete: jest.fn(),
     };
-    const command = new CreateATicketCommand('', '');
+    const command = new CreateATicketCommand('', '', '');
     const handler = new CreateATicketCommandHandler(repository, logger);
     try {
       await handler.handle(command);
