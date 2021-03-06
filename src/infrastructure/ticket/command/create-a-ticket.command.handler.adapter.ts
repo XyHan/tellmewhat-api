@@ -6,7 +6,7 @@ import { LoggerInterface } from '../../../domain/utils/logger.interface';
 import { CreateATicketCommandHandler } from '../../../application/command/ticket/create/create-a-ticket.command.handler';
 import { CreateATicketCommand } from '../../../application/command/ticket/create/create-a-ticket.command';
 import { TicketCommandRepositoryInterface } from '../../../domain/repository/ticket/ticket.command-repository.interface';
-import { TicketCommandRepository } from '../repository/ticket/command/ticket.command-repository';
+import { TicketCommandRepository } from '../repository/ticket/ticket.command-repository';
 
 @CommandHandler(CreateATicketCommand)
 export class CreateATicketCommandHandlerAdapter extends CreateATicketCommandHandler implements ICommandHandler {

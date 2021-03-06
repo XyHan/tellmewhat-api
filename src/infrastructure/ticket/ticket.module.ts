@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TicketRepository } from './repository/ticket/ticket.repository';
 import { TicketQueryHandlers } from './query';
-import { TicketQueryRepository } from './repository/ticket/query/ticket.query-repository';
-import { TicketCommandRepository } from './repository/ticket/command/ticket.command-repository';
+import { TicketQueryRepository } from './repository/ticket/ticket.query-repository';
+import { TicketCommandRepository } from './repository/ticket/ticket.command-repository';
 import { LoggerModule } from '../logger/logger.module';
 import { TicketCommandHandlers } from './command';
 

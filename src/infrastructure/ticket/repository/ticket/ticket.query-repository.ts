@@ -1,11 +1,11 @@
-import { TicketQueryRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.query-repository.interface';
-import { TicketRepository } from '../ticket.repository';
-import { TicketInterface } from '../../../../../domain/model/ticket.model';
-import { TicketRepositoryException } from '../ticket.repository.exception';
+import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
+import { TicketRepository } from './ticket.repository';
+import { TicketInterface } from '../../../../domain/model/ticket.model';
+import { TicketRepositoryException } from './ticket.repository.exception';
 import { Inject, Injectable } from '@nestjs/common';
-import { findAllOptions } from '../../../../../domain/repository/find-all-options.type';
-import { LoggerAdapterService } from '../../../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../../../domain/utils/logger.interface';
+import { findAllOptions } from '../../../../domain/repository/find-all-options.type';
+import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
+import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 
 @Injectable()
 export class TicketQueryRepository implements TicketQueryRepositoryInterface {
