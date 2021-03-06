@@ -2,36 +2,45 @@ import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ti
 import { TicketInterface, TicketModel } from '../../../../domain/model/ticket.model';
 import { ListAllTicketsQuery } from './list-all-tickets.query';
 import { ListAllTicketsQueryHandler } from './list-all-tickets.query.handler';
+import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerMock } from '../../../../infrastructure/logger/logger.mock';
+import { findAllOptions } from '../../../../domain/repository/find-all-options.type';
 
 export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 
 describe('list all tickets handler test', () => {
+  let logger: LoggerInterface;
+
+  beforeEach(async () => {
+    logger = new LoggerMock();
+  })
+
   it ('return a ticket success', async () => {
     const repository: TicketQueryRepositoryInterface = {
       findOne: jest.fn(),
-      findAll(): Promise<TicketInterface[]> {
+      findAll(options: findAllOptions): Promise<[TicketInterface[], number]> {
         const ticket = new TicketModel();
         ticket.uuid = UUID;
-        return Promise.resolve([ticket]);
+        return Promise.resolve([[ticket], 1]);
       },
     };
     const query = new ListAllTicketsQuery(10, 0);
-    const handler = new ListAllTicketsQueryHandler(repository);
-    const tickets: TicketInterface[] = await handler.handle(query);
-    expect(tickets.length).toEqual(1);
-    expect(tickets[0].uuid).toEqual(UUID);
+    const handler = new ListAllTicketsQueryHandler(repository, logger);
+    const tickets: [TicketInterface[], number] = await handler.handle(query);
+    expect(tickets[0].length).toEqual(1);
+    expect(tickets[0][0].uuid).toEqual(UUID);
   });
 
   it('list all tickets error', async () => {
     const repository: TicketQueryRepositoryInterface = {
       findOne: jest.fn(),
-      findAll(): Promise<TicketInterface[]> {
+      findAll(options: findAllOptions): Promise<[TicketInterface[], number]> {
         const error: Error = new Error('Repository error');
         return Promise.reject(error);
       },
     };
     const query = new ListAllTicketsQuery(10, 0);
-    const handler = new ListAllTicketsQueryHandler(repository);
+    const handler = new ListAllTicketsQueryHandler(repository, logger);
     try {
       await handler.handle(query);
     } catch (e) {

@@ -1,11 +1,11 @@
-import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
-import { TicketRepository } from './ticket.repository';
-import { TicketInterface } from '../../../../domain/model/ticket.model';
-import { TicketRepositoryException } from './ticket.repository.exception';
+import { TicketQueryRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.query-repository.interface';
+import { TicketRepository } from '../ticket.repository';
+import { TicketInterface } from '../../../../../domain/model/ticket.model';
+import { TicketRepositoryException } from '../ticket.repository.exception';
 import { Inject, Injectable } from '@nestjs/common';
-import { findAllOptions } from '../../../../domain/repository/find-all-options.type';
-import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { findAllOptions } from '../../../../../domain/repository/find-all-options.type';
+import { LoggerAdapterService } from '../../../../logger/logger-adapter.service';
+import { LoggerInterface } from '../../../../../domain/utils/logger.interface';
 
 @Injectable()
 export class TicketQueryRepository implements TicketQueryRepositoryInterface {
@@ -22,7 +22,7 @@ export class TicketQueryRepository implements TicketQueryRepositoryInterface {
     try {
       return await this.repository.findAndCount({ skip: options.offsetStart, take: options.size });
     } catch (e) {
-      const message: string = `TicketCommandRepository - Error on findAll tickets`;
+      const message: string = `TicketQueryRepository - Error on findAll tickets`;
       this._logger.error(message);
       throw new TicketRepositoryException(message);
     }
@@ -33,10 +33,10 @@ export class TicketQueryRepository implements TicketQueryRepositoryInterface {
       return await this.repository.findOneOrFail({ uuid });
     } catch (e) {
       if (e.name === 'EntityNotFound') {
-        this._logger.warn(`TicketCommandRepository - findOne - Ticket ${uuid} not found`);
+        this._logger.warn(`TicketQueryRepository - findOne - Ticket ${uuid} not found`);
         return null;
       }
-      const message: string = `TicketCommandRepository - Error on findOne ticket '${uuid}'`;
+      const message: string = `TicketQueryRepository - Error on findOne ticket '${uuid}'`;
       this._logger.error(message);
       throw new TicketRepositoryException(message);
     }

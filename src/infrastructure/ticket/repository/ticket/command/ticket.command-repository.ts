@@ -1,11 +1,11 @@
-import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
-import { TicketInterface } from '../../../../domain/model/ticket.model';
-import { TicketRepository } from './ticket.repository';
-import { TicketRepositoryException } from './ticket.repository.exception';
-import { TicketEntity } from '../../entity/ticket.entity';
+import { TicketCommandRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.command-repository.interface';
+import { TicketInterface } from '../../../../../domain/model/ticket.model';
+import { TicketRepository } from '../ticket.repository';
+import { TicketRepositoryException } from '../ticket.repository.exception';
+import { TicketEntity } from '../../../entity/ticket.entity';
 import { Inject, Injectable } from '@nestjs/common';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
-import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
+import { LoggerInterface } from '../../../../../domain/utils/logger.interface';
+import { LoggerAdapterService } from '../../../../logger/logger-adapter.service';
 
 @Injectable()
 export class TicketCommandRepository implements TicketCommandRepositoryInterface {

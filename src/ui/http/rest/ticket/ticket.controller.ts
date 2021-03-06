@@ -3,11 +3,12 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Inject,
   Param,
   Post,
   Put,
-  Query
+  Query, UsePipes, ValidationPipe
 } from '@nestjs/common';
 import { TicketInterface } from '../../../../domain/model/ticket.model';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
@@ -56,7 +57,7 @@ export class TicketController extends BaseController {
   }
 
   @Get('/:uuid')
-  public async get(@Param() params): Promise<TicketInterface> {
+  public async findOne(@Param() params): Promise<TicketInterface> {
     try {
       return this.findOneTicketByUuid(params.uuid);
     } catch (e) {
@@ -66,7 +67,8 @@ export class TicketController extends BaseController {
   }
 
   @Post('/')
-  public async add(@Body() createATicketDto: CreateATicketDto): Promise<TicketInterface> {
+  @UsePipes(new ValidationPipe({ transform: true }))
+  public async post(@Body() createATicketDto: CreateATicketDto): Promise<TicketInterface> {
     try {
       const uuid: string = v4();
       const command = new CreateATicketCommand(uuid, createATicketDto.subject, createATicketDto.description); // @todo Refacto with User uuid param
@@ -79,7 +81,8 @@ export class TicketController extends BaseController {
   }
 
   @Put('/:uuid')
-  public async update(
+  @UsePipes(new ValidationPipe({ transform: true }))
+  public async put(
     @Body() updateATicketDto: UpdateATicketDto,
     @Param('uuid') uuid: string,
   ): Promise<TicketInterface> {
@@ -101,6 +104,7 @@ export class TicketController extends BaseController {
   }
 
   @Delete('/:uuid')
+  @HttpCode(204)
   public async delete(@Param('uuid') uuid: string): Promise<{}> {
     try {
       const command = new DeleteATicketCommand(uuid);

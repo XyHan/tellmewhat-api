@@ -2,10 +2,18 @@ import { GetOneTicketQuery } from './get-one-ticket.query';
 import { GetOneTicketHandler } from './get-one-ticket.query.handler';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { TicketInterface, TicketModel } from '../../../../domain/model/ticket.model';
+import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerMock } from '../../../../infrastructure/logger/logger.mock';
 
 export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 
 describe('get one ticket handler test', () => {
+  let logger: LoggerInterface;
+
+  beforeEach(async () => {
+    logger = new LoggerMock();
+  })
+
   it ('return a ticket success', async () => {
     const repository: TicketQueryRepositoryInterface = {
       findOne(uuid: string): Promise<TicketInterface> {
@@ -16,7 +24,7 @@ describe('get one ticket handler test', () => {
       findAll: jest.fn(),
     };
     const query = new GetOneTicketQuery(UUID);
-    const handler = new GetOneTicketHandler(repository);
+    const handler = new GetOneTicketHandler(repository, logger);
     const ticket: TicketInterface = await handler.handle(query);
     expect(ticket.uuid).toEqual(UUID);
   });
@@ -30,7 +38,7 @@ describe('get one ticket handler test', () => {
       findAll: jest.fn(),
     };
     const query = new GetOneTicketQuery(UUID);
-    const handler = new GetOneTicketHandler(repository);
+    const handler = new GetOneTicketHandler(repository, logger);
     try {
       await handler.handle(query);
     } catch (e) {
