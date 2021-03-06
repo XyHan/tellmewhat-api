@@ -1,0 +1,85 @@
+export interface UserInterface {
+  uuid: string;
+  password: string;
+  salt: string;
+  email: string;
+  createdAt: Date;
+  createdBy: string;
+  updatedAt: Date;
+  updatedBy: string;
+}
+
+export class UserModel implements UserInterface {
+  private _email: string;
+  private _password: string;
+  private _salt: string;
+  private _uuid: string;
+  private _createdAt: Date;
+  private _createdBy: string;
+  private _updatedAt: Date;
+  private _updatedBy: string;
+
+  get email(): string {
+    return this._email;
+  }
+
+  set email(value: string) {
+    this._email = value;
+  }
+
+  get password(): string {
+    return this._password;
+  }
+
+  set password(value: string) {
+    this._password = value;
+  }
+
+  get salt(): string {
+    return this._salt;
+  }
+
+  set salt(value: string) {
+    this._salt = value;
+  }
+
+  get uuid(): string {
+    return this._uuid;
+  }
+
+  set uuid(value: string) {
+    this._uuid = value;
+  }
+
+  get createdAt(): Date {
+    return this._createdAt;
+  }
+
+  set createdAt(value: Date) {
+    this._createdAt = value;
+  }
+
+  get createdBy(): string {
+    return this._createdBy;
+  }
+
+  set createdBy(value: string) {
+    this._createdBy = value;
+  }
+
+  get updatedAt(): Date {
+    return this._updatedAt;
+  }
+
+  set updatedAt(value: Date) {
+    this._updatedAt = value;
+  }
+
+  get updatedBy(): string {
+    return this._updatedBy;
+  }
+
+  set updatedBy(value: string) {
+    this._updatedBy = value;
+  }
+}

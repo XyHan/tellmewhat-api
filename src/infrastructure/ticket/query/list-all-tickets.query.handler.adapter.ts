@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
-import { TicketInterface } from '../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { Inject } from '@nestjs/common';
 import { TicketQueryRepository } from '../repository/ticket/ticket.query-repository';
 import { TicketQueryRepositoryInterface } from '../../../domain/repository/ticket/ticket.query-repository.interface';

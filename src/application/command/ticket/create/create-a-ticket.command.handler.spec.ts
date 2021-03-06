@@ -1,4 +1,4 @@
-import { TicketInterface } from '../../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
 import { CreateATicketCommand } from './create-a-ticket.command';
 import { CreateATicketCommandHandler } from './create-a-ticket.command.handler';

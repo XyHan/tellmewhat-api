@@ -2,7 +2,7 @@ import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 import { CommandHandlerInterface } from '../../command-handler.interface';
 import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
 import { CreateATicketCommand} from './create-a-ticket.command';
-import { TicketInterface, TicketModel } from '../../../../domain/model/ticket.model';
+import { TicketInterface, TicketModel } from '../../../../domain/model/ticket/ticket.model';
 import { CreateATicketCommandHandlerException } from './create-a-ticket.command.handler.exception';
 import { TicketFactory } from '../../../../domain/factory/ticket.factory';
 

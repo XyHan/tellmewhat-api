@@ -1,4 +1,4 @@
-import { TicketInterface } from '../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { TicketFactory } from '../../../domain/factory/ticket.factory';
 import { TicketEntity } from '../entity/ticket.entity';
 

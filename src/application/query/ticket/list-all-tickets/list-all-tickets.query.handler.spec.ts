@@ -1,5 +1,5 @@
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
-import { TicketInterface, TicketModel } from '../../../../domain/model/ticket.model';
+import { TicketInterface, TicketModel } from '../../../../domain/model/ticket/ticket.model';
 import { ListAllTicketsQuery } from './list-all-tickets.query';
 import { ListAllTicketsQueryHandler } from './list-all-tickets.query.handler';
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';

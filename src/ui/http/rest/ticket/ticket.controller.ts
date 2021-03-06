@@ -10,7 +10,7 @@ import {
   Put,
   Query, UsePipes, ValidationPipe
 } from '@nestjs/common';
-import { TicketInterface } from '../../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
 import { GetOneTicketQuery } from '../../../../application/query/ticket/get-one-ticket/get-one-ticket.query';
 import { ListAllTicketsQuery } from '../../../../application/query/ticket/list-all-tickets/list-all-tickets.query';

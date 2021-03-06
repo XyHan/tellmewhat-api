@@ -2,7 +2,7 @@ import { QueryHandlerInterface } from '../../query-handler.interface';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { GetOneTicketQuery } from './get-one-ticket.query';
 import { GetOneTicketQueryHandlerException } from './get-one-ticket.query.handler.exception';
-import { TicketInterface } from '../../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 
 export class GetOneTicketHandler implements QueryHandlerInterface {

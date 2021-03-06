@@ -1,6 +1,6 @@
 import { QueryHandlerInterface } from '../../query-handler.interface';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
-import { TicketInterface } from '../../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { ListAllTicketsQueryHandlerException } from './list-all-tickets.query.handler.exception';
 import { ListAllTicketsQuery } from './list-all-tickets.query';
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';

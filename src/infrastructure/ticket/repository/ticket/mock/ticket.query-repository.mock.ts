@@ -1,5 +1,5 @@
 import { TicketQueryRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.query-repository.interface';
-import { TicketInterface } from '../../../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../../../domain/model/ticket/ticket.model';
 import { TicketRepositoryException } from '../ticket.repository.exception';
 import { findAllOptions } from '../../../../../domain/repository/find-all-options.type';
 import { TicketFixtures } from '../../../fixtures/ticket.fixtures';

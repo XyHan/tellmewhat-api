@@ -1,5 +1,5 @@
 import { TicketCommandRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.command-repository.interface';
-import { TicketInterface } from '../../../../../domain/model/ticket.model';
+import { TicketInterface } from '../../../../../domain/model/ticket/ticket.model';
 import { TicketRepositoryException } from '../ticket.repository.exception';
 import { TicketEntity } from '../../../entity/ticket.entity';
 import { TicketFixtures } from '../../../fixtures/ticket.fixtures';

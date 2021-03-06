@@ -1,4 +1,4 @@
-import { TicketInterface } from '../../model/ticket.model';
+import { TicketInterface } from '../../model/ticket/ticket.model';
 import { findAllOptions } from '../find-all-options.type';
 
 export interface TicketQueryRepositoryInterface {

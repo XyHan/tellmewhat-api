@@ -1,4 +1,4 @@
-import { TicketInterface } from '../model/ticket.model';
+import { TicketInterface } from '../model/ticket/ticket.model';
 
 export interface TicketFactoryInterface {
   generate(

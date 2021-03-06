@@ -1,4 +1,4 @@
-import { TicketInterface, TicketModel } from '../../../../domain/model/ticket.model';
+import { TicketInterface, TicketModel } from '../../../../domain/model/ticket/ticket.model';
 import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';

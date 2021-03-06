@@ -19,7 +19,7 @@ export abstract class BaseController {
   protected paginateResponse(size: number, page: number, results: [any[] , number]): PaginatedResponse {
     const total: number = results && results.length > 1 && typeof results[1] === 'number' ? results[1] : 0;
     const collection: any[] = results && results.length > 1 ? results[0].map((item: any) => classToClass(item)) : [];
-    const pages: number = Math.ceil(total / size);
+    const pages: number = Math.ceil(total / size) || 1;
     page === 0 ? page++ : page;
 
     return { page, pages, total, collection};
