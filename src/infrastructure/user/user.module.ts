@@ -5,6 +5,7 @@ import { UserRepository } from './repository/user.repository';
 import { UserQueryRepository } from './repository/user.query-repository';
 import { UserCommandRepository } from './repository/user.command-repository';
 import { UserQueryHandlers } from './query';
+import { UserCommandHandlers } from './command';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserQueryHandlers } from './query';
     UserQueryRepository,
     UserCommandRepository,
     ...UserQueryHandlers,
+    ...UserCommandHandlers,
   ],
   exports: [
     UserQueryRepository,
