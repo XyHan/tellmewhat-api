@@ -1,5 +1,6 @@
 export interface UserInterface {
   uuid: string;
+  status: number;
   password: string;
   salt: string;
   email: string;
@@ -18,6 +19,7 @@ export class UserModel implements UserInterface {
   private _createdBy: string;
   private _updatedAt: Date;
   private _updatedBy: string;
+  private _status: number;
 
   get email(): string {
     return this._email;
@@ -81,5 +83,13 @@ export class UserModel implements UserInterface {
 
   set updatedBy(value: string) {
     this._updatedBy = value;
+  }
+
+  get status(): number {
+    return this._status;
+  }
+
+  set status(value: number) {
+    this._status = value;
   }
 }

@@ -32,4 +32,7 @@ export class UserEntity implements UserInterface {
   @Expose()
   @Index('IDX_USER_UUID')
   @Column({ type: 'varchar', length: 38, name: 'uuid' , nullable: false, unique: true }) public uuid: string;
+
+  @Expose()
+  @Column({ type: 'integer', name: 'status', nullable: false }) public status: number;
 }
