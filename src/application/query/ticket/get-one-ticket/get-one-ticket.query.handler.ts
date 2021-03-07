@@ -5,7 +5,7 @@ import { GetOneTicketQueryHandlerException } from './get-one-ticket.query.handle
 import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 
-export class GetOneTicketHandler implements QueryHandlerInterface {
+export class GetOneTicketQueryHandler implements QueryHandlerInterface {
   protected readonly _repository: TicketQueryRepositoryInterface;
   protected readonly _logger: LoggerInterface;
 
@@ -21,7 +21,7 @@ export class GetOneTicketHandler implements QueryHandlerInterface {
     try {
       return await this._repository.findOne(query.uuid);
     } catch (e) {
-      const message: string = `GetOneTicketHandler - Ticket ${query.uuid} error: ${e.message}`;
+      const message: string = `GetOneTicketQueryHandler - Ticket ${query.uuid} error: ${e.message}`;
       this._logger.error(message);
       throw new GetOneTicketQueryHandlerException(message);
     }

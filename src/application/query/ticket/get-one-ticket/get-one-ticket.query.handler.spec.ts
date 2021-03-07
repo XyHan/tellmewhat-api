@@ -1,5 +1,5 @@
 import { GetOneTicketQuery } from './get-one-ticket.query';
-import { GetOneTicketHandler } from './get-one-ticket.query.handler';
+import { GetOneTicketQueryHandler } from './get-one-ticket.query.handler';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { TicketInterface, TicketModel } from '../../../../domain/model/ticket/ticket.model';
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';
@@ -24,7 +24,7 @@ describe('get one ticket handler test', () => {
       findAll: jest.fn(),
     };
     const query = new GetOneTicketQuery(UUID);
-    const handler = new GetOneTicketHandler(repository, logger);
+    const handler = new GetOneTicketQueryHandler(repository, logger);
     const ticket: TicketInterface = await handler.handle(query);
     expect(ticket.uuid).toEqual(UUID);
   });
@@ -38,11 +38,11 @@ describe('get one ticket handler test', () => {
       findAll: jest.fn(),
     };
     const query = new GetOneTicketQuery(UUID);
-    const handler = new GetOneTicketHandler(repository, logger);
+    const handler = new GetOneTicketQueryHandler(repository, logger);
     try {
       await handler.handle(query);
     } catch (e) {
-      expect(e.message).toEqual('GetOneTicketHandler - Ticket 31dd20e0-9a1d-4734-b0af-d9cc3aff4028 error: Not found');
+      expect(e.message).toEqual('GetOneTicketQueryHandler - Ticket 31dd20e0-9a1d-4734-b0af-d9cc3aff4028 error: Not found');
     }
   });
 });
