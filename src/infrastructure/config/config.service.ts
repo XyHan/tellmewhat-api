@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigInterface } from './config.interface';
 import { TicketEntity } from '../ticket/entity/ticket.entity';
-import { UserEntity } from '../user/entity/user.entity';
+import { UserEntity } from '../security/entity/user.entity';
 
 @Injectable()
 export class ConfigService implements ConfigInterface {
