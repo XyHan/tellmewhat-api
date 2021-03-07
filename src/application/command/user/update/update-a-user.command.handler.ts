@@ -1,10 +1,11 @@
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 import { CommandHandlerInterface } from '../../command-handler.interface';
 import { UserCommandRepositoryInterface } from '../../../../domain/repository/user/user.command-repository.interface';
-import { UserInterface } from '../../../../domain/model/user/user.model';
+import {UserInterface, UserModel} from '../../../../domain/model/user/user.model';
 import { UserQueryRepositoryInterface } from '../../../../domain/repository/user/user.query-repository.interface';
 import { UpdateAUserCommandHandlerException } from './update-a-user.command.handler.exception';
 import { UpdateAUserCommand } from './update-a-user.command';
+import {UserFactory} from "../../../../domain/factory/user.factory";
 
 export class UpdateAUserCommandHandler implements CommandHandlerInterface {
   protected readonly _commandRepository: UserCommandRepositoryInterface;
@@ -24,12 +25,23 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
   async handle(command: UpdateAUserCommand): Promise<UserInterface> {
     try {
       const user: UserInterface = await this.findOneUserByUuid(command.uuid);
-      const userEntity: UserInterface = await this._commandRepository.update(user);
+      const updatedUser: UserInterface = new UserFactory(new UserModel()).generate(
+        command.uuid,
+        command.status,
+        command.email,
+        user.password,
+        user.salt,
+        user.createdAt,
+        user.createdBy,
+        user.updatedAt,
+        user.updatedBy,
+      );
+      const userEntity: UserInterface = await this._commandRepository.update(updatedUser);
       this._logger.info(`UpdateAUserCommandHandler - User ${user.uuid} updated`);
 
       return userEntity;
     } catch (e) {
-      const message: string = `UpdateAUserCommandHandler - User deletion error: ${e.message}`;
+      const message: string = `UpdateAUserCommandHandler - User update error: ${e.message}`;
       this._logger.error(message);
       throw new UpdateAUserCommandHandlerException(message);
     }

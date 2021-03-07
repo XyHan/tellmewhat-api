@@ -1,0 +1,26 @@
+import { UserQueryRepositoryInterface } from '../../../../domain/repository/user/user.query-repository.interface';
+import { UserInterface } from '../../../../domain/model/user/user.model';
+import { UserRepositoryException } from '../user.repository.exception';
+import { UserFixtures } from '../../fixtures/user.fixtures';
+
+export class UserQueryRepositoryMock implements UserQueryRepositoryInterface {
+  async findOneByEmail(email: string): Promise<UserInterface | null> {
+    try {
+      const user: UserInterface | undefined = UserFixtures.userCollection.find((user: UserInterface) => user.email === email);
+      return user ? user : null;
+    } catch (e) {
+      const message: string = `UserQueryRepository - Error on findOneByEmail user '${email}'`;
+      throw new UserRepositoryException(message);
+    }
+  }
+
+  async findOneByUuid(uuid: string): Promise<UserInterface | null> {
+    try {
+      const user: UserInterface | undefined = UserFixtures.userCollection.find((user: UserInterface) => user.uuid === uuid);
+      return user ? user : null;
+    } catch (e) {
+      const message: string = `UserQueryRepository - Error on findOneByUuid user '${uuid}'`;
+      throw new UserRepositoryException(message);
+    }
+  }
+}

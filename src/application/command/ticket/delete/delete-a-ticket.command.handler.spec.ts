@@ -5,9 +5,7 @@ import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ti
 import { DeleteATicketCommand } from './delete-a-ticket.command';
 import { DeleteATicketCommandHandler } from './delete-a-ticket.command.handler';
 
-export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
-export const STATUS = 2;
-export const SUBJECT = 'Yoda';
+const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 
 describe('delete a ticket handler test', () => {
   it ('delete a ticket success', async () => {

@@ -4,9 +4,9 @@ import { CreateAUserCommand } from './create-a-user.command';
 import { CreateAUserCommandHandler } from './create-a-user.command.handler';
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 
-export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
-export const EMAIL = 'notme@unknow.com';
-export const PASSWORD = 'changeme';
+const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
+const EMAIL = 'notme@unknow.com';
+const PASSWORD = 'changeme';
 
 describe('create a user handler test', () => {
   it ('create a user success', async () => {

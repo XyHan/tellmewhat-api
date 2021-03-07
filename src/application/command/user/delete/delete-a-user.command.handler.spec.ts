@@ -5,9 +5,7 @@ import { UserQueryRepositoryInterface } from '../../../../domain/repository/user
 import { DeleteAUserCommand } from './delete-a-user.command';
 import { DeleteAUserCommandHandler } from './delete-a-user.command.handler';
 
-export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
-export const STATUS = 2;
-export const SUBJECT = 'Yoda';
+const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 
 describe('delete a user handler test', () => {
   it ('delete a user success', async () => {

@@ -5,9 +5,10 @@ import { UserQueryRepositoryInterface } from '../../../../domain/repository/user
 import { UpdateAUserCommand } from './update-a-user.command';
 import { UpdateAUserCommandHandler } from './update-a-user.command.handler';
 
-export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
-export const EMAIL = 'stillnotme@unknow.com';
-export const PASSWORD = 'changemeforstronger';
+const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
+const EMAIL = 'stillnotme@unknow.com';
+const STATUS = 2;
+const UPDATEDBY = '31dd20e0-zzzz-yyyy-xxxx-d9cc3aff4028';
 
 describe('update a user handler test', () => {
   it ('update a user success', async () => {
@@ -33,7 +34,7 @@ describe('update a user handler test', () => {
       create: jest.fn(),
       delete: jest.fn(),
     };
-    const command = new UpdateAUserCommand(UUID, EMAIL, PASSWORD);
+    const command = new UpdateAUserCommand(UUID, STATUS, EMAIL, UPDATEDBY);
     const handler = new UpdateAUserCommandHandler(commandRepository, queryRepository, logger);
     const user: UserInterface = await handler.handle(command);
     expect(user.uuid).toBe(UUID);
@@ -63,12 +64,12 @@ describe('update a user handler test', () => {
       create: jest.fn(),
       delete: jest.fn(),
     };
-    const command = new UpdateAUserCommand('', '', '');
+    const command = new UpdateAUserCommand('', 1, '', '');
     const handler = new UpdateAUserCommandHandler(commandRepository, queryRepository, logger);
     try {
       await handler.handle(command);
     } catch (e) {
-      expect(e.message).toEqual('UpdateAUserCommandHandler - User deletion error: Repository error');
+      expect(e.message).toEqual('UpdateAUserCommandHandler - User update error: Repository error');
     }
   });
 });

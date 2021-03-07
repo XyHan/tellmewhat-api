@@ -56,7 +56,7 @@ describe('TicketController tests suite', () => {
     expect(response.body.uuid).toBe(UUID);
   });
 
-  it('POST - ADD - should return a TicketInterface', async () => {
+  it('POST - should return a TicketInterface', async () => {
     const response = await request(app.getHttpServer()).post('/tickets').send({
       subject: SUBJECT,
       description: DESCRIPTION
@@ -66,7 +66,7 @@ describe('TicketController tests suite', () => {
     expect(response.body.description).toBe(DESCRIPTION);
   });
 
-  it('POST - UPDATE - should return a TicketInterface', async () => {
+  it('UPDATE - should return a TicketInterface', async () => {
     const response = await request(app.getHttpServer()).put(`/tickets/${UUID}`).send({
       status: 3,
       subject: SUBJECT,
@@ -78,7 +78,7 @@ describe('TicketController tests suite', () => {
     expect(response.body.description).toBe('Integer sit amet purus a lacus fermentum consectetur nec quis leo.');
   });
 
-  it('POST - DELETE - should return a TicketInterface', async () => {
+  it('DELETE - should return a TicketInterface', async () => {
     const response = await request(app.getHttpServer()).delete(`/tickets/${UUID}`).send();
     expect(response.status).toBe(204);
     expect(response.body).toBeDefined();
@@ -89,7 +89,7 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(404);
   });
 
-  it('POST - ADD - should return 400 bad subject attribute', async () => {
+  it('POST - should return 400 bad subject attribute', async () => {
     const response = await request(app.getHttpServer()).post('/tickets').send({
       subject: 1,
       description: DESCRIPTION
@@ -97,7 +97,7 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(400);
   });
 
-  it('POST - ADD - should return 400 bad description attribute', async () => {
+  it('POST - should return 400 bad description attribute', async () => {
     const response = await request(app.getHttpServer()).post('/tickets').send({
       subject: SUBJECT,
       description: 1
@@ -105,12 +105,12 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(400);
   });
 
-  it('POST - ADD - should return 400 missing attributes', async () => {
+  it('POST - should return 400 missing attributes', async () => {
     const response = await request(app.getHttpServer()).post('/tickets').send({});
     expect(response.status).toBe(400);
   });
 
-  it('POST - UPDATE - should return 400 bad status attribute', async () => {
+  it('UPDATE - should return 400 bad status attribute', async () => {
     const response = await request(app.getHttpServer()).put(`/tickets/${UUID}`).send({
       status: '3',
       subject: SUBJECT,
@@ -119,7 +119,7 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(400);
   });
 
-  it('POST - UPDATE - should return 400 bad subject attribute', async () => {
+  it('UPDATE - should return 400 bad subject attribute', async () => {
     const response = await request(app.getHttpServer()).put(`/tickets/${UUID}`).send({
       status: 3,
       subject: 0,
@@ -128,7 +128,7 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(400);
   });
 
-  it('POST - UPDATE - should return 400 bad description attribute', async () => {
+  it('UPDATE - should return 400 bad description attribute', async () => {
     const response = await request(app.getHttpServer()).put(`/tickets/${UUID}`).send({
       status: 3,
       subject: SUBJECT,
@@ -137,12 +137,12 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(400);
   });
 
-  it('POST - UPDATE - should return 400 missing attributes', async () => {
+  it('UPDATE - should return 400 missing attributes', async () => {
     const response = await request(app.getHttpServer()).put(`/tickets/${UUID}`).send({});
     expect(response.status).toBe(400);
   });
 
-  it('POST - DELETE - should return a TicketInterface', async () => {
+  it('DELETE - should return a TicketInterface', async () => {
     const response = await request(app.getHttpServer()).delete(`/tickets/bad-uuid`);
     expect(response.status).toBe(500);
   });

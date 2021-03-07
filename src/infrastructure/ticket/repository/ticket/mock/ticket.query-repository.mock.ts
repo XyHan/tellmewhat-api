@@ -9,7 +9,7 @@ export class TicketQueryRepositoryMock implements TicketQueryRepositoryInterface
     try {
       return [TicketFixtures.ticketCollection, TicketFixtures.ticketCollection.length];
     } catch (e) {
-      const message: string = `TicketCommandRepository - Error on findAll tickets`;
+      const message: string = `TicketQueryRepository - Error on findAll tickets`;
       throw new TicketRepositoryException(message);
     }
   }
@@ -19,7 +19,7 @@ export class TicketQueryRepositoryMock implements TicketQueryRepositoryInterface
       const ticket: TicketInterface | undefined = TicketFixtures.ticketCollection.find((ticket: TicketInterface) => ticket.uuid === uuid);
       return ticket ? ticket : null;
     } catch (e) {
-      const message: string = `TicketCommandRepository - Error on findOne ticket '${uuid}'`;
+      const message: string = `TicketQueryRepository - Error on findOne ticket '${uuid}'`;
       throw new TicketRepositoryException(message);
     }
   }

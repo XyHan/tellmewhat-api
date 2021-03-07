@@ -5,11 +5,11 @@ import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ti
 import { UpdateATicketCommand } from './update-a-ticket.command';
 import { UpdateATicketCommandHandler } from './update-a-ticket.command.handler';
 
-export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
-export const STATUS = 2;
-export const UPDATED_BY = '31dd20e0-9a1d-4734-xxxx-d9cc3aff4028';
-export const SUBJECT = 'Yoda';
-export const DESCRIPTION = 'N\'essaie pas! Fais-le ou ne le fais pas! Il n\'y a pas d\'essai.';
+const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
+const STATUS = 2;
+const UPDATED_BY = '31dd20e0-9a1d-4734-xxxx-d9cc3aff4028';
+const SUBJECT = 'Yoda';
+const DESCRIPTION = 'N\'essaie pas! Fais-le ou ne le fais pas! Il n\'y a pas d\'essai.';
 
 describe('update a ticket handler test', () => {
   it ('update a ticket success', async () => {

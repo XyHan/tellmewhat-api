@@ -4,9 +4,9 @@ import { CreateATicketCommand } from './create-a-ticket.command';
 import { CreateATicketCommandHandler } from './create-a-ticket.command.handler';
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 
-export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
-export const SUBJECT = 'Yoda';
-export const DESCRIPTION = 'N\'essaie pas! Fais-le ou ne le fais pas! Il n\'y a pas d\'essai.';
+const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
+const SUBJECT = 'Yoda';
+const DESCRIPTION = 'N\'essaie pas! Fais-le ou ne le fais pas! Il n\'y a pas d\'essai.';
 
 describe('create a ticket handler test', () => {
   it ('create a ticket success', async () => {

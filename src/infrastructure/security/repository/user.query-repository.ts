@@ -22,10 +22,10 @@ export class UserQueryRepository implements UserQueryRepositoryInterface {
       return await this.repository.findOneOrFail({ uuid });
     } catch (e) {
       if (e.name === 'EntityNotFound') {
-        this._logger.warn(`UserQueryRepository - findOne - User ${uuid} not found`);
+        this._logger.warn(`UserQueryRepository - findOneByUuid - User ${uuid} not found`);
         return null;
       }
-      const message: string = `UserQueryRepository - Error on findOne user '${uuid}'`;
+      const message: string = `UserQueryRepository - Error on findOneByUuid user '${uuid}'`;
       this._logger.error(message);
       throw new UserRepositoryException(message);
     }
@@ -37,10 +37,10 @@ export class UserQueryRepository implements UserQueryRepositoryInterface {
       return await this.repository.findOneOrFail({ email });
     } catch (e) {
       if (e.name === 'EntityNotFound') {
-        this._logger.warn(`UserQueryRepository - findOne - User ${email} not found`);
+        this._logger.warn(`UserQueryRepository - findOneByEmail - User ${email} not found`);
         return null;
       }
-      const message: string = `UserQueryRepository - Error on findOne user '${email}'`;
+      const message: string = `UserQueryRepository - Error on findOneByEmail user '${email}'`;
       this._logger.error(message);
       throw new UserRepositoryException(message);
     }
