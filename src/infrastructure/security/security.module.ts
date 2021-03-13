@@ -6,6 +6,7 @@ import { UserQueryRepository } from './repository/user.query-repository';
 import { UserCommandRepository } from './repository/user.command-repository';
 import { UserQueryHandlers } from './query';
 import { UserCommandHandlers } from './command';
+import { BcryptAdapter } from './adapter/bcrypt.adapter';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UserCommandHandlers } from './command';
     UserCommandRepository,
     ...UserQueryHandlers,
     ...UserCommandHandlers,
+    BcryptAdapter,
   ],
   exports: [
     UserQueryRepository,

@@ -39,8 +39,8 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
         user.salt,
         user.createdAt,
         user.createdBy,
-        user.updatedAt,
-        user.updatedBy,
+        new Date(),
+        command.updatedBy,
       );
     } catch (e) {
       const message: string = `UpdateAUserCommandHandler - updateUserFromCommand - User update error: ${e.message}`;

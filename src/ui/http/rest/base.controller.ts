@@ -30,8 +30,8 @@ export abstract class BaseController {
     throw new HttpException(message, HttpStatus.NOT_FOUND);
   }
 
-  protected http500Response(message: string): HttpException {
+  protected http400Response(message: string): HttpException {
     this._logger.error(message);
-    throw new HttpException(message, HttpStatus.INTERNAL_SERVER_ERROR);
+    throw new HttpException(message, HttpStatus.BAD_REQUEST);
   }
 }

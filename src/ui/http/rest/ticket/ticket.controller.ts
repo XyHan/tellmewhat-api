@@ -52,7 +52,7 @@ export class TicketController extends BaseController {
       return this.paginateResponse(parseInt(size, 10), parseInt(page, 10), results);
     } catch (e) {
       const message: string = `TicketController - listAll error. Previous: ${e.message}`;
-      this.http500Response(message);
+      this.http400Response(message);
     }
   }
 
@@ -62,7 +62,7 @@ export class TicketController extends BaseController {
       return this.findOneTicketByUuid(params.uuid);
     } catch (e) {
       const message: string = `TicketController - get ${params.uuid} error. Previous: ${e.message}`;
-      this.http500Response(message);
+      this.http400Response(message);
     }
   }
 
@@ -75,8 +75,8 @@ export class TicketController extends BaseController {
       await this._commandBus.execute(command);
       return await this.findOneTicketByUuid(uuid);
     } catch (e) {
-      const message: string = `TicketController - Add ticket error`;
-      this.http500Response(message);
+      const message: string = `TicketController - Add ticket error: ${e.message}`;
+      this.http400Response(message);
     }
   }
 
@@ -98,8 +98,8 @@ export class TicketController extends BaseController {
       await this._commandBus.execute(command);
       return await this.findOneTicketByUuid(uuid);
     } catch (e) {
-      const message: string = `TicketController - Update ${uuid} ticket error`;
-      this.http500Response(message);
+      const message: string = `TicketController - Update ${uuid} ticket error: ${e.message}`;
+      this.http400Response(message);
     }
   }
 
@@ -111,8 +111,8 @@ export class TicketController extends BaseController {
       await this._commandBus.execute(command);
       return {};
     } catch (e) {
-      const message: string = `TicketController - Delete ticket ${uuid} error`;
-      this.http500Response(message);
+      const message: string = `TicketController - Delete ticket ${uuid} error: ${e.message}`;
+      this.http400Response(message);
     }
   }
 
@@ -123,7 +123,7 @@ export class TicketController extends BaseController {
       ticket = await this._queryBus.execute(query);
     } catch (e) {
       const message: string = `TicketController - findOneTicket ${uuid} error. Previous: ${e.message}`;
-      this.http500Response(message);
+      this.http400Response(message);
     }
     if (!ticket && !nullable) {
       const message: string = `TicketController - Ticket ${uuid} not found`;

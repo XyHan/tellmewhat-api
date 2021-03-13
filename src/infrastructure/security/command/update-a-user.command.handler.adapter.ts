@@ -1,5 +1,4 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
-import { UserInterface } from '../../../domain/model/user/user.model';
 import { Inject } from '@nestjs/common';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
 import { LoggerInterface } from '../../../domain/utils/logger.interface';
@@ -20,7 +19,7 @@ export class UpdateAUserCommandHandlerAdapter extends UpdateAUserCommandHandler 
     super(commandRepository, queryRepository, logger);
   }
 
-  async execute(command: UpdateAUserCommand): Promise<UserInterface> {
+  async execute(command: UpdateAUserCommand): Promise<void> {
     return await this.handle(command);
   }
 }

@@ -22,7 +22,7 @@ export class UserCommandRepository implements UserCommandRepositoryInterface {
     try {
       return await this.repository.save(user);
     } catch (e) {
-      const message: string = `UserCommandRepository - Error on create user '${user.uuid}'`;
+      const message: string = `UserCommandRepository - Error on create user '${user.uuid}': ${e.message}`;
       this._logger.error(message);
       throw new UserRepositoryException(message);
     }
@@ -32,7 +32,7 @@ export class UserCommandRepository implements UserCommandRepositoryInterface {
     try {
       return await this.repository.remove(user);
     } catch (e) {
-      const message: string = `UserCommandRepository - Error on delete user '${user.uuid}'`;
+      const message: string = `UserCommandRepository - Error on delete user '${user.uuid}': ${e.message}`;
       this._logger.error(message);
       throw new UserRepositoryException(message);
     }
@@ -42,7 +42,7 @@ export class UserCommandRepository implements UserCommandRepositoryInterface {
     try {
       return await this.repository.save(user);
     } catch (e) {
-      const message: string = `UserCommandRepository - Error on update user '${user.uuid}'`;
+      const message: string = `UserCommandRepository - Error on update user '${user.uuid}': ${e.message}`;
       this._logger.error(message);
       throw new UserRepositoryException(message);
     }

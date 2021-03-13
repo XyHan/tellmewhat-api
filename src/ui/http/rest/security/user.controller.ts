@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   HttpCode,
   Inject,
   Param,
@@ -50,8 +49,8 @@ export class UserController extends BaseController {
       await this._commandBus.execute(command);
       return await this.findOneUserByUuid(uuid);
     } catch (e) {
-      const message: string = `UserController - Add user error`;
-      this.http500Response(message);
+      const message: string = `UserController - Add user error: ${e.message}`;
+      this.http400Response(message);
     }
   }
 
@@ -72,8 +71,8 @@ export class UserController extends BaseController {
       await this._commandBus.execute(command);
       return await this.findOneUserByUuid(uuid);
     } catch (e) {
-      const message: string = `UserController - Update ${uuid} user error`;
-      this.http500Response(message);
+      const message: string = `UserController - Update ${uuid} user error: ${e.message}`;
+      this.http400Response(message);
     }
   }
 
@@ -85,8 +84,8 @@ export class UserController extends BaseController {
       await this._commandBus.execute(command);
       return {};
     } catch (e) {
-      const message: string = `UserController - Delete user ${uuid} error`;
-      this.http500Response(message);
+      const message: string = `UserController - Delete user ${uuid} error: ${e.message}`;
+      this.http400Response(message);
     }
   }
 
@@ -97,7 +96,7 @@ export class UserController extends BaseController {
       user = await this._queryBus.execute(query);
     } catch (e) {
       const message: string = ` UserController - findOneUserByUuid ${uuid} error. Previous: ${e.message}`;
-      this.http500Response(message);
+      this.http400Response(message);
     }
     if (!user && !nullable) {
       const message: string = ` UserController - User ${uuid} not found`;
