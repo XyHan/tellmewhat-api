@@ -5,38 +5,56 @@ import { CreateAUserCommand } from './create-a-user.command';
 import { UserInterface, UserModel } from '../../../../domain/model/user/user.model';
 import { UserFactory } from '../../../../domain/factory/user.factory';
 import { CreateAUserCommandHandlerException } from './create-a-user.command.handler.exception';
+import { EncrypterInterface } from '../../../../domain/utils/encrypter.interface';
 
 export class CreateAUserCommandHandler implements CommandHandlerInterface {
   protected readonly _repository: UserCommandRepositoryInterface;
   protected readonly _logger: LoggerInterface;
+  protected readonly _encrypter: EncrypterInterface;
 
   constructor(
     repository: UserCommandRepositoryInterface,
-    logger: LoggerInterface
+    logger: LoggerInterface,
+    encrypter: EncrypterInterface,
   ) {
     this._repository = repository;
     this._logger = logger;
+    this._encrypter = encrypter;
   }
 
-  async handle(command: CreateAUserCommand): Promise<UserInterface> {
+  public async handle(command: CreateAUserCommand): Promise<void> {
+    const user: UserInterface = await this.generateUserFromCommand(command);
+    await this.registerUser(user);
+  }
+
+  private async generateUserFromCommand(command: CreateAUserCommand): Promise<UserInterface> {
     try {
-      const user: UserInterface = new UserFactory(new UserModel()).generate(
+      const salt: string = await this._encrypter.salt();
+      const hashedPassword: string = await this._encrypter.hash(command.password, salt);
+      return new UserFactory(new UserModel()).generate(
         command.uuid,
         1,
         command.email,
-        command.password,
-        'saltToChange',
+        hashedPassword,
+        salt,
         new Date(),
-        'c9f63e25-bd06-42ae-993c-20b6b236cb84',
+        command.createdBy,
         new Date(),
-        'c9f63e25-bd06-42ae-993c-20b6b236cb84',
+        command.createdBy,
       );
-      const userEntity: UserInterface = await this._repository.create(user);
-      this._logger.info(`CreateAUserCommandHandler - User ${user.uuid} created`);
-
-      return userEntity;
     } catch (e) {
-      const message: string = `CreateAUserCommandHandler - User creation error: ${e.message}`;
+      const message: string = `CreateAUserCommandHandler - generateUserFromCommand - User generation error: ${e.message}`;
+      this._logger.error(message);
+      throw new CreateAUserCommandHandlerException(message);
+    }
+  }
+
+  private async registerUser(user: UserInterface): Promise<void> {
+    try {
+      await this._repository.create(user);
+      this._logger.info(`CreateAUserCommandHandler - User ${user.uuid} registered`);
+    } catch (e) {
+      const message: string = `CreateAUserCommandHandler - saveUser - User registration error: ${e.message}`;
       this._logger.error(message);
       throw new CreateAUserCommandHandlerException(message);
     }

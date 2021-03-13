@@ -46,7 +46,7 @@ export class UserController extends BaseController {
   public async post(@Body() createAUserDto: CreateAUserDto): Promise<UserInterface> {
     try {
       const uuid: string = v4();
-      const command = new CreateAUserCommand(uuid, createAUserDto.email, createAUserDto.password);
+      const command = new CreateAUserCommand(uuid, createAUserDto.email, createAUserDto.password, uuid);
       await this._commandBus.execute(command);
       return await this.findOneUserByUuid(uuid);
     } catch (e) {

@@ -1,11 +1,11 @@
 import { LoggerInterface } from '../../../../domain/utils/logger.interface';
 import { CommandHandlerInterface } from '../../command-handler.interface';
 import { UserCommandRepositoryInterface } from '../../../../domain/repository/user/user.command-repository.interface';
-import {UserInterface, UserModel} from '../../../../domain/model/user/user.model';
+import { UserInterface } from '../../../../domain/model/user/user.model';
 import { UserQueryRepositoryInterface } from '../../../../domain/repository/user/user.query-repository.interface';
 import { UpdateAUserCommandHandlerException } from './update-a-user.command.handler.exception';
 import { UpdateAUserCommand } from './update-a-user.command';
-import {UserFactory} from "../../../../domain/factory/user.factory";
+import { UserFactory } from '../../../../domain/factory/user.factory';
 
 export class UpdateAUserCommandHandler implements CommandHandlerInterface {
   protected readonly _commandRepository: UserCommandRepositoryInterface;
@@ -15,17 +15,23 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
   constructor(
     commandRepository: UserCommandRepositoryInterface,
     queryRepository: UserQueryRepositoryInterface,
-    logger: LoggerInterface
+    logger: LoggerInterface,
   ) {
     this._commandRepository = commandRepository;
     this._queryRepository = queryRepository;
     this._logger = logger;
   }
 
-  async handle(command: UpdateAUserCommand): Promise<UserInterface> {
+  public async handle(command: UpdateAUserCommand): Promise<void> {
+    const user: UserInterface = await this.findOneUserByUuid(command.uuid);
+    const updatedUser: UserInterface = await this.updateUserFromCommand(command, user);
+    await this.saveUpdatedUser(updatedUser);
+    this._logger.info(`UpdateAUserCommandHandler - User ${user.uuid} updated`);
+  }
+
+  private async updateUserFromCommand(command: UpdateAUserCommand, user: UserInterface): Promise<UserInterface> {
     try {
-      const user: UserInterface = await this.findOneUserByUuid(command.uuid);
-      const updatedUser: UserInterface = new UserFactory(new UserModel()).generate(
+      return new UserFactory(user).generate(
         command.uuid,
         command.status,
         command.email,
@@ -36,12 +42,19 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
         user.updatedAt,
         user.updatedBy,
       );
-      const userEntity: UserInterface = await this._commandRepository.update(updatedUser);
-      this._logger.info(`UpdateAUserCommandHandler - User ${user.uuid} updated`);
-
-      return userEntity;
     } catch (e) {
-      const message: string = `UpdateAUserCommandHandler - User update error: ${e.message}`;
+      const message: string = `UpdateAUserCommandHandler - updateUserFromCommand - User update error: ${e.message}`;
+      this._logger.error(message);
+      throw new UpdateAUserCommandHandlerException(message);
+    }
+  }
+
+  private async saveUpdatedUser(user: UserInterface): Promise<void> {
+    try {
+      await this._commandRepository.update(user);
+      this._logger.info(`UpdateAUserCommandHandler - User ${user.uuid} updated`);
+    } catch (e) {
+      const message: string = `UpdateAUserCommandHandler - saveUpdatedUser - User update error: ${e.message}`;
       this._logger.error(message);
       throw new UpdateAUserCommandHandlerException(message);
     }
