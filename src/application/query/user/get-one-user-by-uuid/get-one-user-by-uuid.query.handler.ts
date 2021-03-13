@@ -1,5 +1,5 @@
 import { QueryHandlerInterface } from '../../query-handler.interface';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { UserQueryRepositoryInterface } from '../../../../domain/repository/user/user.query-repository.interface';
 import { GetOneUserByUuidQuery } from './get-one-user-by-uuid.query';
 import { UserInterface } from '../../../../domain/model/user/user.model';

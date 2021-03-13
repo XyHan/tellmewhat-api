@@ -2,8 +2,8 @@ import { GetOneTicketQuery } from './get-one-ticket.query';
 import { GetOneTicketQueryHandler } from './get-one-ticket.query.handler';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { TicketInterface, TicketModel } from '../../../../domain/model/ticket/ticket.model';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
-import { LoggerMock } from '../../../../infrastructure/logger/logger.mock';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
+import { LoggerMock } from '../../../../domain/utils/logger/logger.mock';
 
 export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 

@@ -1,5 +1,5 @@
 import { classToClass } from 'class-transformer';
-import { LoggerInterface } from '../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export interface PaginatedResponse {

@@ -12,9 +12,9 @@ import {
 } from '@nestjs/common';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
 import { LoggerAdapterService } from '../../../../infrastructure/logger/logger-adapter.service';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { v4 } from 'uuid';
-import { classToClass } from 'class-transformer';
+import {classToClass, plainToClass} from 'class-transformer';
 import { BaseController } from '../base.controller';
 import { CreateAUserDto } from './dto/create-a-user.dto';
 import { UserInterface } from '../../../../domain/model/user/user.model';
@@ -23,6 +23,7 @@ import { DeleteAUserCommand } from '../../../../application/command/user/delete/
 import { UpdateAUserCommand } from '../../../../application/command/user/update/update-a-user.command';
 import { UpdateAUserDto } from './dto/update-a-user.dto';
 import { GetOneUserByUuidQuery } from '../../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query';
+import { UserEntity } from '../../../../infrastructure/security/entity/user.entity';
 
 @Controller('/users')
 export class UserController extends BaseController {
@@ -103,6 +104,6 @@ export class UserController extends BaseController {
       this.http404Response(message);
     }
 
-    return classToClass(user);
+    return plainToClass(UserEntity, user);
   }
 }

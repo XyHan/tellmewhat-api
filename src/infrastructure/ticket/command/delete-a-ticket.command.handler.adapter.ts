@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
 import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { Inject } from '@nestjs/common';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { TicketCommandRepositoryInterface } from '../../../domain/repository/ticket/ticket.command-repository.interface';
 import { TicketCommandRepository } from '../repository/ticket/ticket.command-repository';
 import { TicketQueryRepository } from '../repository/ticket/ticket.query-repository';

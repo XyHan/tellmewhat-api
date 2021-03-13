@@ -1,4 +1,4 @@
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { CommandHandlerInterface } from '../../command-handler.interface';
 import { UserCommandRepositoryInterface } from '../../../../domain/repository/user/user.command-repository.interface';
 import { UserInterface } from '../../../../domain/model/user/user.model';
@@ -21,13 +21,11 @@ export class DeleteAUserCommandHandler implements CommandHandlerInterface {
     this._logger = logger;
   }
 
-  async handle(command: DeleteAUserCommand): Promise<UserInterface> {
+  async handle(command: DeleteAUserCommand): Promise<void> {
     try {
       const user: UserInterface = await this.findOneUserByUuid(command.uuid);
-      const userEntity: UserInterface = await this._commandRepository.delete(user);
+      await this._commandRepository.delete(user);
       this._logger.info(`DeleteAUserCommandHandler - User ${user.uuid} deleted`);
-
-      return userEntity;
     } catch (e) {
       const message: string = `DeleteAUserCommandHandler - User deletion error: ${e.message}`;
       this._logger.error(message);

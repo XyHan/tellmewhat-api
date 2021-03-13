@@ -6,7 +6,7 @@ import { Inject } from '@nestjs/common';
 import { TicketQueryRepository } from '../repository/ticket/ticket.query-repository';
 import { TicketQueryRepositoryInterface } from '../../../domain/repository/ticket/ticket.query-repository.interface';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 
 @QueryHandler(GetOneTicketQuery)
 export class GetOneTicketQueryHandlerAdapter extends GetOneTicketQueryHandler implements IQueryHandler {

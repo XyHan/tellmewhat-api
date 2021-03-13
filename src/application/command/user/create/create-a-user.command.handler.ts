@@ -1,11 +1,11 @@
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { CommandHandlerInterface } from '../../command-handler.interface';
 import { UserCommandRepositoryInterface } from '../../../../domain/repository/user/user.command-repository.interface';
 import { CreateAUserCommand } from './create-a-user.command';
 import { UserInterface, UserModel } from '../../../../domain/model/user/user.model';
 import { UserFactory } from '../../../../domain/factory/user.factory';
 import { CreateAUserCommandHandlerException } from './create-a-user.command.handler.exception';
-import { EncrypterInterface } from '../../../../domain/utils/encrypter.interface';
+import { EncrypterInterface } from '../../../../domain/utils/encrypter/encrypter.interface';
 
 export class CreateAUserCommandHandler implements CommandHandlerInterface {
   protected readonly _repository: UserCommandRepositoryInterface;

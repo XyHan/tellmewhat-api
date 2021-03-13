@@ -15,7 +15,7 @@ import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
 import { GetOneTicketQuery } from '../../../../application/query/ticket/get-one-ticket/get-one-ticket.query';
 import { ListAllTicketsQuery } from '../../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
 import { LoggerAdapterService } from '../../../../infrastructure/logger/logger-adapter.service';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { CreateATicketDto } from './dto/create-a-ticket.dto';
 import { CreateATicketCommand } from '../../../../application/command/ticket/create/create-a-ticket.command';
 import { v4 } from 'uuid';

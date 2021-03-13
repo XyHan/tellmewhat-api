@@ -2,8 +2,8 @@ import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ti
 import { TicketInterface, TicketModel } from '../../../../domain/model/ticket/ticket.model';
 import { ListAllTicketsQuery } from './list-all-tickets.query';
 import { ListAllTicketsQueryHandler } from './list-all-tickets.query.handler';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
-import { LoggerMock } from '../../../../infrastructure/logger/logger.mock';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
+import { LoggerMock } from '../../../../domain/utils/logger/logger.mock';
 import { findAllOptions } from '../../../../domain/repository/find-all-options.type';
 
 export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';

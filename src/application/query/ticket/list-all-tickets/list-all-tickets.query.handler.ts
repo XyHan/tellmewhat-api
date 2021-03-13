@@ -3,7 +3,7 @@ import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ti
 import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { ListAllTicketsQueryHandlerException } from './list-all-tickets.query.handler.exception';
 import { ListAllTicketsQuery } from './list-all-tickets.query';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 
 export class ListAllTicketsQueryHandler implements QueryHandlerInterface {
   protected readonly _repository: TicketQueryRepositoryInterface;

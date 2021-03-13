@@ -2,7 +2,7 @@ import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
 import { CreateATicketCommand } from './create-a-ticket.command';
 import { CreateATicketCommandHandler } from './create-a-ticket.command.handler';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 
 const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 const SUBJECT = 'Yoda';

@@ -1,9 +1,8 @@
-import { UserInterface } from '../model/user/user.model';
+import { UserInterface, UserModel } from '../model/user/user.model';
 import { UserFactory } from '../factory/user.factory';
-import { UserEntity } from '../../infrastructure/security/entity/user.entity';
 
 export const USER_COLLECTION: UserInterface[] = [
-  new UserFactory(new UserEntity()).generate(
+  new UserFactory(new UserModel()).generate(
     '5e4e03a6-6e6f-4b39-a158-307d1e9082d8',
     1,
     'user1@test.com',
@@ -14,7 +13,7 @@ export const USER_COLLECTION: UserInterface[] = [
     new Date(),
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
   ),
-  new UserFactory(new UserEntity()).generate(
+  new UserFactory(new UserModel()).generate(
     '0d66db91-4441-4563-967c-797d767c7288',
     1,
     'user2@test.com',
@@ -44,7 +43,7 @@ export class UserFixtures {
     if (userIndex) {
       this._userCollection.splice(userIndex, 1);
       this._userCollection.push(
-        new UserFactory(new UserEntity()).generate(
+        new UserFactory(new UserModel()).generate(
           userToUpdate.uuid,
           userToUpdate.status,
           userToUpdate.email,
@@ -61,7 +60,7 @@ export class UserFixtures {
 
   public static addUser(user: UserInterface): void {
     this._userCollection.push(
-      new UserFactory(new UserEntity()).generate(
+      new UserFactory(new UserModel()).generate(
         user.uuid,
         user.status,
         user.email,

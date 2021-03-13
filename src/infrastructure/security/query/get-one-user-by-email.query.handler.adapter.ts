@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { UserQueryRepository } from '../repository/user.query-repository';
 import { UserQueryRepositoryInterface } from '../../../domain/repository/user/user.query-repository.interface';
 import { UserInterface } from '../../../domain/model/user/user.model';

@@ -1,9 +1,6 @@
 import { LoggerInterface } from './logger.interface';
-import { LoggerVErrorInterface } from '../../../infrastructure/logger/logger-v-error.interface';
-import { LoggerAdapterService } from '../../../infrastructure/logger/logger-adapter.service';
-import { VError } from '@netflix/nerror';
 
-export class LoggerMock implements LoggerInterface, LoggerVErrorInterface {
+export class LoggerMock implements LoggerInterface {
   public errorContent: string[] = [];
   public logContent: string[] = [];
 
@@ -18,11 +15,6 @@ export class LoggerMock implements LoggerInterface, LoggerVErrorInterface {
   public reset(): void {
     this.errorContent = [];
     this.logContent = [];
-  }
-
-  public verror(error: VError): void {
-    const errorTxt = LoggerAdapterService.formatFullStackErrorResolver(error);
-    this.errorContent.push(errorTxt);
   }
 
   public verbose(message: any, context?: string): void {

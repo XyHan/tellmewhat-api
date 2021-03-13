@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { UserQueryRepositoryInterface } from '../../../domain/repository/user/user.query-repository.interface';
 import { UserInterface } from '../../../domain/model/user/user.model';
 import { UserRepository } from './user.repository';

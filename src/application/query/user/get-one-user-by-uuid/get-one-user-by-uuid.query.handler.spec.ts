@@ -1,5 +1,5 @@
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
-import { LoggerMock } from '../../../../infrastructure/logger/logger.mock';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
+import { LoggerMock } from '../../../../domain/utils/logger/logger.mock';
 import { UserQueryRepositoryInterface } from '../../../../domain/repository/user/user.query-repository.interface';
 import { UserInterface, UserModel } from '../../../../domain/model/user/user.model';
 import { GetOneUserByUuidQuery } from './get-one-user-by-uuid.query';

@@ -1,8 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
-import { UserInterface } from '../../../domain/model/user/user.model';
 import { Inject } from '@nestjs/common';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { DeleteAUserCommandHandler } from '../../../application/command/user/delete/delete-a-user.command.handler';
 import { DeleteAUserCommand } from '../../../application/command/user/delete/delete-a-user.command';
 import { UserCommandRepositoryInterface } from '../../../domain/repository/user/user.command-repository.interface';
@@ -20,7 +19,7 @@ export class DeleteAUserCommandHandlerAdapter extends DeleteAUserCommandHandler 
     super(commandRepository, queryRepository, logger);
   }
 
-  async execute(command: DeleteAUserCommand): Promise<UserInterface> {
+  async execute(command: DeleteAUserCommand): Promise<void> {
     return await this.handle(command);
   }
 }

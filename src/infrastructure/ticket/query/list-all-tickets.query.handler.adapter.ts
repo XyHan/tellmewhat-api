@@ -6,7 +6,7 @@ import { TicketQueryRepositoryInterface } from '../../../domain/repository/ticke
 import { ListAllTicketsQuery } from '../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
 import { ListAllTicketsQueryHandler } from '../../../application/query/ticket/list-all-tickets/list-all-tickets.query.handler';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 
 @QueryHandler(ListAllTicketsQuery)
 export class ListAllTicketsQueryHandlerAdapter extends ListAllTicketsQueryHandler implements IQueryHandler {

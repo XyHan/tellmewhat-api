@@ -4,7 +4,7 @@ import { TicketRepository } from './ticket.repository';
 import { TicketRepositoryException } from './ticket.repository.exception';
 import { TicketEntity } from '../../entity/ticket.entity';
 import { Inject, Injectable } from '@nestjs/common';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
 
 @Injectable()

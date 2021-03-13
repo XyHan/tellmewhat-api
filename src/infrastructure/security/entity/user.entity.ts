@@ -1,6 +1,7 @@
 import { UserInterface } from '../../../domain/model/user/user.model';
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
+import { Length } from 'class-validator';
 
 @Entity({ name: 'user' })
 export class UserEntity implements UserInterface {
@@ -14,6 +15,7 @@ export class UserEntity implements UserInterface {
   @Column({ type: 'varchar', length: 38, name: 'created_by', nullable: false }) public createdBy: string;
 
   @Expose()
+  @Length(1, 200)
   @Index('IDX_USER_EMAIL')
   @Column({ type: 'varchar', length: 200, name: 'email', nullable: false, unique: true  }) public email: string;
 
@@ -30,6 +32,7 @@ export class UserEntity implements UserInterface {
   @Column({ type: 'varchar', length: 38, name: 'updated_by', nullable: false }) public updatedBy: string;
 
   @Expose()
+  @Length(1, 38)
   @Index('IDX_USER_UUID')
   @Column({ type: 'varchar', length: 38, name: 'uuid' , nullable: false, unique: true }) public uuid: string;
 

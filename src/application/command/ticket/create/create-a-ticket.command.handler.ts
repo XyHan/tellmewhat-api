@@ -1,4 +1,4 @@
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { CommandHandlerInterface } from '../../command-handler.interface';
 import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
 import { CreateATicketCommand} from './create-a-ticket.command';

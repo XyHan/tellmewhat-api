@@ -1,6 +1,6 @@
 import { TicketInterface, TicketModel } from '../../../../domain/model/ticket/ticket.model';
 import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { DeleteATicketCommand } from './delete-a-ticket.command';
 import { DeleteATicketCommandHandler } from './delete-a-ticket.command.handler';

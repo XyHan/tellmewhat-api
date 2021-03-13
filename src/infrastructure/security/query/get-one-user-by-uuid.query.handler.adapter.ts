@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { GetOneUserByUuidQuery } from '../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query';
 import { GetOneUserByUuidQueryHandler } from '../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query.handler';
 import { UserQueryRepository } from '../repository/user.query-repository';

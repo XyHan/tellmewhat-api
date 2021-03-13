@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TicketModule } from '../../../../infrastructure/ticket/ticket.module';
-import { LoggerMock } from '../../../../infrastructure/logger/logger.mock';
+import { LoggerMock } from '../../../../domain/utils/logger/logger.mock';
 import { LoggerAdapterService } from '../../../../infrastructure/logger/logger-adapter.service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TicketQueryRepositoryMock } from '../../../../infrastructure/ticket/repository/ticket/mock/ticket.query-repository.mock';
@@ -142,8 +142,8 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(400);
   });
 
-  it('DELETE - should return a TicketInterface', async () => {
+  it('DELETE - should return a bad request status', async () => {
     const response = await request(app.getHttpServer()).delete(`/tickets/bad-uuid`);
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(400);
   });
 });

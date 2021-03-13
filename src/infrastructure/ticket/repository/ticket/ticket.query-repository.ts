@@ -5,7 +5,7 @@ import { TicketRepositoryException } from './ticket.repository.exception';
 import { Inject, Injectable } from '@nestjs/common';
 import { findAllOptions } from '../../../../domain/repository/find-all-options.type';
 import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../../domain/utils/logger.interface';
+import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 
 @Injectable()
 export class TicketQueryRepository implements TicketQueryRepositoryInterface {
