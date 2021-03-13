@@ -1,50 +1,40 @@
 import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { LoggerMock } from '../../../../domain/utils/logger/logger.mock';
 import { UserQueryRepositoryInterface } from '../../../../domain/repository/user/user.query-repository.interface';
-import { UserInterface, UserModel } from '../../../../domain/model/user/user.model';
+import { UserInterface } from '../../../../domain/model/user/user.model';
 import { GetOneUserByEmailQuery } from './get-one-user-by-email.query';
 import { GetOneUserByEmailQueryHandler } from './get-one-user-by-email.query.handler';
+import { UserQueryRepositoryMock } from '../../../../domain/repository/user/mock/user.query-repository.mock';
+import { GetOneUserByEmailQueryHandlerException } from './get-one-user-by-email.query.handler.exception';
 
-export const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
-export const EMAIL = 'notme@unknow.com';
+const UUID = '5e4e03a6-6e6f-4b39-a158-307d1e9082d8';
+const EMAIL = 'user1@test.com';
 
 describe('get one user by email handler test', () => {
-  let logger: LoggerInterface;
+  const logger: LoggerInterface = new LoggerMock();
+  let repository: UserQueryRepositoryInterface;
 
-  beforeEach(async () => {
-    logger = new LoggerMock();
+  beforeEach(() => {
+    repository = new UserQueryRepositoryMock();
   })
 
   it ('return a user success', async () => {
-    const repository: UserQueryRepositoryInterface = {
-      findOneByEmail(email: string): Promise<UserInterface> {
-        const user = new UserModel();
-        user.uuid = UUID;
-        user.email = EMAIL;
-        return Promise.resolve(user);
-      },
-      findOneByUuid: jest.fn(),
-    };
     const query = new GetOneUserByEmailQuery(EMAIL);
     const handler = new GetOneUserByEmailQueryHandler(repository, logger);
     const user: UserInterface = await handler.handle(query);
     expect(user.uuid).toEqual(UUID);
   });
 
-  it('return a ticket error', async () => {
-    const repository: UserQueryRepositoryInterface = {
-      findOneByEmail(email: string): Promise<UserInterface> {
-        const error: Error = new Error('Not found');
-        return Promise.reject(error);
-      },
-      findOneByUuid: jest.fn(),
-    };
-    const query = new GetOneUserByEmailQuery(EMAIL);
+  it('return a user null success', async () => {
+    const query = new GetOneUserByEmailQuery('email-not-found');
     const handler = new GetOneUserByEmailQueryHandler(repository, logger);
-    try {
-      await handler.handle(query);
-    } catch (e) {
-      expect(e.message).toEqual(`GetOneUserByEmailQueryHandler - User ${EMAIL} error: Not found`);
-    }
+    const user: UserInterface = await handler.handle(query);
+    expect(user).toBeNull();
+  });
+
+  it('return a user null error', async () => {
+    const query = new GetOneUserByEmailQuery('bad-email');
+    const handler = new GetOneUserByEmailQueryHandler(repository, logger);
+    await expect(handler.handle(query)).rejects.toThrowError(GetOneUserByEmailQueryHandlerException);
   });
 });
