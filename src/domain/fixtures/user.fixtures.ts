@@ -35,7 +35,9 @@ export class UserFixtures {
 
   public static deleteUser(userToDelete: UserInterface): void {
     const index: number = this._userCollection.findIndex((user: UserInterface) => user.uuid === userToDelete.uuid);
-    this._userCollection.splice(index, 1);
+    if (index) {
+      this._userCollection.splice(index, 1);
+    }
   }
 
   public static updateUser(userToUpdate: UserInterface): void {

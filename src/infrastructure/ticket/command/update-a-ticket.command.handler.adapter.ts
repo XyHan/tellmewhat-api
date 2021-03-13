@@ -1,5 +1,4 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
-import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { Inject } from '@nestjs/common';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
 import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
@@ -20,7 +19,7 @@ export class UpdateATicketCommandHandlerAdapter extends UpdateATicketCommandHand
     super(commandRepository, queryRepository, logger);
   }
 
-  async execute(command: UpdateATicketCommand): Promise<TicketInterface> {
+  async execute(command: UpdateATicketCommand): Promise<void> {
     return await this.handle(command);
   }
 }

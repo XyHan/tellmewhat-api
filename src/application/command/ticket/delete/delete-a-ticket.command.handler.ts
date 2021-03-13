@@ -21,13 +21,11 @@ export class DeleteATicketCommandHandler implements CommandHandlerInterface {
     this._logger = logger;
   }
 
-  async handle(command: DeleteATicketCommand): Promise<TicketInterface> {
+  async handle(command: DeleteATicketCommand): Promise<void> {
     try {
       const ticket: TicketInterface = await this.findOneTicketByUuid(command.uuid);
-      const ticketEntity: TicketInterface = await this._commandRepository.delete(ticket);
+      await this._commandRepository.delete(ticket);
       this._logger.info(`DeleteATicketCommandHandler - Ticket ${ticket.uuid} deleted`);
-
-      return ticketEntity;
     } catch (e) {
       const message: string = `DeleteATicketCommandHandler - Ticket deletion error: ${e.message}`;
       this._logger.error(message);

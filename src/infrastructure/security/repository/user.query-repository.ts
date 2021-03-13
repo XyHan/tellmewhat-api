@@ -4,7 +4,7 @@ import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { UserQueryRepositoryInterface } from '../../../domain/repository/user/user.query-repository.interface';
 import { UserInterface } from '../../../domain/model/user/user.model';
 import { UserRepository } from './user.repository';
-import { UserRepositoryException } from './user.repository.exception';
+import { UserRepositoryException } from '../../../domain/repository/user/user.repository.exception';
 
 @Injectable()
 export class UserQueryRepository implements UserQueryRepositoryInterface {

@@ -19,11 +19,12 @@ import { LoggerInterface } from '../../../../domain/utils/logger/logger.interfac
 import { CreateATicketDto } from './dto/create-a-ticket.dto';
 import { CreateATicketCommand } from '../../../../application/command/ticket/create/create-a-ticket.command';
 import { v4 } from 'uuid';
-import { classToClass } from 'class-transformer';
+import { plainToClass} from 'class-transformer';
 import { BaseController, PaginatedResponse } from '../base.controller';
 import { UpdateATicketDto } from './dto/update-a-ticket.dto';
 import { UpdateATicketCommand } from '../../../../application/command/ticket/update/update-a-ticket.command';
 import { DeleteATicketCommand } from '../../../../application/command/ticket/delete/delete-a-ticket.command';
+import { TicketEntity } from '../../../../infrastructure/ticket/entity/ticket.entity';
 
 @Controller('/tickets')
 export class TicketController extends BaseController {
@@ -49,7 +50,13 @@ export class TicketController extends BaseController {
     try {
       const query = new ListAllTicketsQuery(parseInt(size, 10), parseInt(page, 10));
       const results: [TicketInterface[] , number] = await this._queryBus.execute(query);
-      return this.paginateResponse(parseInt(size, 10), parseInt(page, 10), results);
+      const collection: TicketInterface[] = results[0].map((ticket: TicketInterface) => plainToClass(TicketEntity, ticket))
+      return this.paginateResponse(
+        parseInt(size, 10),
+        parseInt(page, 10),
+        collection,
+        results[1]
+      );
     } catch (e) {
       const message: string = `TicketController - listAll error. Previous: ${e.message}`;
       this.http400Response(message);
@@ -71,7 +78,7 @@ export class TicketController extends BaseController {
   public async post(@Body() createATicketDto: CreateATicketDto): Promise<TicketInterface> {
     try {
       const uuid: string = v4();
-      const command = new CreateATicketCommand(uuid, createATicketDto.subject, createATicketDto.description); // @todo Refacto with User uuid param
+      const command = new CreateATicketCommand(uuid, createATicketDto.subject, createATicketDto.description, uuid); // @todo Refacto with User uuid param
       await this._commandBus.execute(command);
       return await this.findOneTicketByUuid(uuid);
     } catch (e) {
@@ -130,6 +137,6 @@ export class TicketController extends BaseController {
       this.http404Response(message);
     }
 
-    return classToClass(ticket);
+    return plainToClass(TicketEntity, ticket);
   }
 }

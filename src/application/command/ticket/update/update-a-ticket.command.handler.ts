@@ -22,10 +22,15 @@ export class UpdateATicketCommandHandler implements CommandHandlerInterface {
     this._logger = logger;
   }
 
-  async handle(command: UpdateATicketCommand): Promise<TicketInterface> {
+  async handle(command: UpdateATicketCommand): Promise<void> {
+    const ticket: TicketInterface = await this.findOneTicketByUuid(command.uuid);
+    const updatedTicket: TicketInterface = this.updateTicketFromCommand(command, ticket);
+    await this.updateTicket(updatedTicket);
+  }
+
+  private updateTicketFromCommand(command: UpdateATicketCommand, ticket: TicketInterface): TicketInterface {
     try {
-      const ticket: TicketInterface = await this.findOneTicketByUuid(command.uuid);
-      const updatedTicket: TicketInterface = new TicketFactory(ticket).generate(
+      return new TicketFactory(ticket).generate(
         command.uuid,
         command.status,
         ticket.createdAt,
@@ -35,12 +40,19 @@ export class UpdateATicketCommandHandler implements CommandHandlerInterface {
         command.subject,
         command.description,
       );
-      const ticketEntity: TicketInterface = await this._commandRepository.update(updatedTicket);
-      this._logger.info(`UpdateATicketCommandHandler - Ticket ${ticket.uuid} updated`);
-
-      return ticketEntity;
     } catch (e) {
-      const message: string = `UpdateATicketCommandHandler - Ticket update error: ${e.message}`;
+      const message: string = `UpdateATicketCommandHandler - updateTicketFromCommand - Ticket update error: ${e.message}`;
+      this._logger.error(message);
+      throw new UpdateATicketCommandHandlerException(message);
+    }
+  }
+
+  private async updateTicket(updatedTicket: TicketInterface): Promise<void> {
+    try {
+      await this._commandRepository.update(updatedTicket);
+      this._logger.info(`UpdateATicketCommandHandler - updateTicket - Ticket ${updatedTicket.uuid} updated`);
+    } catch (e) {
+      const message: string = `UpdateATicketCommandHandler - updateTicket - Ticket update error: ${e.message}`;
       this._logger.error(message);
       throw new UpdateATicketCommandHandlerException(message);
     }

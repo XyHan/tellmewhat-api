@@ -1,6 +1,9 @@
-import { classToClass } from 'class-transformer';
 import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
+import { UserInterface } from '../../../domain/model/user/user.model';
+
+export type result = TicketInterface | UserInterface;
 
 export interface PaginatedResponse {
   page: number;
@@ -16,9 +19,7 @@ export abstract class BaseController {
     this._logger = logger;
   }
 
-  protected paginateResponse(size: number, page: number, results: [any[] , number]): PaginatedResponse {
-    const total: number = results && results.length > 1 && typeof results[1] === 'number' ? results[1] : 0;
-    const collection: any[] = results && results.length > 1 ? results[0].map((item: any) => classToClass(item)) : [];
+  protected paginateResponse(size: number, page: number, collection: result[], total: number): PaginatedResponse {
     const pages: number = Math.ceil(total / size) || 1;
     page === 0 ? page++ : page;
 

@@ -14,7 +14,7 @@ import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
 import { LoggerAdapterService } from '../../../../infrastructure/logger/logger-adapter.service';
 import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { v4 } from 'uuid';
-import {classToClass, plainToClass} from 'class-transformer';
+import { plainToClass } from 'class-transformer';
 import { BaseController } from '../base.controller';
 import { CreateAUserDto } from './dto/create-a-user.dto';
 import { UserInterface } from '../../../../domain/model/user/user.model';

@@ -1,7 +1,6 @@
 import { UserCommandRepositoryInterface } from '../user.command-repository.interface';
 import { UserInterface } from '../../../model/user/user.model';
-import { UserRepositoryException } from '../../../../infrastructure/security/repository/user.repository.exception';
-import { UserEntity } from '../../../../infrastructure/security/entity/user.entity';
+import { UserRepositoryException } from '../user.repository.exception';
 import { UserFixtures } from '../../../fixtures/user.fixtures';
 
 export class UserCommandRepositoryMock implements UserCommandRepositoryInterface {
@@ -16,7 +15,7 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
     }
   }
 
-  public async delete(user: UserEntity): Promise<UserInterface> {
+  public async delete(user: UserInterface): Promise<UserInterface> {
     try {
       UserFixtures.deleteUser(user);
       return user;

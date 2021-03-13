@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
 import { UserCommandRepositoryInterface } from '../../../domain/repository/user/user.command-repository.interface';
-import { UserRepositoryException } from './user.repository.exception';
+import { UserRepositoryException } from '../../../domain/repository/user/user.repository.exception';
 import { UserRepository } from './user.repository';
 import { UserInterface } from '../../../domain/model/user/user.model';
 import { UserEntity } from '../entity/user.entity';

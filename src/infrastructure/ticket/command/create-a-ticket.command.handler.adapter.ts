@@ -1,5 +1,4 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
-import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { Inject } from '@nestjs/common';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
 import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
@@ -17,7 +16,7 @@ export class CreateATicketCommandHandlerAdapter extends CreateATicketCommandHand
     super(repository, logger);
   }
 
-  async execute(command: CreateATicketCommand): Promise<TicketInterface> {
+  async execute(command: CreateATicketCommand): Promise<void> {
     return await this.handle(command);
   }
 }
