@@ -1,7 +1,6 @@
-import { UserInterface } from '../../../domain/model/user/user.model';
-import { UserFactory } from '../../../domain/factory/user.factory';
-import { UserEntity } from '../entity/user.entity';
-import {classToClass} from "class-transformer";
+import { UserInterface } from '../model/user/user.model';
+import { UserFactory } from '../factory/user.factory';
+import { UserEntity } from '../../infrastructure/security/entity/user.entity';
 
 export const USER_COLLECTION: UserInterface[] = [
   new UserFactory(new UserEntity()).generate(
@@ -9,7 +8,7 @@ export const USER_COLLECTION: UserInterface[] = [
     1,
     'user1@test.com',
     'password1',
-    '',
+    'salt1',
     new Date(),
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
     new Date(),
@@ -20,7 +19,7 @@ export const USER_COLLECTION: UserInterface[] = [
     1,
     'user2@test.com',
     'password2',
-    '',
+    'salt2',
     new Date(),
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
     new Date(),
@@ -33,6 +32,11 @@ export class UserFixtures {
 
   public static get userCollection(): UserInterface[] {
     return this._userCollection;
+  }
+
+  public static deleteUser(userToDelete: UserInterface): void {
+    const index: number = this._userCollection.findIndex((user: UserInterface) => user.uuid === userToDelete.uuid);
+    this._userCollection.splice(index, 1);
   }
 
   public static updateUser(userToUpdate: UserInterface): void {

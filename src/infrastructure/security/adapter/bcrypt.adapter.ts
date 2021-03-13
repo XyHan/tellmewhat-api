@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { EncrypterInterface } from '../../../domain/utils/encrypter.interface';
+import { EncrypterInterface } from '../../../domain/utils/encrypter/encrypter.interface';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()

@@ -1,7 +1,7 @@
-import { UserQueryRepositoryInterface } from '../../../../domain/repository/user/user.query-repository.interface';
-import { UserInterface } from '../../../../domain/model/user/user.model';
-import { UserRepositoryException } from '../user.repository.exception';
-import { UserFixtures } from '../../fixtures/user.fixtures';
+import { UserQueryRepositoryInterface } from '../user.query-repository.interface';
+import { UserInterface } from '../../../model/user/user.model';
+import { UserRepositoryException } from '../../../../infrastructure/security/repository/user.repository.exception';
+import { UserFixtures } from '../../../fixtures/user.fixtures';
 
 export class UserQueryRepositoryMock implements UserQueryRepositoryInterface {
   async findOneByEmail(email: string): Promise<UserInterface | null> {

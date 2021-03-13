@@ -1,11 +1,12 @@
-import { UserCommandRepositoryInterface } from '../../../../domain/repository/user/user.command-repository.interface';
-import { UserInterface } from '../../../../domain/model/user/user.model';
-import { UserRepositoryException } from '../user.repository.exception';
-import { UserEntity } from '../../entity/user.entity';
-import { UserFixtures } from '../../fixtures/user.fixtures';
+import { UserCommandRepositoryInterface } from '../user.command-repository.interface';
+import { UserInterface } from '../../../model/user/user.model';
+import { UserRepositoryException } from '../../../../infrastructure/security/repository/user.repository.exception';
+import { UserEntity } from '../../../../infrastructure/security/entity/user.entity';
+import { UserFixtures } from '../../../fixtures/user.fixtures';
 
 export class UserCommandRepositoryMock implements UserCommandRepositoryInterface {
   public async create(user: UserInterface): Promise<UserInterface> {
+    this.isValidUser(user);
     try {
       UserFixtures.addUser(user);
       return user;
@@ -17,6 +18,7 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
 
   public async delete(user: UserEntity): Promise<UserInterface> {
     try {
+      UserFixtures.deleteUser(user);
       return user;
     } catch (e) {
       const message: string = `UserCommandRepository - Error on delete user '${user.uuid}'`;
@@ -25,6 +27,7 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
   }
 
   public async update(user: UserInterface): Promise<UserInterface> {
+    this.isValidUser(user);
     try {
       UserFixtures.updateUser(user);
       return user;
@@ -32,5 +35,13 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
       const message: string = `UserCommandRepository - Error on update user '${user.uuid}'`;
       throw new UserRepositoryException(message);
     }
+  }
+
+  private isValidUser(user: UserInterface): boolean {
+    if (!user.email.length || !user.uuid.length || !user.password.length) {
+      const message: string = `UserCommandRepository - Error on create user '${user.uuid}' - email, uuid and password cannot be empty`;
+      throw new UserRepositoryException(message);
+    }
+    return true;
   }
 }

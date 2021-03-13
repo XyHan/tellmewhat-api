@@ -1,6 +1,6 @@
-import { LoggerInterface } from '../../domain/utils/logger.interface';
-import { LoggerVErrorInterface } from './logger-v-error.interface';
-import { LoggerAdapterService } from './logger-adapter.service';
+import { LoggerInterface } from './logger.interface';
+import { LoggerVErrorInterface } from '../../../infrastructure/logger/logger-v-error.interface';
+import { LoggerAdapterService } from '../../../infrastructure/logger/logger-adapter.service';
 import { VError } from '@netflix/nerror';
 
 export class LoggerMock implements LoggerInterface, LoggerVErrorInterface {
