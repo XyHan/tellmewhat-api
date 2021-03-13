@@ -7,11 +7,17 @@ import { UserCommandRepository } from './repository/user.command-repository';
 import { UserQueryHandlers } from './query';
 import { UserCommandHandlers } from './command';
 import { BcryptAdapter } from './adapter/bcrypt.adapter';
+import { PassportModule } from '@nestjs/passport';
+import { CqrsModule } from '@nestjs/cqrs';
+import { AuthService } from './service/auth.service';
+import { LocalStrategy } from './strategy/local.strategy';
 
 @Module({
   imports: [
+    CqrsModule,
     TypeOrmModule.forFeature([UserRepository]),
-    LoggerModule
+    LoggerModule,
+    PassportModule
   ],
   providers: [
     UserQueryRepository,
@@ -19,6 +25,8 @@ import { BcryptAdapter } from './adapter/bcrypt.adapter';
     ...UserQueryHandlers,
     ...UserCommandHandlers,
     BcryptAdapter,
+    AuthService,
+    LocalStrategy
   ],
   exports: [
     UserQueryRepository,
