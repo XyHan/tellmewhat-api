@@ -9,8 +9,9 @@ import { UserCommandHandlers } from './command';
 import { BcryptAdapter } from './adapter/bcrypt.adapter';
 import { PassportModule } from '@nestjs/passport';
 import { CqrsModule } from '@nestjs/cqrs';
-import { AuthService } from './service/auth.service';
-import { LocalStrategy } from './strategy/local.strategy';
+import { AuthService } from './service/auth/auth.service';
+import {SshKeygenService} from "./service/ssh-keygen/ssh-keygen.service";
+import {JsonWebTokenAdapter} from "./adapter/json-web-token.adapter";
 
 @Module({
   imports: [
@@ -25,12 +26,14 @@ import { LocalStrategy } from './strategy/local.strategy';
     ...UserQueryHandlers,
     ...UserCommandHandlers,
     BcryptAdapter,
+    JsonWebTokenAdapter,
     AuthService,
-    LocalStrategy
+    SshKeygenService,
   ],
   exports: [
     UserQueryRepository,
     UserCommandRepository,
+    SshKeygenService
   ]
 })
 export class SecurityModule {}
