@@ -7,7 +7,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { LoggerModule } from '../../infrastructure/logger/logger.module';
 import { UserController } from './rest/security/user.controller';
 import { SecurityModule } from '../../infrastructure/security/security.module';
-import {AuthController} from "./rest/security/auth.controller";
+import { AuthController } from './rest/security/auth.controller';
 
 @Module({
   imports: [

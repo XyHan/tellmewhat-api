@@ -1,38 +1,39 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BcryptAdapter } from '../../adapter/bcrypt.adapter';
 import { EncrypterInterface } from '../../../../domain/utils/encrypter/encrypter.interface';
-import { IQueryBus, QueryBus } from '@nestjs/cqrs';
-import { UserInterface } from '../../../../domain/model/user/user.model';
 import { AuthServiceException } from './auth.service.exception';
-import { GetOneUserByEmailQuery } from '../../../../application/query/user/get-one-user-by-email/get-one-user-by-email.query';
+import { AuthManagerInterface } from '../../../../domain/utils/security/auth-manager.interface';
+import { JsonWebTokenAdapter } from '../../adapter/jwt/json-web-token.adapter';
+import { TokenInterface, TokenModel } from '../../../../domain/model/auth/token.model';
+import { UserInterface } from '../../../../domain/model/user/user.model';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements AuthManagerInterface {
   private readonly _encrypter: EncrypterInterface;
-  private readonly _queryBus: IQueryBus;
+  private readonly _jwtAdapter: JsonWebTokenAdapter;
 
   constructor(
     @Inject(BcryptAdapter) encrypter: EncrypterInterface,
-    @Inject(QueryBus) queryBus: IQueryBus,
+    @Inject(JsonWebTokenAdapter) jwtAdapter: JsonWebTokenAdapter,
   ) {
     this._encrypter = encrypter;
-    this._queryBus = queryBus;
+    this._jwtAdapter = jwtAdapter;
   }
 
-  async validateUser(email: string, password: string): Promise<boolean> {
-    const user: UserInterface | null = await this.findOneUserByEmail(email);
-    if (user && user.password) {
-      return this._encrypter.compare(password, user.password);
-    }
-    return null;
-  }
-
-  private async findOneUserByEmail(email: string): Promise<UserInterface | null> {
+  public async isValidPassword(passwordToCompare: string, passwordToCompareWith: string): Promise<boolean> {
     try {
-      const query = new GetOneUserByEmailQuery(email);
-      return await this._queryBus.execute(query);
+      return await this._encrypter.compare(passwordToCompare, passwordToCompareWith);
     } catch (e) {
-      throw new AuthServiceException(`AuthService - findOneUserByEmail - Error for user email ${email}: ${e.message}`);
+      throw new AuthServiceException(`AuthService - validate - Password validation error: ${e.message}\n`);
+    }
+  }
+
+  public generateToken(user: UserInterface): TokenInterface {
+    try {
+      const token: string = this._jwtAdapter.sign(user);
+      return new TokenModel(token);
+    } catch (e) {
+      throw new AuthServiceException(`AuthService - generateToken - Token generation for user ${user.email} error: ${e.message}\n`);
     }
   }
 }

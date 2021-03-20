@@ -1,15 +1,15 @@
 export interface TokenInterface {
-  value: string;
+  readonly token: string;
 }
 
 export class TokenModel implements TokenInterface {
-  private _value: string;
+  private readonly _token: string;
 
-  get value(): string {
-    return this._value;
+  constructor(token?: string) {
+    this._token = token;
   }
 
-  set value(value: string) {
-    this._value = value;
+  get token(): string {
+    return this._token;
   }
 }
