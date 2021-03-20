@@ -11,19 +11,19 @@ import {
   ValidationPipe
 } from '@nestjs/common';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
-import { LoggerAdapterService } from '../../../../infrastructure/logger/logger-adapter.service';
-import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
+import { LoggerAdapterService } from '../../../../../../infrastructure/logger/logger-adapter.service';
+import { LoggerInterface } from '../../../../../../domain/utils/logger/logger.interface';
 import { v4 } from 'uuid';
 import { plainToClass } from 'class-transformer';
-import { BaseController } from '../base.controller';
-import { CreateAUserDto } from './dto/create-a-user.dto';
-import { UserInterface } from '../../../../domain/model/user/user.model';
-import { CreateAUserCommand } from '../../../../application/command/user/create/create-a-user.command';
-import { DeleteAUserCommand } from '../../../../application/command/user/delete/delete-a-user.command';
-import { UpdateAUserCommand } from '../../../../application/command/user/update/update-a-user.command';
-import { UpdateAUserDto } from './dto/update-a-user.dto';
-import { GetOneUserByUuidQuery } from '../../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query';
-import { UserEntity } from '../../../../infrastructure/security/entity/user.entity';
+import { BaseController } from '../../../base.controller';
+import { CreateAUserDto } from '../../dto/create-a-user.dto';
+import { UserInterface } from '../../../../../../domain/model/user/user.model';
+import { CreateAUserCommand } from '../../../../../../application/command/user/create/create-a-user.command';
+import { DeleteAUserCommand } from '../../../../../../application/command/user/delete/delete-a-user.command';
+import { UpdateAUserCommand } from '../../../../../../application/command/user/update/update-a-user.command';
+import { UpdateAUserDto } from '../../dto/update-a-user.dto';
+import { GetOneUserByUuidQuery } from '../../../../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query';
+import { UserEntity } from '../../../../../../infrastructure/security/entity/user.entity';
 
 @Controller('/users')
 export class UserController extends BaseController {

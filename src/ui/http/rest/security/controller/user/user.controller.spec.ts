@@ -1,16 +1,16 @@
 import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
-import { SecurityModule } from '../../../../infrastructure/security/security.module';
-import { LoggerMock } from '../../../../domain/utils/logger/logger.mock';
-import { LoggerAdapterService } from '../../../../infrastructure/logger/logger-adapter.service';
+import { SecurityModule } from '../../../../../../infrastructure/security/security.module';
+import { LoggerMock } from '../../../../../../domain/utils/logger/logger.mock';
+import { LoggerAdapterService } from '../../../../../../infrastructure/logger/logger-adapter.service';
 import { CqrsModule } from '@nestjs/cqrs';
-import { UserQueryRepositoryMock } from '../../../../domain/repository/user/mock/user.query-repository.mock';
-import { UserQueryRepository } from '../../../../infrastructure/security/repository/user.query-repository';
-import { UserCommandRepository } from '../../../../infrastructure/security/repository/user.command-repository';
-import { UserCommandRepositoryMock } from '../../../../domain/repository/user/mock/user.command-repository.mock';
-import { AppModule } from '../../../../infrastructure/app/app.module';
-import { UiHttpModule } from '../../ui-http.module';
-import { LoggerModule } from '../../../../infrastructure/logger/logger.module';
+import { UserQueryRepositoryMock } from '../../../../../../domain/repository/user/mock/user.query-repository.mock';
+import { UserQueryRepository } from '../../../../../../infrastructure/security/repository/user.query-repository';
+import { UserCommandRepository } from '../../../../../../infrastructure/security/repository/user.command-repository';
+import { UserCommandRepositoryMock } from '../../../../../../domain/repository/user/mock/user.command-repository.mock';
+import { AppModule } from '../../../../../../infrastructure/app/app.module';
+import { UiHttpModule } from '../../../../ui-http.module';
+import { LoggerModule } from '../../../../../../infrastructure/logger/logger.module';
 import { INestApplication } from '@nestjs/common';
 
 const UUID = '0d66db91-4441-4563-967c-797d767c7288';

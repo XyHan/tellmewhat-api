@@ -5,14 +5,14 @@ import {
   Post,
 } from '@nestjs/common';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
-import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
-import { LoggerAdapterService } from '../../../../infrastructure/logger/logger-adapter.service';
-import { BaseController } from '../base.controller';
-import { TokenInterface } from '../../../../domain/model/auth/token.model';
-import { LoginQuery } from '../../../../application/query/auth/login/login.query';
-import { LoginDto } from './dto/login.dto';
+import { LoggerInterface } from '../../../../../../domain/utils/logger/logger.interface';
+import { LoggerAdapterService } from '../../../../../../infrastructure/logger/logger-adapter.service';
+import { BaseController } from '../../../base.controller';
+import { TokenInterface } from '../../../../../../domain/model/auth/token.model';
+import { LoginQuery } from '../../../../../../application/query/auth/login/login.query';
+import { LoginDto } from '../../dto/login.dto';
 import { plainToClass } from 'class-transformer';
-import { TokenTransformer } from '../../../../infrastructure/security/transformer/token.transformer';
+import { TokenTransformer } from '../../../../../../infrastructure/security/transformer/token.transformer';
 
 @Controller()
 export class AuthController extends BaseController {

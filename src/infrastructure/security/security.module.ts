@@ -13,6 +13,8 @@ import { AuthService } from './service/auth/auth.service';
 import { JsonWebTokenAdapter } from './adapter/jwt/json-web-token.adapter';
 import { AuthQueryHandlers } from './query/auth';
 import { loginQueryHandlerProvider } from './provider/login-query-handler.provider';
+import { GetOneUserByEmailQueryHandlerProvider } from './provider/get-one-user-by-email-query-handler.provider';
+import { GetOneUserByUuidQueryHandlerProvider } from './provider/get-one-user-by-uuid-query-handler.provider';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { loginQueryHandlerProvider } from './provider/login-query-handler.provid
   providers: [
     UserQueryRepository,
     UserCommandRepository,
+    GetOneUserByEmailQueryHandlerProvider,
+    GetOneUserByUuidQueryHandlerProvider,
     ...UserQueryHandlers,
     ...UserCommandHandlers,
     BcryptAdapter,
