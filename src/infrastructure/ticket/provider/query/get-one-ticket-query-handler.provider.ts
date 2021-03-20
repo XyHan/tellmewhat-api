@@ -5,7 +5,7 @@ import { GetOneTicketQueryHandler } from '../../../../application/query/ticket/g
 import { TicketQueryRepository } from '../../repository/ticket/ticket.query-repository';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 
-export const GetOneTicketQueryHandlerProvider: FactoryProvider = {
+export const getOneTicketQueryHandlerProvider: FactoryProvider = {
   provide: 'GET_ONE_TICKET_QUERY_HANDLER',
   useFactory: (ticketRepository: TicketQueryRepositoryInterface, logger: LoggerInterface) => {
     return new GetOneTicketQueryHandler(ticketRepository, logger);

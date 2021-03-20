@@ -1,22 +1,17 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
-import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
-import { CreateATicketCommandHandler } from '../../../application/command/ticket/create/create-a-ticket.command.handler';
 import { CreateATicketCommand } from '../../../application/command/ticket/create/create-a-ticket.command';
-import { TicketCommandRepositoryInterface } from '../../../domain/repository/ticket/ticket.command-repository.interface';
-import { TicketCommandRepository } from '../repository/ticket/ticket.command-repository';
+import { CommandHandlerInterface } from '../../../application/command/command-handler.interface';
 
 @CommandHandler(CreateATicketCommand)
-export class CreateATicketCommandHandlerAdapter extends CreateATicketCommandHandler implements ICommandHandler {
-  constructor(
-    @Inject(TicketCommandRepository) repository: TicketCommandRepositoryInterface,
-    @Inject(LoggerAdapterService) logger: LoggerInterface
-  ) {
-    super(repository, logger);
+export class CreateATicketCommandHandlerAdapter implements ICommandHandler {
+  private readonly _commandHandler: CommandHandlerInterface;
+
+  constructor(@Inject('CREATE_A_TICKET_COMMAND_HANDLER') commandHandler: CommandHandlerInterface) {
+    this._commandHandler = commandHandler;
   }
 
   async execute(command: CreateATicketCommand): Promise<void> {
-    return await this.handle(command);
+    return await this._commandHandler.handle(command);
   }
 }

@@ -5,7 +5,7 @@ import { TicketQueryRepository } from '../../repository/ticket/ticket.query-repo
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { ListAllTicketsQueryHandler } from '../../../../application/query/ticket/list-all-tickets/list-all-tickets.query.handler';
 
-export const ListAllTicketsQueryHandlerProvider: FactoryProvider = {
+export const listAllTicketsQueryHandlerProvider: FactoryProvider = {
   provide: 'LIST_ALL_TICKETS_QUERY_HANDLER',
   useFactory: (ticketRepository: TicketQueryRepositoryInterface, logger: LoggerInterface) => {
     return new ListAllTicketsQueryHandler(ticketRepository, logger);

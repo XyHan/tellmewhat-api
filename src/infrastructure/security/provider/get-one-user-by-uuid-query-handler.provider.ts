@@ -5,7 +5,7 @@ import { UserQueryRepository } from '../repository/user.query-repository';
 import { LoggerAdapterService } from '../../logger/logger-adapter.service';
 import { GetOneUserByUuidQueryHandler } from '../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query.handler';
 
-export const GetOneUserByUuidQueryHandlerProvider: FactoryProvider = {
+export const getOneUserByUuidQueryHandlerProvider: FactoryProvider = {
   provide: 'GET_ONE_USER_BY_UUID_QUERY_HANDLER',
   useFactory: (userRepository: UserQueryRepositoryInterface, logger: LoggerInterface) => {
     return new GetOneUserByUuidQueryHandler(userRepository, logger);
