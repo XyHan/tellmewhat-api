@@ -12,9 +12,12 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { AuthService } from './service/auth/auth.service';
 import { JsonWebTokenAdapter } from './adapter/jwt/json-web-token.adapter';
 import { AuthQueryHandlers } from './query/auth';
-import { loginQueryHandlerProvider } from './provider/login-query-handler.provider';
-import { getOneUserByEmailQueryHandlerProvider } from './provider/get-one-user-by-email-query-handler.provider';
-import { getOneUserByUuidQueryHandlerProvider } from './provider/get-one-user-by-uuid-query-handler.provider';
+import { loginQueryHandlerProvider } from './provider/query/login-query-handler.provider';
+import { getOneUserByEmailQueryHandlerProvider } from './provider/query/get-one-user-by-email-query-handler.provider';
+import { getOneUserByUuidQueryHandlerProvider } from './provider/query/get-one-user-by-uuid-query-handler.provider';
+import { createAUserCommandHandlerProvider } from './provider/command/create-a-user-command-handler.provider';
+import { updateAUserCommandHandlerProvider } from './provider/command/update-a-user-command-handler.provider';
+import { deleteAUserCommandHandlerProvider } from './provider/command/delete-a-user-command-handler.provider';
 
 @Module({
   imports: [
@@ -29,6 +32,9 @@ import { getOneUserByUuidQueryHandlerProvider } from './provider/get-one-user-by
     getOneUserByEmailQueryHandlerProvider,
     getOneUserByUuidQueryHandlerProvider,
     ...UserQueryHandlers,
+    createAUserCommandHandlerProvider,
+    updateAUserCommandHandlerProvider,
+    deleteAUserCommandHandlerProvider,
     ...UserCommandHandlers,
     BcryptAdapter,
     JsonWebTokenAdapter,

@@ -1,25 +1,17 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
-import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
-import { CreateAUserCommandHandler } from '../../../application/command/user/create/create-a-user.command.handler';
 import { CreateAUserCommand } from '../../../application/command/user/create/create-a-user.command';
-import { UserCommandRepositoryInterface } from '../../../domain/repository/user/user.command-repository.interface';
-import { UserCommandRepository } from '../repository/user.command-repository';
-import { BcryptAdapter } from '../adapter/bcrypt.adapter';
-import { EncrypterInterface } from '../../../domain/utils/encrypter/encrypter.interface';
+import { CommandHandlerInterface } from '../../../application/command/command-handler.interface';
 
 @CommandHandler(CreateAUserCommand)
-export class CreateAUserCommandHandlerAdapter extends CreateAUserCommandHandler implements ICommandHandler {
-  constructor(
-    @Inject(UserCommandRepository) repository: UserCommandRepositoryInterface,
-    @Inject(LoggerAdapterService) logger: LoggerInterface,
-    @Inject(BcryptAdapter) encrypter: EncrypterInterface
-  ) {
-    super(repository, logger, encrypter);
+export class CreateAUserCommandHandlerAdapter implements ICommandHandler {
+  private readonly _commandHandler: CommandHandlerInterface;
+
+  constructor(@Inject('CREATE_A_USER_COMMAND_HANDLER') commandHandler: CommandHandlerInterface) {
+    this._commandHandler = commandHandler;
   }
 
   async execute(command: CreateAUserCommand): Promise<void> {
-    return await this.handle(command);
+    return await this._commandHandler.handle(command);
   }
 }
