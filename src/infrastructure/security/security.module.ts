@@ -1,4 +1,4 @@
-import {FactoryProvider, Module} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { LoggerModule } from '../logger/logger.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './repository/user.repository';
@@ -7,7 +7,6 @@ import { UserCommandRepository } from './repository/user.command-repository';
 import { UserQueryHandlers } from './query/user';
 import { UserCommandHandlers } from './command';
 import { BcryptAdapter } from './adapter/bcrypt.adapter';
-import { PassportModule } from '@nestjs/passport';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AuthService } from './service/auth/auth.service';
 import { JsonWebTokenAdapter } from './adapter/jwt/json-web-token.adapter';
@@ -24,7 +23,6 @@ import { deleteAUserCommandHandlerProvider } from './provider/command/delete-a-u
     CqrsModule,
     TypeOrmModule.forFeature([UserRepository]),
     LoggerModule,
-    PassportModule
   ],
   providers: [
     UserQueryRepository,
@@ -45,6 +43,7 @@ import { deleteAUserCommandHandlerProvider } from './provider/command/delete-a-u
   exports: [
     UserQueryRepository,
     UserCommandRepository,
+    AuthService
   ]
 })
 export class SecurityModule {}

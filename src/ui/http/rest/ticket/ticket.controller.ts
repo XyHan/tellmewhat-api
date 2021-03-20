@@ -8,7 +8,7 @@ import {
   Param,
   Post,
   Put,
-  Query, UsePipes, ValidationPipe
+  Query, UseGuards, UsePipes, ValidationPipe
 } from '@nestjs/common';
 import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
@@ -25,6 +25,7 @@ import { UpdateATicketDto } from './dto/update-a-ticket.dto';
 import { UpdateATicketCommand } from '../../../../application/command/ticket/update/update-a-ticket.command';
 import { DeleteATicketCommand } from '../../../../application/command/ticket/delete/delete-a-ticket.command';
 import { TicketEntity } from '../../../../infrastructure/ticket/entity/ticket.entity';
+import { AuthGuard } from '../../guard/auth.guard';
 
 @Controller('/tickets')
 export class TicketController extends BaseController {
@@ -43,6 +44,7 @@ export class TicketController extends BaseController {
   }
 
   @Get('/')
+  @UseGuards(AuthGuard)
   public async listAll(
     @Query('size') size: string | undefined = '10',
     @Query('page') page: string | undefined = '0',

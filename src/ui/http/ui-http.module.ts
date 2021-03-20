@@ -8,6 +8,7 @@ import { LoggerModule } from '../../infrastructure/logger/logger.module';
 import { UserController } from './rest/security/controller/user/user.controller';
 import { SecurityModule } from '../../infrastructure/security/security.module';
 import { AuthController } from './rest/security/controller/auth/auth.controller';
+import { AuthGuard } from './guard/auth.guard';
 
 @Module({
   imports: [
@@ -16,6 +17,9 @@ import { AuthController } from './rest/security/controller/auth/auth.controller'
     TicketModule,
     SecurityModule,
     LoggerModule,
+  ],
+  providers: [
+    AuthGuard,
   ],
   controllers: [
     AppController,

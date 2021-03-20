@@ -1,10 +1,11 @@
 import { AuthManagerInterface } from './auth-manager.interface';
-import { UserInterface } from '../../model/user/user.model';
+import { UserInterface, UserModel } from '../../model/user/user.model';
 import { TokenInterface, TokenModel } from '../../model/auth/token.model';
 
 export class AuthManagerMock implements AuthManagerInterface {
   private readonly _refEmail: string;
   private readonly _refPassword: string;
+  private _currentUser: UserInterface | null;
 
   constructor(refEmail: string, refPassword) {
     this._refEmail = refEmail;
@@ -20,5 +21,13 @@ export class AuthManagerMock implements AuthManagerInterface {
       return Promise.resolve(true);
     }
     return Promise.resolve(false);
+  }
+
+  async register(token: TokenInterface): Promise<boolean> {
+    return Promise.resolve(true);
+  }
+
+  get currentUser(): UserInterface | null {
+    return this._currentUser;
   }
 }

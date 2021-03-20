@@ -5,19 +5,28 @@ import { AuthServiceException } from './auth.service.exception';
 import { AuthManagerInterface } from '../../../../domain/utils/security/auth-manager.interface';
 import { JsonWebTokenAdapter } from '../../adapter/jwt/json-web-token.adapter';
 import { TokenInterface, TokenModel } from '../../../../domain/model/auth/token.model';
-import { UserInterface } from '../../../../domain/model/user/user.model';
+import { UserInterface, UserModel} from '../../../../domain/model/user/user.model';
+import { IQueryBus, QueryBus } from "@nestjs/cqrs/dist";
+import { DecodedTokenInterface } from '../../../../domain/model/auth/decodedToken.model';
+import { plainToClass } from "class-transformer";
+import { GetOneUserByUuidQuery } from '../../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query';
+import { DecodedTokenTransformer } from '../../transformer/decodedToken.transformer';
 
 @Injectable()
 export class AuthService implements AuthManagerInterface {
   private readonly _encrypter: EncrypterInterface;
   private readonly _jwtAdapter: JsonWebTokenAdapter;
+  private readonly _queryBus: IQueryBus;
+  private _currentUser: UserInterface | null = null;
 
   constructor(
     @Inject(BcryptAdapter) encrypter: EncrypterInterface,
     @Inject(JsonWebTokenAdapter) jwtAdapter: JsonWebTokenAdapter,
+    @Inject(QueryBus) queryBus: IQueryBus
   ) {
     this._encrypter = encrypter;
     this._jwtAdapter = jwtAdapter;
+    this._queryBus = queryBus;
   }
 
   public async isValidPassword(passwordToCompare: string, passwordToCompareWith: string): Promise<boolean> {
@@ -35,5 +44,27 @@ export class AuthService implements AuthManagerInterface {
     } catch (e) {
       throw new AuthServiceException(`AuthService - generateToken - Token generation for user ${user.email} error: ${e.message}\n`);
     }
+  }
+
+  public async register(token: TokenInterface): Promise<boolean> {
+    try {
+      const verifiedToken: string | object = this._jwtAdapter.verify(token);
+      const decodedToken: DecodedTokenInterface = plainToClass(DecodedTokenTransformer, verifiedToken);
+      if (decodedToken && decodedToken.uuid) {
+        const query = new GetOneUserByUuidQuery(decodedToken.uuid);
+        const user: UserInterface | null = await this._queryBus.execute(query);
+        if (user) {
+          this._currentUser = user;
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      throw new AuthServiceException(`AuthService - isGrantedUser - Error: ${e.message}\n`);
+    }
+  }
+
+  get currentUser(): UserInterface | null {
+    return this._currentUser;
   }
 }
