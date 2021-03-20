@@ -27,7 +27,7 @@ describe('login handler test', () => {
     const query = new LoginQuery(EMAIL, PASSWORD);
     const handler = new LoginQueryHandler(authManager, userRepository, logger);
     const token: TokenInterface = await handler.handle(query);
-    expect(token.value).toContain('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.');
+    expect(token.token).toContain('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.');
   });
 
   it('return an bad email error', async () => {
