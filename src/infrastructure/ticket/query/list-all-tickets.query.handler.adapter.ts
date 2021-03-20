@@ -1,23 +1,18 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
 import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { Inject } from '@nestjs/common';
-import { TicketQueryRepository } from '../repository/ticket/ticket.query-repository';
-import { TicketQueryRepositoryInterface } from '../../../domain/repository/ticket/ticket.query-repository.interface';
 import { ListAllTicketsQuery } from '../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
-import { ListAllTicketsQueryHandler } from '../../../application/query/ticket/list-all-tickets/list-all-tickets.query.handler';
-import { LoggerAdapterService } from '../../logger/logger-adapter.service';
-import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
+import { QueryHandlerInterface } from '../../../application/query/query-handler.interface';
 
 @QueryHandler(ListAllTicketsQuery)
-export class ListAllTicketsQueryHandlerAdapter extends ListAllTicketsQueryHandler implements IQueryHandler {
-  constructor(
-    @Inject(TicketQueryRepository) repository: TicketQueryRepositoryInterface,
-    @Inject(LoggerAdapterService) logger: LoggerInterface
-  ) {
-    super(repository, logger);
+export class ListAllTicketsQueryHandlerAdapter implements IQueryHandler {
+  private readonly _queryHandler: QueryHandlerInterface;
+
+  constructor(@Inject('LIST_ALL_TICKETS_QUERY_HANDLER') queryHandler: QueryHandlerInterface) {
+    this._queryHandler = queryHandler;
   }
 
   async execute(query: ListAllTicketsQuery): Promise<[TicketInterface[], number]> {
-    return await this.handle(query);
+    return await this._queryHandler.handle(query);
   }
 }

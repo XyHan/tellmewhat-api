@@ -6,6 +6,8 @@ import { TicketQueryRepository } from './repository/ticket/ticket.query-reposito
 import { TicketCommandRepository } from './repository/ticket/ticket.command-repository';
 import { LoggerModule } from '../logger/logger.module';
 import { TicketCommandHandlers } from './command';
+import { GetOneTicketQueryHandlerProvider } from './provider/query/get-one-ticket-query-handler.provider';
+import { ListAllTicketsQueryHandlerProvider } from './provider/query/list-all-tickets-query-handler.provider';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { TicketCommandHandlers } from './command';
   providers: [
     TicketQueryRepository,
     TicketCommandRepository,
+    GetOneTicketQueryHandlerProvider,
+    ListAllTicketsQueryHandlerProvider,
     ...TicketQueryHandlers,
     ...TicketCommandHandlers,
   ],
