@@ -5,7 +5,7 @@ import { AuthServiceException } from './auth.service.exception';
 import { AuthManagerInterface } from '../../../../domain/utils/security/auth-manager.interface';
 import { JsonWebTokenAdapter } from '../../adapter/jwt/json-web-token.adapter';
 import { TokenInterface, TokenModel } from '../../../../domain/model/auth/token.model';
-import { UserInterface, UserModel} from '../../../../domain/model/user/user.model';
+import { UserInterface } from '../../../../domain/model/user/user.model';
 import { IQueryBus, QueryBus } from "@nestjs/cqrs/dist";
 import { DecodedTokenInterface } from '../../../../domain/model/auth/decodedToken.model';
 import { plainToClass } from "class-transformer";
@@ -17,7 +17,6 @@ export class AuthService implements AuthManagerInterface {
   private readonly _encrypter: EncrypterInterface;
   private readonly _jwtAdapter: JsonWebTokenAdapter;
   private readonly _queryBus: IQueryBus;
-  private _currentUser: UserInterface | null = null;
 
   constructor(
     @Inject(BcryptAdapter) encrypter: EncrypterInterface,
@@ -46,25 +45,18 @@ export class AuthService implements AuthManagerInterface {
     }
   }
 
-  public async register(token: TokenInterface): Promise<boolean> {
+  public async isValidUser(token: TokenInterface): Promise<UserInterface | boolean> {
     try {
       const verifiedToken: string | object = this._jwtAdapter.verify(token);
       const decodedToken: DecodedTokenInterface = plainToClass(DecodedTokenTransformer, verifiedToken);
       if (decodedToken && decodedToken.uuid) {
         const query = new GetOneUserByUuidQuery(decodedToken.uuid);
         const user: UserInterface | null = await this._queryBus.execute(query);
-        if (user) {
-          this._currentUser = user;
-          return true;
-        }
+        if (user) return user;
       }
       return false;
     } catch (e) {
       throw new AuthServiceException(`AuthService - isGrantedUser - Error: ${e.message}\n`);
     }
-  }
-
-  get currentUser(): UserInterface | null {
-    return this._currentUser;
   }
 }

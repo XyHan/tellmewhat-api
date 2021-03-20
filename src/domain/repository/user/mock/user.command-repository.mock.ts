@@ -8,7 +8,7 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
     this.isValidUser(user);
     try {
       UserFixtures.addUser(user);
-      return user;
+      return Promise.resolve(user);
     } catch (e) {
       const message: string = `UserCommandRepository - Error on create user '${user.uuid}'`;
       throw new UserRepositoryException(message);
@@ -18,7 +18,7 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
   public async delete(user: UserInterface): Promise<UserInterface> {
     try {
       UserFixtures.deleteUser(user);
-      return user;
+      return Promise.resolve(user);
     } catch (e) {
       const message: string = `UserCommandRepository - Error on delete user '${user.uuid}'`;
       throw new UserRepositoryException(message);
@@ -29,7 +29,7 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
     this.isValidUser(user);
     try {
       UserFixtures.updateUser(user);
-      return user;
+      return Promise.resolve(user);
     } catch (e) {
       const message: string = `UserCommandRepository - Error on update user '${user.uuid}'`;
       throw new UserRepositoryException(message);

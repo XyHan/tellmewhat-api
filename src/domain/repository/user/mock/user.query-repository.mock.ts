@@ -9,7 +9,7 @@ export class UserQueryRepositoryMock implements UserQueryRepositoryInterface {
     if (email === 'bad-email') throw new UserRepositoryException(message);
     try {
       const user: UserInterface | undefined = UserFixtures.userCollection.find((user: UserInterface) => user.email === email);
-      return user ? user : null;
+      return user ? Promise.resolve(user) : Promise.resolve(null);
     } catch (e) {
       throw new UserRepositoryException(message);
     }
@@ -20,7 +20,7 @@ export class UserQueryRepositoryMock implements UserQueryRepositoryInterface {
     if (uuid === 'bad-uuid') throw new UserRepositoryException(message);
     try {
       const user: UserInterface | undefined = UserFixtures.userCollection.find((user: UserInterface) => user.uuid === uuid);
-      return user ? user : null;
+      return user ? Promise.resolve(user) : Promise.resolve(null);
     } catch (e) {
       throw new UserRepositoryException(message);
     }

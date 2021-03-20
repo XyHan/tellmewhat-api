@@ -12,6 +12,7 @@ import { AppModule } from '../../../../../../infrastructure/app/app.module';
 import { UiHttpModule } from '../../../../ui-http.module';
 import { LoggerModule } from '../../../../../../infrastructure/logger/logger.module';
 import { INestApplication } from '@nestjs/common';
+import * as JsonWebToken from 'jsonwebtoken';
 
 const UUID = '0d66db91-4441-4563-967c-797d767c7288';
 const EMAIL = 'somebody@unknow.com';
@@ -19,8 +20,22 @@ const PASSWORD = 'changeme';
 
 describe('UserController tests suite', () => {
   let app: INestApplication;
+  let token: string;
+  let wrongToken: string;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
+    token = JsonWebToken.sign(
+      { uuid: '5e4e03a6-6e6f-4b39-a158-307d1e9082d8', email: 'user2@test.com' },
+      Buffer.from('changeMeAsSoonAsPossible', 'base64').toString(),
+      { algorithm: 'HS256', expiresIn: '1d' }
+    );
+
+    wrongToken = JsonWebToken.sign(
+      { uuid: 'bad-uuid', email: 'bad-email' },
+      Buffer.from('changeMeAsSoonAsPossible', 'base64').toString(),
+      { algorithm: 'HS256', expiresIn: '1d' }
+    );
+
     const moduleRef: TestingModule = await Test.createTestingModule({
       imports: [AppModule, CqrsModule, SecurityModule, UiHttpModule, LoggerModule],
     })
@@ -56,10 +71,14 @@ describe('UserController tests suite', () => {
   });
 
   it('UPDATE - should return a UserInterface', async () => {
-    const response = await request(app.getHttpServer()).put(`/users/${UUID}`).send({
-      status: 3,
-      email: `${EMAIL}.br`,
-    });
+    const response = await request(app.getHttpServer())
+      .put(`/users/${UUID}`)
+      .send({
+        status: 3,
+        email: `${EMAIL}.br`,
+      })
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
     expect(response.status).toBe(200);
     expect(response.body.email).toBe(`${EMAIL}.br`);
     expect(response.body.status).toBe(3);
@@ -70,64 +89,120 @@ describe('UserController tests suite', () => {
     expect(response.body.updatedBy).toBeDefined();
   });
 
+  it('UPDATE - should return a 401', async () => {
+    const response = await request(app.getHttpServer())
+      .put(`/users/${UUID}`)
+      .send({
+        status: 3,
+        email: `${EMAIL}.br`,
+      })
+      .set({ 'Authorization': `Bearer ${wrongToken}` })
+    ;
+    expect(response.status).toBe(401);
+  });
+
   it('DELETE - should return a UserInterface', async () => {
-    const response = await request(app.getHttpServer()).delete(`/users/${UUID}`).send();
+    const response = await request(app.getHttpServer())
+      .delete(`/users/${UUID}`)
+      .send()
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
     expect(response.status).toBe(204);
     expect(response.body).toBeDefined();
   });
 
+  it('DELETE - should return a UserInterface', async () => {
+    const response = await request(app.getHttpServer())
+      .delete(`/users/${UUID}`)
+      .send()
+      .set({ 'Authorization': `Bearer ${wrongToken}` })
+    ;
+    expect(response.status).toBe(401);
+  });
+
   it('POST - should return 400 bad email attribute', async () => {
-    const response = await request(app.getHttpServer()).post('/users').send({
-      email: 1,
-      password: PASSWORD,
-    });
+    const response = await request(app.getHttpServer())
+      .post('/users')
+      .set({ 'Authorization': `Bearer ${token}` })
+      .send({
+        email: 1,
+        password: PASSWORD,
+      })
+    ;
     expect(response.status).toBe(400);
   });
 
   it('POST - should return 400 bad password attribute', async () => {
-    const response = await request(app.getHttpServer()).post('/users').send({
-      email: EMAIL,
-      password: 1,
-    });
+    const response = await request(app.getHttpServer())
+      .post('/users')
+      .set({ 'Authorization': `Bearer ${token}` })
+      .send({
+        email: EMAIL,
+        password: 1,
+      })
+    ;
     expect(response.status).toBe(400);
   });
 
   it('POST - should return 400 missing attributes', async () => {
-    const response = await request(app.getHttpServer()).post('/users').send({});
+    const response = await request(app.getHttpServer())
+      .post('/users')
+      .set({ 'Authorization': `Bearer ${token}` })
+      .send({})
+    ;
     expect(response.status).toBe(400);
   });
 
   it('UPDATE - should return 400 bad status attribute', async () => {
-    const response = await request(app.getHttpServer()).put(`/users/${UUID}`).send({
-      status: '3',
-      email: `${EMAIL}.br`,
-    });
+    const response = await request(app.getHttpServer())
+      .put(`/users/${UUID}`)
+      .set({ 'Authorization': `Bearer ${token}` })
+      .send({
+        status: '3',
+        email: `${EMAIL}.br`,
+      })
+    ;
     expect(response.status).toBe(400);
   });
 
   it('UPDATE - should return 400 bad email attribute', async () => {
-    const response = await request(app.getHttpServer()).put(`/users/${UUID}`).send({
-      status: 3,
-      email: 2,
-    });
+    const response = await request(app.getHttpServer())
+      .put(`/users/${UUID}`)
+      .set({ 'Authorization': `Bearer ${token}` })
+      .send({
+        status: 3,
+        email: 2,
+      })
+    ;
     expect(response.status).toBe(400);
   });
 
   it('UPDATE - should return 400 bad email format attribute', async () => {
-    const response = await request(app.getHttpServer()).put(`/users/${UUID}`).send({
-      status: 3,
-      email: 'idontknow',
-    });
+    const response = await request(app.getHttpServer())
+      .put(`/users/${UUID}`)
+      .set({ 'Authorization': `Bearer ${token}` })
+      .send({
+        status: 3,
+        email: 'idontknow',
+      })
+    ;
     expect(response.status).toBe(400);
   });
 
   it('UPDATE - should return 400 missing attributes', async () => {
-    const response = await request(app.getHttpServer()).put(`/users/${UUID}`).send({});
+    const response = await request(app.getHttpServer())
+      .put(`/users/${UUID}`)
+      .set({ 'Authorization': `Bearer ${token}` })
+      .send({})
+    ;
     expect(response.status).toBe(400);
   });
 
   it('DELETE - should return a bad request status', async () => {
-    const response = await request(app.getHttpServer()).delete(`/users/bad-uuid`);
+    const response = await request(app.getHttpServer())
+      .delete(`/users/bad-uuid`)
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
     expect(response.status).toBe(400);
   });
 });

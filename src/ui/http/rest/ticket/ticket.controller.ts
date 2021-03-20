@@ -26,6 +26,8 @@ import { UpdateATicketCommand } from '../../../../application/command/ticket/upd
 import { DeleteATicketCommand } from '../../../../application/command/ticket/delete/delete-a-ticket.command';
 import { TicketEntity } from '../../../../infrastructure/ticket/entity/ticket.entity';
 import { AuthGuard } from '../../guard/auth.guard';
+import { CurrentUser } from '../../../../infrastructure/security/decorator/current-user.decorator';
+import { UserInterface } from '../../../../domain/model/user/user.model';
 
 @Controller('/tickets')
 export class TicketController extends BaseController {
@@ -66,6 +68,7 @@ export class TicketController extends BaseController {
   }
 
   @Get('/:uuid')
+  @UseGuards(AuthGuard)
   public async findOne(@Param() params): Promise<TicketInterface> {
     try {
       return this.findOneTicketByUuid(params.uuid);
@@ -76,11 +79,15 @@ export class TicketController extends BaseController {
   }
 
   @Post('/')
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe({ transform: true }))
-  public async post(@Body() createATicketDto: CreateATicketDto): Promise<TicketInterface> {
+  public async post(
+    @Body() createATicketDto: CreateATicketDto,
+    @CurrentUser() user: UserInterface,
+  ): Promise<TicketInterface> {
     try {
       const uuid: string = v4();
-      const command = new CreateATicketCommand(uuid, createATicketDto.subject, createATicketDto.description, uuid); // @todo Refacto with User uuid param
+      const command = new CreateATicketCommand(uuid, createATicketDto.subject, createATicketDto.description, user.uuid);
       await this._commandBus.execute(command);
       return await this.findOneTicketByUuid(uuid);
     } catch (e) {
@@ -90,17 +97,18 @@ export class TicketController extends BaseController {
   }
 
   @Put('/:uuid')
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe({ transform: true }))
   public async put(
     @Body() updateATicketDto: UpdateATicketDto,
     @Param('uuid') uuid: string,
+    @CurrentUser() user: UserInterface,
   ): Promise<TicketInterface> {
     try {
-      const updatedBy: string = v4(); // @todo Refacto with User uuid
       const command = new UpdateATicketCommand(
         uuid,
         updateATicketDto.status,
-        updatedBy,
+        user.uuid,
         updateATicketDto.description,
         updateATicketDto.subject
       );
@@ -113,6 +121,7 @@ export class TicketController extends BaseController {
   }
 
   @Delete('/:uuid')
+  @UseGuards(AuthGuard)
   @HttpCode(204)
   public async delete(@Param('uuid') uuid: string): Promise<{}> {
     try {

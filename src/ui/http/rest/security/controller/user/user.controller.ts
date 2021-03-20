@@ -6,7 +6,7 @@ import {
   Inject,
   Param,
   Post,
-  Put,
+  Put, UseGuards,
   UsePipes,
   ValidationPipe
 } from '@nestjs/common';
@@ -24,6 +24,8 @@ import { UpdateAUserCommand } from '../../../../../../application/command/user/u
 import { UpdateAUserDto } from '../../dto/update-a-user.dto';
 import { GetOneUserByUuidQuery } from '../../../../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query';
 import { UserEntity } from '../../../../../../infrastructure/security/entity/user.entity';
+import { AuthGuard } from '../../../../guard/auth.guard';
+import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
 
 @Controller('/users')
 export class UserController extends BaseController {
@@ -56,18 +58,19 @@ export class UserController extends BaseController {
   }
 
   @Put('/:uuid')
+  @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe({ transform: true }))
   public async put(
     @Body() updateAUserDto: UpdateAUserDto,
     @Param('uuid') uuid: string,
+    @CurrentUser() user: UserInterface,
   ): Promise<UserInterface> {
     try {
-      const updatedBy: string = v4(); // @todo Refacto with User uuid
       const command = new UpdateAUserCommand(
         uuid,
         updateAUserDto.status,
         updateAUserDto.email,
-        updatedBy,
+        user.uuid,
       );
       await this._commandBus.execute(command);
       return await this.findOneUserByUuid(uuid);
@@ -78,6 +81,7 @@ export class UserController extends BaseController {
   }
 
   @Delete('/:uuid')
+  @UseGuards(AuthGuard)
   @HttpCode(204)
   public async delete(@Param('uuid') uuid: string): Promise<{}> {
     try {

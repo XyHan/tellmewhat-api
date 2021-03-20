@@ -7,7 +7,7 @@ import { TicketFixtures } from '../../../fixtures/ticket.fixtures';
 export class TicketQueryRepositoryMock implements TicketQueryRepositoryInterface {
   public async findAll(options: findAllOptions): Promise<[TicketInterface[], number]> {
     try {
-      return [TicketFixtures.ticketCollection, TicketFixtures.ticketCollection.length];
+      return Promise.resolve([TicketFixtures.ticketCollection, TicketFixtures.ticketCollection.length]);
     } catch (e) {
       const message: string = `TicketQueryRepository - Error on findAll tickets`;
       throw new TicketRepositoryException(message);
@@ -17,7 +17,7 @@ export class TicketQueryRepositoryMock implements TicketQueryRepositoryInterface
   public async findOne(uuid: string): Promise<TicketInterface | null> {
     try {
       const ticket: TicketInterface | undefined = TicketFixtures.ticketCollection.find((ticket: TicketInterface) => ticket.uuid === uuid);
-      return ticket ? ticket : null;
+      return ticket ? Promise.resolve(ticket) : Promise.resolve(null);
     } catch (e) {
       const message: string = `TicketQueryRepository - Error on findOne ticket '${uuid}'`;
       throw new TicketRepositoryException(message);

@@ -8,7 +8,7 @@ export class TicketCommandRepositoryMock implements TicketCommandRepositoryInter
     this.isValidTicket(ticket);
     try {
       TicketFixtures.addTicket(ticket);
-      return ticket;
+      return Promise.resolve(ticket);
     } catch (e) {
       const message: string = `TicketCommandRepository - Error on create ticket '${ticket.uuid}'`;
       throw new TicketRepositoryException(message);
@@ -18,7 +18,7 @@ export class TicketCommandRepositoryMock implements TicketCommandRepositoryInter
   public async delete(ticket: TicketInterface): Promise<TicketInterface> {
     try {
       TicketFixtures.deleteTicket(ticket);
-      return ticket;
+      return Promise.resolve(ticket);
     } catch (e) {
       const message: string = `TicketCommandRepository - Error on delete ticket '${ticket.uuid}'`;
       throw new TicketRepositoryException(message);
@@ -29,7 +29,7 @@ export class TicketCommandRepositoryMock implements TicketCommandRepositoryInter
     this.isValidTicket(ticket);
     try {
       TicketFixtures.updateTicket(ticket);
-      return ticket;
+      return Promise.resolve(ticket);
     } catch (e) {
       const message: string = `TicketCommandRepository - Error on update ticket '${ticket.uuid}'`;
       throw new TicketRepositoryException(message);

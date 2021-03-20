@@ -5,25 +5,27 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import * as _ from 'lodash';
 import { AuthService } from '../../../infrastructure/security/service/auth/auth.service';
 import { AuthManagerInterface } from '../../../domain/utils/security/auth-manager.interface';
 import { TokenInterface, TokenModel } from '../../../domain/model/auth/token.model';
+import { UserInterface } from '../../../domain/model/user/user.model';
+import { BaseController } from '../rest/base.controller';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    private readonly reflector: Reflector,
-    @Inject(AuthService) private readonly authService: AuthManagerInterface,
-  ) {}
+  constructor(@Inject(AuthService) private readonly authService: AuthManagerInterface) {}
 
   async canActivate(context: ExecutionContext) {
     try {
-      // const roles = this.reflector.get<string[]>('roles', context.getHandler()) || [];
       const headers = this.validHeaders(context);
       const token: TokenInterface = new TokenModel(headers.headers.authorization);
-      return await this.authService.register(token);
+      const user: UserInterface | boolean = await this.authService.isValidUser(token);
+      if (user) {
+        Reflect.defineMetadata('currentUser', user, BaseController);
+        return true;
+      }
+      return false;
     } catch (e) {
       throw new UnauthorizedException('[AuthGuard] Bad credentials');
     }
