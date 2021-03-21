@@ -118,8 +118,8 @@ describe('UserController tests suite', () => {
       .send()
       .set({ 'Authorization': `Bearer ${token}` })
     ;
-    expect(response.status).toBe(204);
-    expect(response.body).toBeDefined();
+    expect(response.status).toBe(200);
+    expect(response.body.status).toBe(0);
   });
 
   it('DELETE - should return a 401', async () => {

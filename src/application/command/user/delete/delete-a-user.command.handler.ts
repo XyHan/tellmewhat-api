@@ -22,22 +22,32 @@ export class DeleteAUserCommandHandler implements CommandHandlerInterface {
   }
 
   async handle(command: DeleteAUserCommand): Promise<void> {
-    try {
-      const user: UserInterface = await this.findOneUserByUuid(command.uuid);
-      await this._commandRepository.delete(user);
-      this._logger.info(`DeleteAUserCommandHandler - User ${user.uuid} deleted`);
-    } catch (e) {
-      const message: string = `DeleteAUserCommandHandler - User deletion error: ${e.message}`;
-      this._logger.error(message);
-      throw new DeleteAUserCommandHandlerException(message);
-    }
+    const user: UserInterface = await this.findOneUserByUuid(command.uuid);
+    if (!user) throw new DeleteAUserCommandHandlerException(`DeleteAUserCommandHandler - User ${command.uuid} not found`);
+    await this.updateUser(user, command);
+    this._logger.info(`DeleteAUserCommandHandler - User ${user.uuid} deleted`);
   }
 
   private async findOneUserByUuid(uuid: string): Promise<UserInterface> {
     try {
       return await this._queryRepository.findOneByUuid(uuid);
     } catch (e) {
-      throw new DeleteAUserCommandHandlerException(e.message);
+      const message: string = `DeleteAUserCommandHandler - findOneUserByUuid - User ${uuid} error: ${e.message}`;
+      this._logger.error(message);
+      throw new DeleteAUserCommandHandlerException(message);
+    }
+  }
+
+  private async updateUser(user: UserInterface, command: DeleteAUserCommand): Promise<void> {
+    try {
+      user.status = 0;
+      user.updatedBy = command.updatedBy;
+      user.updatedAt = new Date();
+      await this._commandRepository.update(user);
+    } catch (e) {
+      const message: string = `DeleteAUserCommandHandler - updateUser - User ${user.uuid} error: ${e.message}`;
+      this._logger.error(message);
+      throw new DeleteAUserCommandHandlerException(message);
     }
   }
 }

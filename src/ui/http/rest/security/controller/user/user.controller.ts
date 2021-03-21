@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Delete,
-  HttpCode,
   Inject,
   Param,
   Post,
@@ -26,7 +25,7 @@ import { GetOneUserByUuidQuery } from '../../../../../../application/query/user/
 import { UserEntity } from '../../../../../../infrastructure/security/entity/user.entity';
 import { AuthGuard } from '../../../../guard/auth.guard';
 import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
-import {RolesValueObject} from "../../../../../../infrastructure/security/value-object/roles.value-object";
+import { RolesValueObject } from '../../../../../../infrastructure/security/value-object/roles.value-object';
 
 @Controller('/users')
 export class UserController extends BaseController {
@@ -90,12 +89,14 @@ export class UserController extends BaseController {
 
   @Delete('/:uuid')
   @UseGuards(AuthGuard)
-  @HttpCode(204)
-  public async delete(@Param('uuid') uuid: string): Promise<{}> {
+  public async delete(
+    @Param('uuid') uuid: string,
+    @CurrentUser() user: UserInterface
+  ): Promise<UserInterface> {
     try {
-      const command = new DeleteAUserCommand(uuid);
+      const command = new DeleteAUserCommand(uuid, user.uuid);
       await this._commandBus.execute(command);
-      return {};
+      return await this.findOneUserByUuid(uuid);
     } catch (e) {
       const message: string = `UserController - Delete user ${uuid} error: ${e.message}`;
       this.http400Response(message);
