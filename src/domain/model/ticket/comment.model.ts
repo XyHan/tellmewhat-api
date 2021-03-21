@@ -1,27 +1,25 @@
-import { CommentInterface, CommentModel } from './comment.model';
+import { TicketInterface, TicketModel } from './ticket.model';
 
-export interface TicketInterface {
+export interface CommentInterface {
   uuid: string;
   status: number;
   createdAt: Date;
   createdBy: string;
   updatedAt: Date;
   updatedBy: string;
-  subject: string;
-  description: string;
-  comments: CommentInterface[];
+  content: string;
+  ticket: TicketInterface;
 }
 
-export class TicketModel implements TicketInterface {
+export class CommentModel implements CommentInterface {
   protected _createdAt: Date;
   protected _createdBy: string;
-  protected _description: string;
   protected _status: number;
-  protected _subject: string;
+  private _content: string;
   protected _updatedAt: Date;
   protected _updatedBy: string;
   protected _uuid: string;
-  private _comments: CommentModel[];
+  private _ticket: TicketModel;
 
   get createdAt(): Date {
     return this._createdAt;
@@ -39,14 +37,6 @@ export class TicketModel implements TicketInterface {
     this._createdBy = value;
   }
 
-  get description(): string {
-    return this._description;
-  }
-
-  set description(value: string) {
-    this._description = value;
-  }
-
   get status(): number {
     return this._status;
   }
@@ -55,12 +45,12 @@ export class TicketModel implements TicketInterface {
     this._status = value;
   }
 
-  get subject(): string {
-    return this._subject;
+  get content(): string {
+    return this._content;
   }
 
-  set subject(value: string) {
-    this._subject = value;
+  set content(value: string) {
+    this._content = value;
   }
 
   get updatedAt(): Date {
@@ -87,11 +77,11 @@ export class TicketModel implements TicketInterface {
     this._uuid = value;
   }
 
-  get comments(): CommentModel[] {
-    return this._comments;
+  get ticket(): TicketModel {
+    return this._ticket;
   }
 
-  set comments(value: CommentModel[]) {
-    this._comments = value;
+  set ticket(value: TicketModel) {
+    this._ticket = value;
   }
 }

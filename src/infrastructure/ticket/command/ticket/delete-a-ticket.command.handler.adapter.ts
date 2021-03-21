@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
-import { DeleteATicketCommand } from '../../../application/command/ticket/delete/delete-a-ticket.command';
-import { CommandHandlerInterface } from '../../../application/command/command-handler.interface';
+import { DeleteATicketCommand } from '../../../../application/command/ticket/delete/delete-a-ticket.command';
+import { CommandHandlerInterface } from '../../../../application/command/command-handler.interface';
 
 @CommandHandler(DeleteATicketCommand)
 export class DeleteATicketCommandHandlerAdapter implements ICommandHandler {

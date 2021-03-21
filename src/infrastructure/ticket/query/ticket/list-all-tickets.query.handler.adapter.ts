@@ -1,8 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
-import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
+import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
 import { Inject } from '@nestjs/common';
-import { ListAllTicketsQuery } from '../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
-import { QueryHandlerInterface } from '../../../application/query/query-handler.interface';
+import { ListAllTicketsQuery } from '../../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
+import { QueryHandlerInterface } from '../../../../application/query/query-handler.interface';
 
 @QueryHandler(ListAllTicketsQuery)
 export class ListAllTicketsQueryHandlerAdapter implements IQueryHandler {

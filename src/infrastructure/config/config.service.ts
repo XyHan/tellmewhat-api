@@ -3,6 +3,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigInterface } from './config.interface';
 import { TicketEntity } from '../ticket/entity/ticket.entity';
 import { UserEntity } from '../security/entity/user.entity';
+import { CommentEntity } from '../ticket/entity/comment.entity';
 
 @Injectable()
 export class ConfigService implements ConfigInterface {
@@ -14,7 +15,7 @@ export class ConfigService implements ConfigInterface {
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [TicketEntity, UserEntity],
+      entities: [TicketEntity, UserEntity, CommentEntity],
       synchronize: true,
       keepConnectionAlive: true,
       debug: false,

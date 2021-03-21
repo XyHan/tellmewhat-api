@@ -1,0 +1,25 @@
+import { QueryInterface } from '../../query.interface';
+
+export class GetOneCommentQuery implements QueryInterface {
+  private readonly _name: string;
+  private readonly _version: number;
+  private readonly _uuid: string;
+
+  constructor(uuid: string) {
+    this._uuid = uuid;
+    this._name = 'get-one-comment-query';
+    this._version = 1.0;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get version(): number {
+    return this._version;
+  }
+
+  get uuid(): string {
+    return this._uuid;
+  }
+}

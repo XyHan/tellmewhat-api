@@ -9,25 +9,25 @@ import {
   Put,
   Query, UseGuards, UsePipes, ValidationPipe
 } from '@nestjs/common';
-import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
+import { TicketInterface } from '../../../../../../domain/model/ticket/ticket.model';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
-import { GetOneTicketQuery } from '../../../../application/query/ticket/get-one-ticket/get-one-ticket.query';
-import { ListAllTicketsQuery } from '../../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
-import { LoggerAdapterService } from '../../../../infrastructure/logger/logger-adapter.service';
-import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
-import { CreateATicketDto } from './dto/create-a-ticket.dto';
-import { CreateATicketCommand } from '../../../../application/command/ticket/create/create-a-ticket.command';
+import { GetOneTicketQuery } from '../../../../../../application/query/ticket/get-one-ticket/get-one-ticket.query';
+import { ListAllTicketsQuery } from '../../../../../../application/query/ticket/list-all-tickets/list-all-tickets.query';
+import { LoggerAdapterService } from '../../../../../../infrastructure/logger/logger-adapter.service';
+import { LoggerInterface } from '../../../../../../domain/utils/logger/logger.interface';
+import { CreateATicketDto } from '../../dto/ticket/create-a-ticket.dto';
+import { CreateATicketCommand } from '../../../../../../application/command/ticket/create/create-a-ticket.command';
 import { v4 } from 'uuid';
 import { plainToClass} from 'class-transformer';
-import { BaseController, PaginatedResponse } from '../base.controller';
-import { UpdateATicketDto } from './dto/update-a-ticket.dto';
-import { UpdateATicketCommand } from '../../../../application/command/ticket/update/update-a-ticket.command';
-import { DeleteATicketCommand } from '../../../../application/command/ticket/delete/delete-a-ticket.command';
-import { TicketEntity } from '../../../../infrastructure/ticket/entity/ticket.entity';
-import { AuthGuard } from '../../guard/auth.guard';
-import { CurrentUser } from '../../../../infrastructure/security/decorator/current-user.decorator';
-import { UserInterface } from '../../../../domain/model/user/user.model';
-import { Roles } from '../../../../infrastructure/security/decorator/role.decorator';
+import { BaseController, PaginatedResponse } from '../../../base.controller';
+import { UpdateATicketDto } from '../../dto/ticket/update-a-ticket.dto';
+import { UpdateATicketCommand } from '../../../../../../application/command/ticket/update/update-a-ticket.command';
+import { DeleteATicketCommand } from '../../../../../../application/command/ticket/delete/delete-a-ticket.command';
+import { TicketEntity } from '../../../../../../infrastructure/ticket/entity/ticket.entity';
+import { AuthGuard } from '../../../../guard/auth.guard';
+import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
+import { UserInterface } from '../../../../../../domain/model/user/user.model';
+import { Roles } from '../../../../../../infrastructure/security/decorator/role.decorator';
 
 @Controller('/tickets')
 export class TicketController extends BaseController {
