@@ -7,19 +7,23 @@ import { CreateACommentCommandHandlerException } from './create-a-comment.comman
 import { CommentFactory } from '../../../../domain/factory/comment.factory';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { TicketInterface } from '../../../../domain/model/ticket/ticket.model';
+import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
 
 export class CreateACommentCommandHandler implements CommandHandlerInterface {
   protected readonly _repository: CommentCommandRepositoryInterface;
-  protected readonly _ticketRepository: TicketQueryRepositoryInterface;
+  protected readonly _ticketQueryRepository: TicketQueryRepositoryInterface;
+  protected readonly _ticketCommandRepository: TicketCommandRepositoryInterface;
   protected readonly _logger: LoggerInterface;
 
   constructor(
     repository: CommentCommandRepositoryInterface,
-    ticketRepository: TicketQueryRepositoryInterface,
+    ticketQueryRepository: TicketQueryRepositoryInterface,
+    ticketCommandRepository: TicketCommandRepositoryInterface,
     logger: LoggerInterface
   ) {
     this._repository = repository;
-    this._ticketRepository = ticketRepository;
+    this._ticketQueryRepository = ticketQueryRepository;
+    this._ticketCommandRepository = ticketCommandRepository;
     this._logger = logger;
   }
 
@@ -27,6 +31,7 @@ export class CreateACommentCommandHandler implements CommandHandlerInterface {
     const ticket: TicketInterface | null = await this.findOneTicketByUuid(command.ticketUuid);
     const comment: CommentInterface = this.generateCommentFromCommand(command, ticket);
     await this.registerComment(comment);
+    await this.updateParent(comment, ticket);
   }
 
   private generateCommentFromCommand(command: CreateACommentCommand, ticket: TicketInterface): CommentInterface {
@@ -61,9 +66,21 @@ export class CreateACommentCommandHandler implements CommandHandlerInterface {
 
   private async findOneTicketByUuid(uuid: string): Promise<TicketInterface> {
     try {
-      return await this._ticketRepository.findOne(uuid);
+      return await this._ticketQueryRepository.findOne(uuid);
     } catch (e) {
       const message: string = `CreateACommentCommandHandler - findOneTicketByUuid - Ticket ${uuid} error: ${e.message}`;
+      this._logger.error(message);
+      throw new CreateACommentCommandHandlerException(message);
+    }
+  }
+
+  private async updateParent(comment: CommentInterface, ticket: TicketInterface): Promise<void> {
+    try {
+      ticket.updatedBy = comment.updatedBy;
+      ticket.updatedAt = comment.updatedAt;
+      await this._ticketCommandRepository.update(ticket);
+    } catch (e) {
+      const message: string = `CreateACommentCommandHandler - updateParent - Comment ${comment.uuid} error: ${e.message}`;
       this._logger.error(message);
       throw new CreateACommentCommandHandlerException(message);
     }

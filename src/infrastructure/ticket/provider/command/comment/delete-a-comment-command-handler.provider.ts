@@ -6,15 +6,18 @@ import { CommentCommandRepositoryInterface } from '../../../../../domain/reposit
 import { CommentQueryRepositoryInterface } from '../../../../../domain/repository/comment/comment.query-repository.interface';
 import { DeleteACommentCommandHandler } from '../../../../../application/command/comment/delete/delete-a-comment.command.handler';
 import { CommentQueryRepository } from '../../../repository/comment/comment.query-repository';
+import { TicketCommandRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.command-repository.interface';
+import { TicketCommandRepository } from '../../../repository/ticket/ticket.command-repository';
 
 export const deleteACommentCommandHandlerProvider: FactoryProvider = {
   provide: 'DELETE_A_COMMENT_COMMAND_HANDLER',
   useFactory: (
     commentCommandRepository: CommentCommandRepositoryInterface,
     commentQueryRepository: CommentQueryRepositoryInterface,
+    ticketCommandRepository: TicketCommandRepositoryInterface,
     logger: LoggerInterface
   ) => {
-    return new DeleteACommentCommandHandler(commentCommandRepository, commentQueryRepository, logger);
+    return new DeleteACommentCommandHandler(commentCommandRepository, commentQueryRepository, ticketCommandRepository, logger);
   },
-  inject: [CommentCommandRepository, CommentQueryRepository, LoggerAdapterService],
+  inject: [CommentCommandRepository, CommentQueryRepository, TicketCommandRepository, LoggerAdapterService],
 }

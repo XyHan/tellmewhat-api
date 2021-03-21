@@ -6,15 +6,18 @@ import { CommentCommandRepository } from '../../../repository/comment/comment.co
 import { CommentCommandRepositoryInterface } from '../../../../../domain/repository/comment/comment.command-repository.interface';
 import { TicketQueryRepository } from '../../../repository/ticket/ticket.query-repository';
 import { TicketQueryRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.query-repository.interface';
+import { TicketCommandRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.command-repository.interface';
+import { TicketCommandRepository } from '../../../repository/ticket/ticket.command-repository';
 
 export const createACommentCommandHandlerProvider: FactoryProvider = {
   provide: 'CREATE_A_COMMENT_COMMAND_HANDLER',
   useFactory: (
     commentRepository: CommentCommandRepositoryInterface,
-    ticketRepository: TicketQueryRepositoryInterface,
+    ticketQueryRepository: TicketQueryRepositoryInterface,
+    ticketCommandRepository: TicketCommandRepositoryInterface,
     logger: LoggerInterface
   ) => {
-    return new CreateACommentCommandHandler(commentRepository, ticketRepository, logger);
+    return new CreateACommentCommandHandler(commentRepository, ticketQueryRepository, ticketCommandRepository, logger);
   },
-  inject: [CommentCommandRepository, TicketQueryRepository, LoggerAdapterService],
+  inject: [CommentCommandRepository, TicketQueryRepository, TicketCommandRepository, LoggerAdapterService],
 }

@@ -21,12 +21,11 @@ import { createACommentCommandHandlerProvider } from './provider/command/comment
 import { updateACommentCommandHandlerProvider } from './provider/command/comment/update-a-comment-command-handler.provider';
 import { deleteACommentCommandHandlerProvider } from './provider/command/comment/delete-a-comment-command-handler.provider';
 import { CommentCommandHandlers } from './command/comment';
-import { CommentSubscriber } from './subscriber/comment.subscriber';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([TicketRepository, CommentRepository]),
-    LoggerModule
+    LoggerModule,
   ],
   providers: [
     TicketQueryRepository,
@@ -47,7 +46,6 @@ import { CommentSubscriber } from './subscriber/comment.subscriber';
     updateACommentCommandHandlerProvider,
     deleteACommentCommandHandlerProvider,
     ...CommentCommandHandlers,
-    CommentSubscriber,
   ],
   exports: [
     TicketQueryRepository,

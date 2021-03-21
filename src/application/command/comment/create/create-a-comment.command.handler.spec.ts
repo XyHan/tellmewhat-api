@@ -10,6 +10,8 @@ import { CommentQueryRepositoryInterface } from '../../../../domain/repository/c
 import { CreateACommentCommandHandlerException } from './create-a-comment.command.handler.exception';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { TicketQueryRepositoryMock } from '../../../../domain/repository/ticket/mock/ticket.query-repository.mock';
+import { TicketCommandRepositoryInterface } from '../../../../domain/repository/ticket/ticket.command-repository.interface';
+import { TicketCommandRepositoryMock } from '../../../../domain/repository/ticket/mock/ticket.command-repository.mock';
 
 const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 const CONTENT = 'N\'essaie pas! Fais-le ou ne le fais pas! Il n\'y a pas d\'essai.';
@@ -21,16 +23,18 @@ describe('create a comment handler test', () => {
   let commandRepository: CommentCommandRepositoryInterface;
   let queryRepository: CommentQueryRepositoryInterface;
   let ticketQueryRepository: TicketQueryRepositoryInterface;
+  let ticketCommandRepository: TicketCommandRepositoryInterface;
 
   beforeEach(() => {
     commandRepository = new CommentCommandRepositoryMock();
     queryRepository = new CommentQueryRepositoryMock();
     ticketQueryRepository = new TicketQueryRepositoryMock();
+    ticketCommandRepository = new TicketCommandRepositoryMock();
   })
 
   it ('create a comment success', async () => {
     const command = new CreateACommentCommand(UUID, CONTENT, CREATEDBY, TICKET_UUID);
-    const handler = new CreateACommentCommandHandler(commandRepository, ticketQueryRepository, logger);
+    const handler = new CreateACommentCommandHandler(commandRepository, ticketQueryRepository, ticketCommandRepository, logger);
     await handler.handle(command);
     const comment: CommentInterface | null = await queryRepository.findOne(UUID);
     expect(comment.uuid).toBe(UUID);
@@ -44,7 +48,7 @@ describe('create a comment handler test', () => {
 
   it('create a comment error', async () => {
     const command = new CreateACommentCommand('', '', '', '');
-    const handler = new CreateACommentCommandHandler(commandRepository, ticketQueryRepository, logger);
+    const handler = new CreateACommentCommandHandler(commandRepository, ticketQueryRepository, ticketCommandRepository, logger);
     await expect(handler.handle(command)).rejects.toThrowError(CreateACommentCommandHandlerException);
   });
 });
