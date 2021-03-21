@@ -2,7 +2,6 @@ import { LoggerInterface } from '../../../../domain/utils/logger/logger.interfac
 import { CommandHandlerInterface } from '../../command-handler.interface';
 import { UserCommandRepositoryInterface } from '../../../../domain/repository/user/user.command-repository.interface';
 import { UserInterface } from '../../../../domain/model/user/user.model';
-import { UserFactory } from '../../../../domain/factory/user.factory';
 import { EncrypterInterface } from '../../../../domain/utils/encrypter/encrypter.interface';
 import { UserQueryRepositoryInterface } from '../../../../domain/repository/user/user.query-repository.interface';
 import { ChangePasswordCommand } from './change-password.command';
@@ -35,19 +34,11 @@ export class ChangePasswordCommandHandler implements CommandHandlerInterface {
   private async updateUserFromCommand(command: ChangePasswordCommand, user: UserInterface): Promise<UserInterface> {
     try {
       const salt: string = await this._encrypter.salt();
-      const hashedPassword: string = await this._encrypter.hash(command.password, salt);
-      return new UserFactory(user).generate(
-        user.uuid,
-        user.status,
-        user.email,
-        hashedPassword,
-        salt,
-        user.createdAt,
-        user.createdBy,
-        new Date(),
-        command.updatedBy,
-        user.roles
-      );
+      user.password = await this._encrypter.hash(command.password, salt);
+      user.salt = salt;
+      user.updatedAt = new Date();
+      user.updatedBy = command.updatedBy;
+      return user;
     } catch (e) {
       const message: string = `ChangePasswordCommandHandler - updateUserFromCommand - User generation error: ${e.message}`;
       this._logger.error(message);
