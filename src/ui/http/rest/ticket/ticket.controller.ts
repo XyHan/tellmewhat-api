@@ -123,11 +123,14 @@ export class TicketController extends BaseController {
   @Delete('/:uuid')
   @UseGuards(AuthGuard)
   @HttpCode(204)
-  public async delete(@Param('uuid') uuid: string): Promise<{}> {
+  public async delete(
+    @Param('uuid') uuid: string,
+    @CurrentUser() user: UserInterface,
+  ): Promise<TicketInterface> {
     try {
-      const command = new DeleteATicketCommand(uuid);
+      const command = new DeleteATicketCommand(uuid, user.uuid);
       await this._commandBus.execute(command);
-      return {};
+      return await this.findOneTicketByUuid(uuid);
     } catch (e) {
       const message: string = `TicketController - Delete ticket ${uuid} error: ${e.message}`;
       this.http400Response(message);

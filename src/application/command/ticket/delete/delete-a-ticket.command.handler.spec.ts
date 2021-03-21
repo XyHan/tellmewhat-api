@@ -10,6 +10,7 @@ import { TicketQueryRepositoryMock } from '../../../../domain/repository/ticket/
 import { DeleteATicketCommandHandlerException } from './delete-a-ticket.command.handler.exception';
 
 const UUID = '0d66db91-4441-4563-967c-797d767c7288';
+const UPDATEDBY = 'fa9f9d7d-3303-4b08-ad27-61bd605c9d19';
 
 describe('delete a ticket handler test', () => {
   const logger: LoggerInterface = new LoggerMock();
@@ -22,15 +23,16 @@ describe('delete a ticket handler test', () => {
   })
 
   it ('delete a ticket success', async () => {
-    const command = new DeleteATicketCommand(UUID);
+    const command = new DeleteATicketCommand(UUID, UPDATEDBY);
     const handler = new DeleteATicketCommandHandler(commandRepository, queryRepository, logger);
     await handler.handle(command);
     const ticket: TicketInterface | null = await queryRepository.findOne(UUID);
-    expect(ticket).toBeNull();
+    expect(ticket.status).toBe(0);
+    expect(ticket.updatedBy).toBe(UPDATEDBY);
   });
 
   it('delete a ticket error', async () => {
-    const command = new DeleteATicketCommand('');
+    const command = new DeleteATicketCommand('', '');
     const handler = new DeleteATicketCommandHandler(commandRepository, queryRepository, logger);
     await expect(handler.handle(command)).rejects.toThrowError(DeleteATicketCommandHandlerException);
   });

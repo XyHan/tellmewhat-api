@@ -22,22 +22,32 @@ export class DeleteATicketCommandHandler implements CommandHandlerInterface {
   }
 
   async handle(command: DeleteATicketCommand): Promise<void> {
-    try {
-      const ticket: TicketInterface = await this.findOneTicketByUuid(command.uuid);
-      await this._commandRepository.delete(ticket);
-      this._logger.info(`DeleteATicketCommandHandler - Ticket ${ticket.uuid} deleted`);
-    } catch (e) {
-      const message: string = `DeleteATicketCommandHandler - Ticket deletion error: ${e.message}`;
-      this._logger.error(message);
-      throw new DeleteATicketCommandHandlerException(message);
-    }
+    const ticket: TicketInterface = await this.findOneTicketByUuid(command.uuid);
+    if (!ticket) throw new DeleteATicketCommandHandlerException(`DeleteATicketCommandHandler - Ticket ${command.uuid} not found`);
+    await this.updateTicket(ticket, command);
+    this._logger.info(`DeleteATicketCommandHandler - Ticket ${ticket.uuid} deleted`);
   }
 
   private async findOneTicketByUuid(uuid: string): Promise<TicketInterface> {
     try {
       return await this._queryRepository.findOne(uuid);
     } catch (e) {
-      throw new DeleteATicketCommandHandlerException(e.message);
+      const message: string = `DeleteATicketCommandHandler - findOneTicketByUuid - Ticket ${uuid} error: ${e.message}`;
+      this._logger.error(message);
+      throw new DeleteATicketCommandHandlerException(message);
+    }
+  }
+
+  private async updateTicket(ticket: TicketInterface, command: DeleteATicketCommand): Promise<void> {
+    try {
+      ticket.status = 0;
+      ticket.updatedBy = command.updatedBy;
+      ticket.updatedAt = new Date();
+      await this._commandRepository.update(ticket);
+    } catch (e) {
+      const message: string = `DeleteATicketCommandHandler - updateTicket - Ticket ${ticket.uuid} error: ${e.message}`;
+      this._logger.error(message);
+      throw new DeleteATicketCommandHandlerException(message);
     }
   }
 }
