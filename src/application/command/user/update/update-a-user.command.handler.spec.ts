@@ -13,6 +13,7 @@ const UUID = '0d66db91-4441-4563-967c-797d767c7288';
 const EMAIL = 'stillnotme@unknow.com';
 const STATUS = 2;
 const UPDATEDBY = '31dd20e0-zzzz-yyyy-xxxx-d9cc3aff4028';
+const ROLES = ['ADMIN'];
 
 describe('update a user handler test', () => {
   const logger: LoggerInterface = new LoggerMock();
@@ -25,7 +26,7 @@ describe('update a user handler test', () => {
   })
 
   it ('update a user success', async () => {
-    const command = new UpdateAUserCommand(UUID, STATUS, EMAIL, UPDATEDBY);
+    const command = new UpdateAUserCommand(UUID, STATUS, EMAIL, UPDATEDBY, ROLES);
     const handler = new UpdateAUserCommandHandler(commandRepository, queryRepository, logger);
     await handler.handle(command);
     const updatedUser: UserInterface = await queryRepository.findOneByUuid(UUID);
@@ -35,7 +36,7 @@ describe('update a user handler test', () => {
   });
 
   it('update a user error', async () => {
-    const command = new UpdateAUserCommand('', 1, '', '');
+    const command = new UpdateAUserCommand('', 1, '', '', ROLES);
     const handler = new UpdateAUserCommandHandler(commandRepository, queryRepository, logger);
     await expect(handler.handle(command)).rejects.toThrowError(UpdateAUserCommandHandlerException);
   });

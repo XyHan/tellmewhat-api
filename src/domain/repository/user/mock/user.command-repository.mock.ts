@@ -7,7 +7,7 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
   public async create(user: UserInterface): Promise<UserInterface> {
     this.isValidUser(user);
     try {
-      UserFixtures.addUser(user);
+      UserFixtures.saveUser(user);
       return Promise.resolve(user);
     } catch (e) {
       const message: string = `UserCommandRepository - Error on create user '${user.uuid}'`;
@@ -28,7 +28,7 @@ export class UserCommandRepositoryMock implements UserCommandRepositoryInterface
   public async update(user: UserInterface): Promise<UserInterface> {
     this.isValidUser(user);
     try {
-      UserFixtures.updateUser(user);
+      UserFixtures.saveUser(user);
       return Promise.resolve(user);
     } catch (e) {
       const message: string = `UserCommandRepository - Error on update user '${user.uuid}'`;

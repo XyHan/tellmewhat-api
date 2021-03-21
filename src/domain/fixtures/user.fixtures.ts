@@ -12,6 +12,7 @@ export const USER_COLLECTION: UserInterface[] = [
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
     new Date(),
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
+    ['ADMIN']
   ),
   new UserFactory(new UserModel()).generate(
     '0d66db91-4441-4563-967c-797d767c7288',
@@ -23,6 +24,7 @@ export const USER_COLLECTION: UserInterface[] = [
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
     new Date(),
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
+    ['USER']
   )
 ];
 
@@ -40,38 +42,23 @@ export class UserFixtures {
     }
   }
 
-  public static updateUser(userToUpdate: UserInterface): void {
-    const userIndex: number = this._userCollection.findIndex((user: UserInterface) => user.uuid === userToUpdate.uuid);
+  public static saveUser(userToSave: UserInterface): void {
+    const userIndex: number = this._userCollection.findIndex((user: UserInterface) => user.uuid === userToSave.uuid);
     if (userIndex) {
       this._userCollection.splice(userIndex, 1);
-      this._userCollection.push(
-        new UserFactory(new UserModel()).generate(
-          userToUpdate.uuid,
-          userToUpdate.status,
-          userToUpdate.email,
-          userToUpdate.password,
-          userToUpdate.salt,
-          userToUpdate.createdAt,
-          userToUpdate.createdBy,
-          userToUpdate.updatedAt,
-          userToUpdate.updatedBy,
-        )
-      );
     }
-  }
-
-  public static addUser(user: UserInterface): void {
     this._userCollection.push(
       new UserFactory(new UserModel()).generate(
-        user.uuid,
-        user.status,
-        user.email,
-        user.password,
-        user.salt,
-        user.createdAt,
-        user.createdBy,
-        user.updatedAt,
-        user.updatedBy,
+        userToSave.uuid,
+        userToSave.status,
+        userToSave.email,
+        userToSave.password,
+        userToSave.salt,
+        userToSave.createdAt,
+        userToSave.createdBy,
+        userToSave.updatedAt,
+        userToSave.updatedBy,
+        userToSave.roles
       )
     );
   }

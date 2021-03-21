@@ -26,6 +26,7 @@ import { GetOneUserByUuidQuery } from '../../../../../../application/query/user/
 import { UserEntity } from '../../../../../../infrastructure/security/entity/user.entity';
 import { AuthGuard } from '../../../../guard/auth.guard';
 import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
+import {RolesValueObject} from "../../../../../../infrastructure/security/value-object/roles.value-object";
 
 @Controller('/users')
 export class UserController extends BaseController {
@@ -48,7 +49,13 @@ export class UserController extends BaseController {
   public async post(@Body() createAUserDto: CreateAUserDto): Promise<UserInterface> {
     try {
       const uuid: string = v4();
-      const command = new CreateAUserCommand(uuid, createAUserDto.email, createAUserDto.password, uuid);
+      const command = new CreateAUserCommand(
+        uuid,
+        createAUserDto.email,
+        createAUserDto.password,
+        uuid,
+        [RolesValueObject.availableUserRoles[2]]
+      );
       await this._commandBus.execute(command);
       return await this.findOneUserByUuid(uuid);
     } catch (e) {
@@ -71,6 +78,7 @@ export class UserController extends BaseController {
         updateAUserDto.status,
         updateAUserDto.email,
         user.uuid,
+        updateAUserDto.roles
       );
       await this._commandBus.execute(command);
       return await this.findOneUserByUuid(uuid);

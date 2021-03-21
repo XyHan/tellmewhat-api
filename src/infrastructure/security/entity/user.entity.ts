@@ -38,4 +38,7 @@ export class UserEntity implements UserInterface {
 
   @Expose()
   @Column({ type: 'integer', name: 'status', nullable: false }) public status: number;
+
+  @Expose()
+  @Column({ type: 'simple-array', name: 'roles', nullable: false }) public roles: string[];
 }

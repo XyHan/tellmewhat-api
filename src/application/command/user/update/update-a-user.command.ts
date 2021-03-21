@@ -7,17 +7,20 @@ export class UpdateAUserCommand implements CommandInterface {
   private readonly _status: number;
   private readonly _email: string;
   private readonly _updatedBy: string;
+  private readonly _roles: string[];
 
   constructor(
     uuid: string,
     status: number,
     email: string,
     updatedBy: string,
+    roles: string[]
   ) {
     this._uuid = uuid;
     this._status = status;
     this._email = email;
     this._updatedBy = updatedBy;
+    this._roles = roles;
   }
 
   get uuid(): string {
@@ -42,5 +45,9 @@ export class UpdateAUserCommand implements CommandInterface {
 
   get updatedBy(): string {
     return this._updatedBy;
+  }
+
+  get roles(): string[] {
+    return this._roles;
   }
 }

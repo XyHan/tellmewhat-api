@@ -24,6 +24,7 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
 
   public async handle(command: UpdateAUserCommand): Promise<void> {
     const user: UserInterface = await this.findOneUserByUuid(command.uuid);
+    if (!user) throw new UpdateAUserCommandHandlerException(`UpdateAUserCommandHandler - User ${command.uuid} not found.`);
     const updatedUser: UserInterface = this.updateUserFromCommand(command, user);
     await this.saveUpdatedUser(updatedUser);
     this._logger.info(`UpdateAUserCommandHandler - User ${user.uuid} updated`);
@@ -41,6 +42,7 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
         user.createdBy,
         new Date(),
         command.updatedBy,
+        command.roles
       );
     } catch (e) {
       const message: string = `UpdateAUserCommandHandler - updateUserFromCommand - User update error: ${e.message}`;
@@ -60,7 +62,7 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
     }
   }
 
-  private async findOneUserByUuid(uuid: string): Promise<UserInterface> {
+  private async findOneUserByUuid(uuid: string): Promise<UserInterface | null> {
     try {
       return await this._queryRepository.findOneByUuid(uuid);
     } catch (e) {

@@ -46,6 +46,7 @@ export class ChangePasswordCommandHandler implements CommandHandlerInterface {
         user.createdBy,
         new Date(),
         command.updatedBy,
+        user.roles
       );
     } catch (e) {
       const message: string = `ChangePasswordCommandHandler - updateUserFromCommand - User generation error: ${e.message}`;

@@ -11,6 +11,7 @@ export interface UserFactoryInterface {
     createdBy: string,
     updatedAt: Date,
     updatedBy: string,
+    roles: string[],
   ): UserInterface;
 }
 
@@ -31,6 +32,7 @@ export class UserFactory implements UserFactoryInterface {
     createdBy: string,
     updatedAt: Date,
     updatedBy: string,
+    roles: string[],
   ): UserInterface {
     this._instance.uuid = uuid;
     this._instance.status = status;
@@ -41,6 +43,7 @@ export class UserFactory implements UserFactoryInterface {
     this._instance.createdBy = createdBy;
     this._instance.updatedAt = updatedAt;
     this._instance.updatedBy = updatedBy;
+    this._instance.roles = roles;
 
     return this._instance;
   }

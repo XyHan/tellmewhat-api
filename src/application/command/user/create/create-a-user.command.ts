@@ -7,17 +7,20 @@ export class CreateAUserCommand implements CommandInterface {
   private readonly _email: string;
   private readonly _password: string;
   private readonly _createdBy: string;
+  private readonly _roles: string[];
 
   constructor(
     uuid: string,
     email: string,
     password: string,
     createdBy: string,
+    roles: string[]
   ) {
     this._uuid = uuid;
     this._email = email;
     this._password = password;
     this._createdBy = createdBy;
+    this._roles = roles;
   }
 
   get uuid(): string {
@@ -42,5 +45,9 @@ export class CreateAUserCommand implements CommandInterface {
 
   get createdBy(): string {
     return this._createdBy;
+  }
+
+  get roles(): string[] {
+    return this._roles;
   }
 }

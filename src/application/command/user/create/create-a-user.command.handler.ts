@@ -41,6 +41,7 @@ export class CreateAUserCommandHandler implements CommandHandlerInterface {
         command.createdBy,
         new Date(),
         command.createdBy,
+        command.roles
       );
     } catch (e) {
       const message: string = `CreateAUserCommandHandler - generateUserFromCommand - User generation error: ${e.message}`;

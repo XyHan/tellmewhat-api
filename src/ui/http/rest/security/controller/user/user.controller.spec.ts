@@ -13,6 +13,7 @@ import { UiHttpModule } from '../../../../ui-http.module';
 import { LoggerModule } from '../../../../../../infrastructure/logger/logger.module';
 import { INestApplication } from '@nestjs/common';
 import * as JsonWebToken from 'jsonwebtoken';
+import {UserInterface} from "../../../../../../domain/model/user/user.model";
 
 const UUID = '0d66db91-4441-4563-967c-797d767c7288';
 const EMAIL = 'somebody@unknow.com';
@@ -23,7 +24,7 @@ describe('UserController tests suite', () => {
   let token: string;
   let wrongToken: string;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     token = JsonWebToken.sign(
       { uuid: '5e4e03a6-6e6f-4b39-a158-307d1e9082d8', email: 'user2@test.com' },
       Buffer.from('changeMeAsSoonAsPossible', 'base64').toString(),
@@ -71,11 +72,16 @@ describe('UserController tests suite', () => {
   });
 
   it('UPDATE - should return a UserInterface', async () => {
+    const postResponse = await request(app.getHttpServer()).post('/users').send({
+      email: EMAIL,
+      password: PASSWORD,
+    });
     const response = await request(app.getHttpServer())
-      .put(`/users/${UUID}`)
+      .put(`/users/${postResponse.body.uuid}`)
       .send({
         status: 3,
         email: `${EMAIL}.br`,
+        roles: ['USER']
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -95,6 +101,7 @@ describe('UserController tests suite', () => {
       .send({
         status: 3,
         email: `${EMAIL}.br`,
+        roles: ['ADMIN']
       })
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
@@ -102,8 +109,12 @@ describe('UserController tests suite', () => {
   });
 
   it('DELETE - should return a UserInterface', async () => {
+    const postResponse = await request(app.getHttpServer()).post('/users').send({
+      email: EMAIL,
+      password: PASSWORD,
+    });
     const response = await request(app.getHttpServer())
-      .delete(`/users/${UUID}`)
+      .delete(`/users/${postResponse.body.uuid}`)
       .send()
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -111,7 +122,7 @@ describe('UserController tests suite', () => {
     expect(response.body).toBeDefined();
   });
 
-  it('DELETE - should return a UserInterface', async () => {
+  it('DELETE - should return a 401', async () => {
     const response = await request(app.getHttpServer())
       .delete(`/users/${UUID}`)
       .send()
@@ -160,6 +171,7 @@ describe('UserController tests suite', () => {
       .send({
         status: '3',
         email: `${EMAIL}.br`,
+        roles: ['ADMIN']
       })
     ;
     expect(response.status).toBe(400);
@@ -172,6 +184,7 @@ describe('UserController tests suite', () => {
       .send({
         status: 3,
         email: 2,
+        roles: ['ADMIN']
       })
     ;
     expect(response.status).toBe(400);
@@ -184,6 +197,20 @@ describe('UserController tests suite', () => {
       .send({
         status: 3,
         email: 'idontknow',
+        roles: ['ADMIN']
+      })
+    ;
+    expect(response.status).toBe(400);
+  });
+
+  it('UPDATE - should return 400 wrong role attribute', async () => {
+    const response = await request(app.getHttpServer())
+      .put(`/users/${UUID}`)
+      .set({ 'Authorization': `Bearer ${token}` })
+      .send({
+        status: 3,
+        email: 'idontknow',
+        roles: ['WRONG_ROLE']
       })
     ;
     expect(response.status).toBe(400);
