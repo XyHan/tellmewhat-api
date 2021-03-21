@@ -26,6 +26,7 @@ import { UserEntity } from '../../../../../../infrastructure/security/entity/use
 import { AuthGuard } from '../../../../guard/auth.guard';
 import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
 import { RolesValueObject } from '../../../../../../infrastructure/security/value-object/roles.value-object';
+import { Roles } from '../../../../../../infrastructure/security/decorator/role.decorator';
 
 @Controller('/users')
 export class UserController extends BaseController {
@@ -65,6 +66,7 @@ export class UserController extends BaseController {
 
   @Put('/:uuid')
   @UseGuards(AuthGuard)
+  @Roles('ADMIN', 'SUPER_ADMIN')
   @UsePipes(new ValidationPipe({ transform: true }))
   public async put(
     @Body() updateAUserDto: UpdateAUserDto,
@@ -89,6 +91,7 @@ export class UserController extends BaseController {
 
   @Delete('/:uuid')
   @UseGuards(AuthGuard)
+  @Roles('ADMIN', 'SUPER_ADMIN')
   public async delete(
     @Param('uuid') uuid: string,
     @CurrentUser() user: UserInterface

@@ -25,6 +25,18 @@ export const USER_COLLECTION: UserInterface[] = [
     new Date(),
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
     ['USER']
+  ),
+  new UserFactory(new UserModel()).generate(
+    'b51b7315-d7ba-49b1-ad7d-ea4c8167b3d0',
+    1,
+    'user3@test.com',
+    'password3',
+    'salt3',
+    new Date(),
+    'c9f63e25-bd06-42ae-993c-20b6b236cb84',
+    new Date(),
+    'c9f63e25-bd06-42ae-993c-20b6b236cb84',
+    ['BAD_ROLE']
   )
 ];
 

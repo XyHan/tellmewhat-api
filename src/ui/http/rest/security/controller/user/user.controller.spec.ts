@@ -13,7 +13,6 @@ import { UiHttpModule } from '../../../../ui-http.module';
 import { LoggerModule } from '../../../../../../infrastructure/logger/logger.module';
 import { INestApplication } from '@nestjs/common';
 import * as JsonWebToken from 'jsonwebtoken';
-import {UserInterface} from "../../../../../../domain/model/user/user.model";
 
 const UUID = '0d66db91-4441-4563-967c-797d767c7288';
 const EMAIL = 'somebody@unknow.com';
@@ -23,6 +22,7 @@ describe('UserController tests suite', () => {
   let app: INestApplication;
   let token: string;
   let wrongToken: string;
+  let badRoleToken: string;
 
   beforeAll(async () => {
     token = JsonWebToken.sign(
@@ -33,6 +33,12 @@ describe('UserController tests suite', () => {
 
     wrongToken = JsonWebToken.sign(
       { uuid: 'bad-uuid', email: 'bad-email' },
+      Buffer.from('changeMeAsSoonAsPossible', 'base64').toString(),
+      { algorithm: 'HS256', expiresIn: '1d' }
+    );
+
+    badRoleToken = JsonWebToken.sign(
+      { uuid: '0d66db91-4441-4563-967c-797d767c7288', email: 'user2@test.com' },
       Buffer.from('changeMeAsSoonAsPossible', 'base64').toString(),
       { algorithm: 'HS256', expiresIn: '1d' }
     );
@@ -108,6 +114,19 @@ describe('UserController tests suite', () => {
     expect(response.status).toBe(401);
   });
 
+  it('UPDATE - should return a 403', async () => {
+    const response = await request(app.getHttpServer())
+      .put(`/users/${UUID}`)
+      .send({
+        status: 3,
+        email: `${EMAIL}.br`,
+        roles: ['ADMIN']
+      })
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
+    expect(response.status).toBe(403);
+  });
+
   it('DELETE - should return a UserInterface', async () => {
     const postResponse = await request(app.getHttpServer()).post('/users').send({
       email: EMAIL,
@@ -129,6 +148,15 @@ describe('UserController tests suite', () => {
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
+  });
+
+  it('DELETE - should return a 403', async () => {
+    const response = await request(app.getHttpServer())
+      .delete(`/users/${UUID}`)
+      .send()
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
+    expect(response.status).toBe(403);
   });
 
   it('POST - should return 400 bad email attribute', async () => {

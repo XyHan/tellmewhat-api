@@ -26,6 +26,7 @@ describe('TicketController tests suite', () => {
   let app: INestApplication;
   let token: string;
   let wrongToken: string;
+  let badRoleToken: string;
 
   beforeAll(async () => {
     token = JsonWebToken.sign(
@@ -36,6 +37,12 @@ describe('TicketController tests suite', () => {
 
     wrongToken = JsonWebToken.sign(
       { uuid: 'bad-uuid', email: 'bad-email' },
+      Buffer.from('changeMeAsSoonAsPossible', 'base64').toString(),
+      { algorithm: 'HS256', expiresIn: '1d' }
+    );
+
+    badRoleToken = JsonWebToken.sign(
+      { uuid: 'b51b7315-d7ba-49b1-ad7d-ea4c8167b3d0', email: 'user3@test.com' },
       Buffer.from('changeMeAsSoonAsPossible', 'base64').toString(),
       { algorithm: 'HS256', expiresIn: '1d' }
     );
@@ -79,6 +86,11 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(401);
   });
 
+  it('GET - LISTALL - should return a 403', async () => {
+    const response = await request(app.getHttpServer()).get('/tickets').set({ 'Authorization': `Bearer ${badRoleToken}` });
+    expect(response.status).toBe(403);
+  });
+
   it('GET - FINDONE - should return a TicketInterface', async () => {
     const response = await request(app.getHttpServer())
       .get(`/tickets/${UUID}`)
@@ -93,6 +105,14 @@ describe('TicketController tests suite', () => {
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
+  });
+
+  it('GET - FINDONE - should return a 403', async () => {
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${UUID}`)
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
+    expect(response.status).toBe(403);
   });
 
   it('POST - should return a TicketInterface', async () => {
@@ -119,6 +139,18 @@ describe('TicketController tests suite', () => {
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
+  });
+
+  it('POST - should return 403', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/tickets')
+      .send({
+        subject: SUBJECT,
+        description: DESCRIPTION
+      })
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
+    expect(response.status).toBe(403);
   });
 
   it('UPDATE - should return a TicketInterface', async () => {
@@ -150,14 +182,27 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(401);
   });
 
+  it('UPDATE - should return a 403', async () => {
+    const response = await request(app.getHttpServer())
+      .put(`/tickets/${UUID}`)
+      .send({
+        status: 3,
+        subject: SUBJECT,
+        description: DESCRIPTION
+      })
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
+    expect(response.status).toBe(403);
+  });
+
   it('DELETE - should return a TicketInterface', async () => {
     const response = await request(app.getHttpServer())
       .delete(`/tickets/${UUID}`)
       .send()
       .set({ 'Authorization': `Bearer ${token}` })
     ;
-    expect(response.status).toBe(204);
-    expect(response.body).toBeDefined();
+    expect(response.status).toBe(200);
+    expect(response.body.status).toBe(0);
   });
 
   it('DELETE - should return a 401', async () => {
@@ -167,6 +212,15 @@ describe('TicketController tests suite', () => {
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
+  });
+
+  it('DELETE - should return a 403', async () => {
+    const response = await request(app.getHttpServer())
+      .delete(`/tickets/${UUID}`)
+      .send()
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
+    expect(response.status).toBe(403);
   });
 
   it('GET - FINDONE - should return a 404', async () => {

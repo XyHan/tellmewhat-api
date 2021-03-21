@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Inject,
   Param,
   Post,
@@ -28,6 +27,7 @@ import { TicketEntity } from '../../../../infrastructure/ticket/entity/ticket.en
 import { AuthGuard } from '../../guard/auth.guard';
 import { CurrentUser } from '../../../../infrastructure/security/decorator/current-user.decorator';
 import { UserInterface } from '../../../../domain/model/user/user.model';
+import { Roles } from '../../../../infrastructure/security/decorator/role.decorator';
 
 @Controller('/tickets')
 export class TicketController extends BaseController {
@@ -47,6 +47,7 @@ export class TicketController extends BaseController {
 
   @Get('/')
   @UseGuards(AuthGuard)
+  @Roles('USER', 'ADMIN', 'SUPER_ADMIN')
   public async listAll(
     @Query('size') size: string | undefined = '10',
     @Query('page') page: string | undefined = '0',
@@ -69,6 +70,7 @@ export class TicketController extends BaseController {
 
   @Get('/:uuid')
   @UseGuards(AuthGuard)
+  @Roles('USER', 'ADMIN', 'SUPER_ADMIN')
   public async findOne(@Param() params): Promise<TicketInterface> {
     try {
       return this.findOneTicketByUuid(params.uuid);
@@ -80,6 +82,7 @@ export class TicketController extends BaseController {
 
   @Post('/')
   @UseGuards(AuthGuard)
+  @Roles('USER', 'ADMIN', 'SUPER_ADMIN')
   @UsePipes(new ValidationPipe({ transform: true }))
   public async post(
     @Body() createATicketDto: CreateATicketDto,
@@ -98,6 +101,7 @@ export class TicketController extends BaseController {
 
   @Put('/:uuid')
   @UseGuards(AuthGuard)
+  @Roles('USER', 'ADMIN', 'SUPER_ADMIN')
   @UsePipes(new ValidationPipe({ transform: true }))
   public async put(
     @Body() updateATicketDto: UpdateATicketDto,
@@ -122,7 +126,7 @@ export class TicketController extends BaseController {
 
   @Delete('/:uuid')
   @UseGuards(AuthGuard)
-  @HttpCode(204)
+  @Roles('USER', 'ADMIN', 'SUPER_ADMIN')
   public async delete(
     @Param('uuid') uuid: string,
     @CurrentUser() user: UserInterface,
