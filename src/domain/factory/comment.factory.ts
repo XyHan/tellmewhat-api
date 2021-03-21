@@ -1,4 +1,5 @@
 import { CommentInterface } from '../model/ticket/comment.model';
+import { TicketInterface } from '../model/ticket/ticket.model';
 
 export interface CommentFactoryInterface {
   generate(
@@ -9,6 +10,7 @@ export interface CommentFactoryInterface {
     updatedAt: Date,
     updatedBy: string,
     content: string,
+    ticket: TicketInterface
   ): CommentInterface;
 }
 
@@ -27,6 +29,7 @@ export class CommentFactory implements CommentFactoryInterface {
     updatedAt: Date,
     updatedBy: string,
     content: string,
+    ticket: TicketInterface
   ): CommentInterface {
     this._instance.uuid = uuid;
     this._instance.status = status;
@@ -35,6 +38,7 @@ export class CommentFactory implements CommentFactoryInterface {
     this._instance.updatedAt = updatedAt;
     this._instance.updatedBy = updatedBy;
     this._instance.content = content;
+    this._instance.ticket = ticket;
 
     return this._instance;
   }

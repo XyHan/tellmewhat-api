@@ -21,6 +21,7 @@ import { createACommentCommandHandlerProvider } from './provider/command/comment
 import { updateACommentCommandHandlerProvider } from './provider/command/comment/update-a-comment-command-handler.provider';
 import { deleteACommentCommandHandlerProvider } from './provider/command/comment/delete-a-comment-command-handler.provider';
 import { CommentCommandHandlers } from './command/comment';
+import { CommentSubscriber } from './subscriber/comment.subscriber';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { CommentCommandHandlers } from './command/comment';
     updateACommentCommandHandlerProvider,
     deleteACommentCommandHandlerProvider,
     ...CommentCommandHandlers,
+    CommentSubscriber,
   ],
   exports: [
     TicketQueryRepository,

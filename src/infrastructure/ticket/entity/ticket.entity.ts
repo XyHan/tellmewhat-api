@@ -1,6 +1,6 @@
 import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { CommentEntity } from './comment.entity';
 
 @Entity({ name: 'ticket' })
@@ -34,6 +34,7 @@ export class TicketEntity implements TicketInterface {
   @Column({ type: 'varchar', length: 38, name: 'uuid' , nullable: false, unique: true }) public uuid: string;
 
   @Expose()
+  @Type(() => CommentEntity)
   @OneToMany(() => CommentEntity, comment => comment.ticket)
   comments: CommentEntity[];
 }

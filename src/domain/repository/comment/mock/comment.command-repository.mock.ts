@@ -7,7 +7,7 @@ export class CommentCommandRepositoryMock implements CommentCommandRepositoryInt
   public async create(comment: CommentInterface): Promise<CommentInterface> {
     this.isValidComment(comment);
     try {
-      CommentFixtures.addComment(comment);
+      CommentFixtures.saveComment(comment);
       return Promise.resolve(comment);
     } catch (e) {
       const message: string = `CommentCommandRepository - Error on create comment '${comment.uuid}'`;
@@ -28,7 +28,7 @@ export class CommentCommandRepositoryMock implements CommentCommandRepositoryInt
   public async update(comment: CommentInterface): Promise<CommentInterface> {
     this.isValidComment(comment);
     try {
-      CommentFixtures.updateComment(comment);
+      CommentFixtures.saveComment(comment);
       return Promise.resolve(comment);
     } catch (e) {
       const message: string = `CommentCommandRepository - Error on update comment '${comment.uuid}'`;

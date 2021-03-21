@@ -17,9 +17,14 @@ import { UserQueryRepository } from '../../../../../../infrastructure/security/r
 import { UserQueryRepositoryMock } from '../../../../../../domain/repository/user/mock/user.query-repository.mock';
 import { UserCommandRepositoryMock } from '../../../../../../domain/repository/user/mock/user.command-repository.mock';
 import { UserCommandRepository } from '../../../../../../infrastructure/security/repository/user.command-repository';
+import { TicketQueryRepository } from '../../../../../../infrastructure/ticket/repository/ticket/ticket.query-repository';
+import { TicketQueryRepositoryMock } from '../../../../../../domain/repository/ticket/mock/ticket.query-repository.mock';
+import { TicketCommandRepository } from '../../../../../../infrastructure/ticket/repository/ticket/ticket.command-repository';
+import { TicketCommandRepositoryMock } from '../../../../../../domain/repository/ticket/mock/ticket.command-repository.mock';
 
 const UUID = '204df646-3b8a-450b-b15c-fab854149136';
 const CONTENT = 'Integer sit amet purus a lacus fermentum consectetur nec quis leo.';
+const TICKET_UUID = '5e4e03a6-6e6f-4b39-a158-307d1e9082d8';
 
 describe('CommentController tests suite', () => {
   let app: INestApplication;
@@ -55,6 +60,10 @@ describe('CommentController tests suite', () => {
       .useClass(CommentQueryRepositoryMock)
       .overrideProvider(CommentCommandRepository)
       .useClass(CommentCommandRepositoryMock)
+      .overrideProvider(TicketQueryRepository)
+      .useClass(TicketQueryRepositoryMock)
+      .overrideProvider(TicketCommandRepository)
+      .useClass(TicketCommandRepositoryMock)
       .overrideProvider(UserQueryRepository)
       .useClass(UserQueryRepositoryMock)
       .overrideProvider(UserCommandRepository)
@@ -117,17 +126,18 @@ describe('CommentController tests suite', () => {
   it('POST - should return a CommentInterface', async () => {
     const response = await request(app.getHttpServer())
       .post('/comments')
-      .send({ content: CONTENT })
+      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(201);
     expect(response.body.content).toBe(CONTENT);
+    expect(response.body.ticket.uuid).toBe(TICKET_UUID);
   });
 
   it('POST - should return a 401', async () => {
     const response = await request(app.getHttpServer())
       .post('/comments')
-      .send({ content: CONTENT })
+      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
@@ -136,15 +146,20 @@ describe('CommentController tests suite', () => {
   it('POST - should return 403', async () => {
     const response = await request(app.getHttpServer())
       .post('/comments')
-      .send({ content: CONTENT })
+      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
     expect(response.status).toBe(403);
   });
 
   it('UPDATE - should return a CommentInterface', async () => {
+    const postResponse = await request(app.getHttpServer())
+      .post('/comments')
+      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
     const response = await request(app.getHttpServer())
-      .put(`/comments/${UUID}`)
+      .put(`/comments/${postResponse.body.uuid}`)
       .send({
         status: 3,
         content: `${CONTENT} Sed ac ultricies est. Donec egestas laoreet urna eget hendrerit.`,
@@ -181,8 +196,13 @@ describe('CommentController tests suite', () => {
   });
 
   it('DELETE - should return a CommentInterface', async () => {
+    const postResponse = await request(app.getHttpServer())
+      .post('/comments')
+      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
     const response = await request(app.getHttpServer())
-      .delete(`/comments/${UUID}`)
+      .delete(`/comments/${postResponse.body.uuid}`)
       .send()
       .set({ 'Authorization': `Bearer ${token}` })
     ;

@@ -90,7 +90,7 @@ export class CommentController extends BaseController {
   ): Promise<CommentInterface> {
     try {
       const uuid: string = v4();
-      const command = new CreateACommentCommand(uuid, createACommentDto.content, user.uuid);
+      const command = new CreateACommentCommand(uuid, createACommentDto.content, user.uuid, createACommentDto.ticketUuid);
       await this._commandBus.execute(command);
       return await this.findOneCommentByUuid(uuid);
     } catch (e) {

@@ -1,5 +1,5 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { CommentInterface } from '../../../domain/model/ticket/comment.model';
 import { TicketEntity } from './ticket.entity';
 
@@ -31,6 +31,7 @@ export class CommentEntity implements CommentInterface {
   @Column({ type: 'varchar', length: 38, name: 'uuid' , nullable: false, unique: true }) public uuid: string;
 
   @Expose()
+  @Type(() => TicketEntity)
   @ManyToOne(() => TicketEntity, ticket => ticket.comments)
   @JoinColumn({ name: 'ticket_id' })
   ticket: TicketEntity;

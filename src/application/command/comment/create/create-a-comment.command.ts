@@ -6,15 +6,18 @@ export class CreateACommentCommand implements CommandInterface {
   private readonly _version: number;
   private readonly _content: string;
   private readonly _createdBy: string;
+  private readonly _ticketUuid: string;
 
   constructor(
     uuid: string,
     content: string,
     createdBy: string,
+    ticketUuid: string,
   ) {
     this._uuid = uuid;
     this._content = content;
     this._createdBy = createdBy;
+    this._ticketUuid = ticketUuid;
   }
 
   get uuid(): string {
@@ -35,5 +38,9 @@ export class CreateACommentCommand implements CommandInterface {
 
   get createdBy(): string {
     return this._createdBy;
+  }
+
+  get ticketUuid(): string {
+    return this._ticketUuid;
   }
 }

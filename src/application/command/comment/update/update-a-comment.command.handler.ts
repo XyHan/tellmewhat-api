@@ -37,7 +37,8 @@ export class UpdateACommentCommandHandler implements CommandHandlerInterface {
         comment.createdBy,
         new Date(),
         command.updatedBy,
-        command.content
+        command.content,
+        comment.ticket
       );
     } catch (e) {
       const message: string = `UpdateACommentCommandHandler - updateCommentFromCommand - Comment update error: ${e.message}`;
