@@ -29,6 +29,7 @@ import { MediaCommandHandlers } from './command/media';
 import { deleteAMediaCommandHandlerProvider } from './provider/command/media/delete-a-media-command-handler.provider';
 import { getOneMediaQueryHandlerProvider } from './provider/query/media/get-one-media-query-handler.provider';
 import { MediaQueryHandlers } from './query/media';
+import { listAllMediaQueryHandlerProvider } from './provider/query/media/list-all-media-query-handler.provider';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { MediaQueryHandlers } from './query/media';
     deleteAMediaCommandHandlerProvider,
     ...MediaCommandHandlers,
     getOneMediaQueryHandlerProvider,
+    listAllMediaQueryHandlerProvider,
     ...MediaQueryHandlers
 
   ],
