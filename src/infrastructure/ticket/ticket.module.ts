@@ -21,13 +21,10 @@ import { createACommentCommandHandlerProvider } from './provider/command/comment
 import { updateACommentCommandHandlerProvider } from './provider/command/comment/update-a-comment-command-handler.provider';
 import { deleteACommentCommandHandlerProvider } from './provider/command/comment/delete-a-comment-command-handler.provider';
 import { CommentCommandHandlers } from './command/comment';
-import { HistoryRepository } from './repository/history/history.repository';
-import { HistoryQueryRepository } from './repository/history/history.query-repository';
-import { HistoryCommandRepository } from './repository/history/history.command-repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TicketRepository, CommentRepository, HistoryRepository]),
+    TypeOrmModule.forFeature([TicketRepository, CommentRepository]),
     LoggerModule,
   ],
   providers: [
@@ -49,16 +46,12 @@ import { HistoryCommandRepository } from './repository/history/history.command-r
     updateACommentCommandHandlerProvider,
     deleteACommentCommandHandlerProvider,
     ...CommentCommandHandlers,
-    HistoryQueryRepository,
-    HistoryCommandRepository,
   ],
   exports: [
     TicketQueryRepository,
     TicketCommandRepository,
     CommentQueryRepository,
     CommentCommandRepository,
-    HistoryQueryRepository,
-    HistoryCommandRepository,
   ]
 })
 export class TicketModule {}

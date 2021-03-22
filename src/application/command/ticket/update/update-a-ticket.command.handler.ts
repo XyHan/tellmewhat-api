@@ -32,7 +32,7 @@ export class UpdateATicketCommandHandler implements CommandHandlerInterface {
   private updateTicketFromCommand(command: UpdateATicketCommand, ticket: TicketInterface): TicketInterface {
     try {
       return new TicketFactory(ticket).generate(
-        command.uuid,
+        ticket.uuid,
         command.status,
         ticket.createdAt,
         ticket.createdBy,

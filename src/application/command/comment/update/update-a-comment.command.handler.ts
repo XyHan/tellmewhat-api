@@ -38,7 +38,7 @@ export class UpdateACommentCommandHandler implements CommandHandlerInterface {
   private updateCommentFromCommand(command: UpdateACommentCommand, comment: CommentInterface): CommentInterface {
     try {
       return new CommentFactory(comment).generate(
-        command.uuid,
+        comment.uuid,
         command.status,
         comment.createdAt,
         comment.createdBy,

@@ -33,7 +33,7 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
   private updateUserFromCommand(command: UpdateAUserCommand, user: UserInterface): UserInterface {
     try {
       return new UserFactory(user).generate(
-        command.uuid,
+        user.uuid,
         command.status,
         command.email,
         user.password,

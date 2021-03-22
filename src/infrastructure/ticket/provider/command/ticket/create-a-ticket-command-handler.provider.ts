@@ -4,16 +4,13 @@ import { LoggerAdapterService } from '../../../../logger/logger-adapter.service'
 import { CreateATicketCommandHandler } from '../../../../../application/command/ticket/create/create-a-ticket.command.handler';
 import { TicketCommandRepository } from '../../../repository/ticket/ticket.command-repository';
 import { TicketCommandRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.command-repository.interface';
-import { HistoryCommandRepository } from '../../../repository/history/history.command-repository';
-import { HistoryCommandRepositoryInterface } from '../../../../../domain/repository/history/history.command-repository.interface';
 
 export const createATicketCommandHandlerProvider: FactoryProvider = {
   provide: 'CREATE_A_TICKET_COMMAND_HANDLER',
   useFactory: (
     ticketRepository: TicketCommandRepositoryInterface,
-    historyCommandRepository: HistoryCommandRepositoryInterface,
     logger: LoggerInterface) => {
-    return new CreateATicketCommandHandler(ticketRepository, historyCommandRepository, logger);
+    return new CreateATicketCommandHandler(ticketRepository, logger);
   },
-  inject: [TicketCommandRepository, HistoryCommandRepository, LoggerAdapterService],
+  inject: [TicketCommandRepository, LoggerAdapterService],
 }

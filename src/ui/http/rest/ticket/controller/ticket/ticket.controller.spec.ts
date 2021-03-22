@@ -17,8 +17,6 @@ import { UserQueryRepository } from '../../../../../../infrastructure/security/r
 import { UserQueryRepositoryMock } from '../../../../../../domain/repository/user/mock/user.query-repository.mock';
 import { UserCommandRepositoryMock } from '../../../../../../domain/repository/user/mock/user.command-repository.mock';
 import { UserCommandRepository } from '../../../../../../infrastructure/security/repository/user.command-repository';
-import { HistoryCommandRepository } from '../../../../../../infrastructure/ticket/repository/history/history.command-repository';
-import { HistoryCommandRepositoryMock } from '../../../../../../domain/repository/history/mock/history.command-repository.mock';
 
 const UUID = '5e4e03a6-6e6f-4b39-a158-307d1e9082d8';
 const SUBJECT = 'Integer sit amet purus a lacus fermentum consectetur nec quis leo.';
@@ -62,8 +60,6 @@ describe('TicketController tests suite', () => {
       .useClass(UserQueryRepositoryMock)
       .overrideProvider(UserCommandRepository)
       .useClass(UserCommandRepositoryMock)
-      .overrideProvider(HistoryCommandRepository)
-      .useClass(HistoryCommandRepositoryMock)
       .compile();
 
     app = moduleRef.createNestApplication();

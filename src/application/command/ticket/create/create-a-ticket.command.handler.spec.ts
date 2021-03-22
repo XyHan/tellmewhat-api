@@ -8,8 +8,6 @@ import { TicketCommandRepositoryMock } from '../../../../domain/repository/ticke
 import { TicketQueryRepositoryMock } from '../../../../domain/repository/ticket/mock/ticket.query-repository.mock';
 import { TicketQueryRepositoryInterface } from '../../../../domain/repository/ticket/ticket.query-repository.interface';
 import { CreateATicketCommandHandlerException } from './create-a-ticket.command.handler.exception';
-import { HistoryCommandRepositoryInterface } from '../../../../domain/repository/history/history.command-repository.interface';
-import { HistoryCommandRepositoryMock } from '../../../../domain/repository/history/mock/history.command-repository.mock';
 
 const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 const SUBJECT = 'Yoda';
@@ -20,17 +18,15 @@ describe('create a ticket handler test', () => {
   const logger: LoggerInterface = new LoggerMock();
   let commandRepository: TicketCommandRepositoryInterface;
   let queryRepository: TicketQueryRepositoryInterface;
-  let historyCommandRepository: HistoryCommandRepositoryInterface;
 
   beforeEach(() => {
     commandRepository = new TicketCommandRepositoryMock();
     queryRepository = new TicketQueryRepositoryMock();
-    historyCommandRepository = new HistoryCommandRepositoryMock();
   })
 
   it ('create a ticket success', async () => {
     const command = new CreateATicketCommand(UUID, SUBJECT, DESCRIPTION, CREATEDBY);
-    const handler = new CreateATicketCommandHandler(commandRepository, historyCommandRepository, logger);
+    const handler = new CreateATicketCommandHandler(commandRepository, logger);
     await handler.handle(command);
     const ticket: TicketInterface | null = await queryRepository.findOne(UUID);
     expect(ticket.uuid).toBe(UUID);
@@ -45,7 +41,7 @@ describe('create a ticket handler test', () => {
 
   it('create a ticket error', async () => {
     const command = new CreateATicketCommand('', '', '', '');
-    const handler = new CreateATicketCommandHandler(commandRepository, historyCommandRepository, logger);
+    const handler = new CreateATicketCommandHandler(commandRepository, logger);
     await expect(handler.handle(command)).rejects.toThrowError(CreateATicketCommandHandlerException);
   });
 });
