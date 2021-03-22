@@ -2,6 +2,7 @@ import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { CommentEntity } from './comment.entity';
+import { MediaEntity } from './media.entity';
 
 @Entity({ name: 'ticket' })
 export class TicketEntity implements TicketInterface {
@@ -37,4 +38,9 @@ export class TicketEntity implements TicketInterface {
   @Type(() => CommentEntity)
   @OneToMany(() => CommentEntity, comment => comment.ticket)
   comments: CommentEntity[];
+
+  @Expose()
+  @Type(() => MediaEntity)
+  @OneToMany(() => MediaEntity, media => media.ticket)
+  media: MediaEntity[];
 }

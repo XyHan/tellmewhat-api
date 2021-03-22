@@ -49,16 +49,12 @@ export class UserFixtures {
 
   public static deleteUser(userToDelete: UserInterface): void {
     const index: number = this._userCollection.findIndex((user: UserInterface) => user.uuid === userToDelete.uuid);
-    if (index) {
-      this._userCollection.splice(index, 1);
-    }
+    if (index) this._userCollection.splice(index, 1);
   }
 
   public static saveUser(userToSave: UserInterface): void {
     const userIndex: number = this._userCollection.findIndex((user: UserInterface) => user.uuid === userToSave.uuid);
-    if (userIndex) {
-      this._userCollection.splice(userIndex, 1);
-    }
+    if (userIndex) this._userCollection.splice(userIndex, 1);
     this._userCollection.push(userToSave);
   }
 }

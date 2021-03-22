@@ -33,16 +33,12 @@ export class TicketFixtures {
 
   public static deleteTicket(ticketToDelete: TicketInterface): void {
     const index: number = this._ticketCollection.findIndex((ticket: TicketInterface) => ticket.uuid === ticketToDelete.uuid);
-    if (index) {
-      this._ticketCollection.splice(index, 1);
-    }
+    if (index) this._ticketCollection.splice(index, 1);
   }
 
   public static saveTicket(ticketToSave: TicketInterface): void {
     const userIndex: number = this._ticketCollection.findIndex((ticket: TicketInterface) => ticket.uuid === ticketToSave.uuid);
-    if (userIndex) {
-      this._ticketCollection.splice(userIndex, 1);
-    }
+    if (userIndex) this._ticketCollection.splice(userIndex, 1);
     this._ticketCollection.push(ticketToSave);
   }
 }

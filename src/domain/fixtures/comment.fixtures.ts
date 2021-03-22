@@ -34,16 +34,12 @@ export class CommentFixtures {
 
   public static deleteComment(commentToDelete: CommentInterface): void {
     const index: number = this._commentCollection.findIndex((comment: CommentInterface) => comment.uuid === commentToDelete.uuid);
-    if (index) {
-      this._commentCollection.splice(index, 1);
-    }
+    if (index) this._commentCollection.splice(index, 1);
   }
 
   public static saveComment(commentToUpdate: CommentInterface): void {
     const userIndex: number = this._commentCollection.findIndex((comment: CommentInterface) => comment.uuid === commentToUpdate.uuid);
-    if (userIndex) {
-      this._commentCollection.splice(userIndex, 1);
-    }
+    if (userIndex) this._commentCollection.splice(userIndex, 1);
     this._commentCollection.push(commentToUpdate);
   }
 }
