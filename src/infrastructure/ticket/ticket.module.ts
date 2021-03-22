@@ -26,6 +26,9 @@ import { MediaQueryRepository } from './repository/media/media.query-repository'
 import { MediaCommandRepository } from './repository/media/media.command-repository';
 import { createAMediaCommandHandlerProvider } from './provider/command/media/create-a-media-command-handler.provider';
 import { MediaCommandHandlers } from './command/media';
+import { deleteAMediaCommandHandlerProvider } from './provider/command/media/delete-a-media-command-handler.provider';
+import { getOneMediaQueryHandlerProvider } from './provider/query/media/get-one-media-query-handler.provider';
+import { MediaQueryHandlers } from './query/media';
 
 @Module({
   imports: [
@@ -54,7 +57,11 @@ import { MediaCommandHandlers } from './command/media';
     MediaQueryRepository,
     MediaCommandRepository,
     createAMediaCommandHandlerProvider,
-    ...MediaCommandHandlers
+    deleteAMediaCommandHandlerProvider,
+    ...MediaCommandHandlers,
+    getOneMediaQueryHandlerProvider,
+    ...MediaQueryHandlers
+
   ],
   exports: [
     TicketQueryRepository,
