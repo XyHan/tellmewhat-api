@@ -30,7 +30,10 @@ export class CommentQueryRepository implements CommentQueryRepositoryInterface {
 
   public async findOne(uuid: string): Promise<CommentInterface | null> {
     try {
-      return await this.repository.findOneOrFail({ uuid });
+      return await this.repository.findOneOrFail(
+        { uuid },
+        { join: { alias: 'c', innerJoinAndSelect: { ticket: 'c.ticket' } } }
+      );
     } catch (e) {
       if (e.name === 'EntityNotFound') {
         this._logger.warn(`CommentQueryRepository - findOne - Comment ${uuid} not found`);

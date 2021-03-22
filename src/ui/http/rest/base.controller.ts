@@ -3,8 +3,9 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
 import { UserInterface } from '../../../domain/model/user/user.model';
 import { CommentInterface } from '../../../domain/model/ticket/comment.model';
+import { MediaInterface } from '../../../domain/model/ticket/media.model';
 
-export type result = TicketInterface | UserInterface | CommentInterface;
+export type result = TicketInterface | UserInterface | CommentInterface | MediaInterface;
 
 export interface PaginatedResponse {
   page: number;

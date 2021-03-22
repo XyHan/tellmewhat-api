@@ -30,7 +30,10 @@ export class MediaQueryRepository implements MediaQueryRepositoryInterface {
 
   public async findOne(uuid: string): Promise<MediaInterface | null> {
     try {
-      return await this.repository.findOneOrFail({ uuid });
+      return await this.repository.findOneOrFail(
+        { uuid },
+        { join: { alias: 'm', innerJoinAndSelect: { ticket: 'm.ticket' } } }
+      );
     } catch (e) {
       if (e.name === 'EntityNotFound') {
         this._logger.warn(`MediaQueryRepository - findOne - Medium ${uuid} not found`);
