@@ -7,7 +7,7 @@ export class TicketCommandRepositoryMock implements TicketCommandRepositoryInter
   public async create(ticket: TicketInterface): Promise<TicketInterface> {
     this.isValidTicket(ticket);
     try {
-      TicketFixtures.addTicket(ticket);
+      TicketFixtures.saveTicket(ticket);
       return Promise.resolve(ticket);
     } catch (e) {
       const message: string = `TicketCommandRepository - Error on create ticket '${ticket.uuid}'`;
@@ -28,7 +28,7 @@ export class TicketCommandRepositoryMock implements TicketCommandRepositoryInter
   public async update(ticket: TicketInterface): Promise<TicketInterface> {
     this.isValidTicket(ticket);
     try {
-      TicketFixtures.updateTicket(ticket);
+      TicketFixtures.saveTicket(ticket);
       return Promise.resolve(ticket);
     } catch (e) {
       const message: string = `TicketCommandRepository - Error on update ticket '${ticket.uuid}'`;

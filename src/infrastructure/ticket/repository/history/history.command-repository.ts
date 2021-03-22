@@ -2,7 +2,6 @@ import { HistoryCommandRepositoryInterface } from '../../../../domain/repository
 import { HistoryInterface } from '../../../../domain/model/ticket/history.model';
 import { HistoryRepository } from './history.repository';
 import { HistoryRepositoryException } from '../../../../domain/repository/history/history.repository.exception';
-import { HistoryEntity } from '../../entity/history.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
 import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
@@ -22,27 +21,7 @@ export class HistoryCommandRepository implements HistoryCommandRepositoryInterfa
     try {
       return await this.repository.save(history);
     } catch (e) {
-      const message: string = `HistoryCommandRepository - Error on create history '${history.uuid}'`;
-      this._logger.error(message);
-      throw new HistoryRepositoryException(message);
-    }
-  }
-
-  public async delete(history: HistoryEntity): Promise<HistoryInterface> {
-    try {
-      return await this.repository.remove(history);
-    } catch (e) {
-      const message: string = `HistoryCommandRepository - Error on delete history '${history.uuid}'`;
-      this._logger.error(message);
-      throw new HistoryRepositoryException(message);
-    }
-  }
-
-  public async update(history: HistoryInterface): Promise<HistoryInterface> {
-    try {
-      return await this.repository.save(history);
-    } catch (e) {
-      const message: string = `HistoryCommandRepository - Error on update history '${history.uuid}'`;
+      const message: string = `HistoryCommandRepository - Error on create history`;
       this._logger.error(message);
       throw new HistoryRepositoryException(message);
     }

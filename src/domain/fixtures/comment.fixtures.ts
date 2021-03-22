@@ -44,17 +44,6 @@ export class CommentFixtures {
     if (userIndex) {
       this._commentCollection.splice(userIndex, 1);
     }
-    this._commentCollection.push(
-      new CommentFactory(new CommentModel()).generate(
-        commentToUpdate.uuid,
-        commentToUpdate.status,
-        commentToUpdate.createdAt,
-        commentToUpdate.createdBy,
-        commentToUpdate.updatedAt,
-        commentToUpdate.updatedBy,
-        commentToUpdate.content,
-        commentToUpdate.ticket
-      )
-    );
+    this._commentCollection.push(commentToUpdate);
   }
 }

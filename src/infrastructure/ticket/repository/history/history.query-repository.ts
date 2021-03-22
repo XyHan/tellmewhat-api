@@ -22,21 +22,7 @@ export class HistoryQueryRepository implements HistoryQueryRepositoryInterface {
     try {
       return await this.repository.findAndCount({ skip: options.offsetStart, take: options.size });
     } catch (e) {
-      const message: string = `HistoryQueryRepository - Error on findAll historys`;
-      this._logger.error(message);
-      throw new HistoryRepositoryException(message);
-    }
-  }
-
-  public async findOne(uuid: string): Promise<HistoryInterface | null> {
-    try {
-      return await this.repository.findOneOrFail({ uuid });
-    } catch (e) {
-      if (e.name === 'EntityNotFound') {
-        this._logger.warn(`HistoryQueryRepository - findOne - History ${uuid} not found`);
-        return null;
-      }
-      const message: string = `HistoryQueryRepository - Error on findOne history '${uuid}'`;
+      const message: string = `HistoryQueryRepository - Error on findAll histories`;
       this._logger.error(message);
       throw new HistoryRepositoryException(message);
     }

@@ -38,35 +38,11 @@ export class TicketFixtures {
     }
   }
 
-  public static updateTicket(ticketToUpdate: TicketInterface): void {
-    const userIndex: number = this._ticketCollection.findIndex((ticket: TicketInterface) => ticket.uuid === ticketToUpdate.uuid);
+  public static saveTicket(ticketToSave: TicketInterface): void {
+    const userIndex: number = this._ticketCollection.findIndex((ticket: TicketInterface) => ticket.uuid === ticketToSave.uuid);
     if (userIndex) {
       this._ticketCollection.splice(userIndex, 1);
-      this._ticketCollection.push(
-        new TicketFactory(new TicketModel()).generate(
-          ticketToUpdate.uuid,
-          ticketToUpdate.status,
-          ticketToUpdate.createdAt,
-          ticketToUpdate.createdBy,
-          ticketToUpdate.updatedAt,
-          ticketToUpdate.updatedBy,
-          ticketToUpdate.subject,
-          ticketToUpdate.description,
-        )
-      );
     }
-  }
-
-  public static addTicket(ticket: TicketInterface): void {
-    this._ticketCollection.push(new TicketFactory(new TicketModel()).generate(
-      ticket.uuid,
-      ticket.status,
-      ticket.createdAt,
-      ticket.createdBy,
-      ticket.updatedAt,
-      ticket.updatedBy,
-      ticket.subject,
-      ticket.description
-    ));
+    this._ticketCollection.push(ticketToSave);
   }
 }

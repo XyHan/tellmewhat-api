@@ -1,7 +1,6 @@
 import { TicketInterface, TicketModel } from './ticket.model';
 
 export interface HistoryInterface {
-  uuid: string;
   ticket: TicketInterface;
   type: number;
   typeUuid: string | null;
@@ -11,21 +10,12 @@ export interface HistoryInterface {
 }
 
 export class HistoryModel implements HistoryInterface {
-  protected _uuid: string;
   protected _ticket: TicketModel;
   protected _type: number;
   protected _typeUuid: string | null;
   protected _description: string | null;
   protected _createdBy: string;
   protected _createdAt: Date;
-
-  get uuid(): string {
-    return this._uuid;
-  }
-
-  set uuid(value: string) {
-    this._uuid = value;
-  }
 
   get ticket(): TicketModel {
     return this._ticket;

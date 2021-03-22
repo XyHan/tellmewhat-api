@@ -59,19 +59,6 @@ export class UserFixtures {
     if (userIndex) {
       this._userCollection.splice(userIndex, 1);
     }
-    this._userCollection.push(
-      new UserFactory(new UserModel()).generate(
-        userToSave.uuid,
-        userToSave.status,
-        userToSave.email,
-        userToSave.password,
-        userToSave.salt,
-        userToSave.createdAt,
-        userToSave.createdBy,
-        userToSave.updatedAt,
-        userToSave.updatedBy,
-        userToSave.roles
-      )
-    );
+    this._userCollection.push(userToSave);
   }
 }

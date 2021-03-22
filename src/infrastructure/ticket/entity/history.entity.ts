@@ -1,4 +1,4 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { TicketEntity } from './ticket.entity';
 import { HistoryInterface } from '../../../domain/model/ticket/history.model';
@@ -15,19 +15,6 @@ export class HistoryEntity implements HistoryInterface {
   @Column({ type: 'varchar', length: 38, name: 'created_by', nullable: false }) public createdBy: string;
 
   @Expose()
-  @Column({ type: 'datetime', name: 'updated_at', nullable: false }) public updatedAt: Date;
-
-  @Expose()
-  @Column({ type: 'varchar', length: 38, name: 'updated_by', nullable: false }) public updatedBy: string;
-
-  @Expose()
-  @Column({ type: 'int', name: 'status' , nullable: false }) public status: number;
-
-  @Expose()
-  @Index('IDX_COMMENT_UUID')
-  @Column({ type: 'varchar', length: 38, name: 'uuid' , nullable: false, unique: true }) public uuid: string;
-
-  @Expose()
   @Column({ type: 'varchar', length: 200, name: 'description' , nullable: true }) public description: string | null;
 
   @Expose()
@@ -38,7 +25,7 @@ export class HistoryEntity implements HistoryInterface {
 
   @Expose()
   @Type(() => TicketEntity)
-  @ManyToOne(() => TicketEntity, ticket => ticket.comments)
+  @ManyToOne(() => TicketEntity, ticket => ticket.histories)
   @JoinColumn({ name: 'ticket_id' })
   ticket: TicketEntity;
 }
