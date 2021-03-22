@@ -24,6 +24,8 @@ import { CommentCommandHandlers } from './command/comment';
 import { MediaRepository } from './repository/media/media.repository';
 import { MediaQueryRepository } from './repository/media/media.query-repository';
 import { MediaCommandRepository } from './repository/media/media.command-repository';
+import { createAMediaCommandHandlerProvider } from './provider/command/media/create-a-media-command-handler.provider';
+import { MediaCommandHandlers } from './command/media';
 
 @Module({
   imports: [
@@ -51,6 +53,8 @@ import { MediaCommandRepository } from './repository/media/media.command-reposit
     ...CommentCommandHandlers,
     MediaQueryRepository,
     MediaCommandRepository,
+    createAMediaCommandHandlerProvider,
+    ...MediaCommandHandlers
   ],
   exports: [
     TicketQueryRepository,
