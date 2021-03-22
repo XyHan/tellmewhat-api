@@ -23,7 +23,7 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
   }
 
   public async handle(command: UpdateAUserCommand): Promise<void> {
-    const user: UserInterface = await this.findOneUserByUuid(command.uuid);
+    const user: UserInterface | null = await this.findOneUserByUuid(command.uuid);
     if (!user) throw new UpdateAUserCommandHandlerException(`UpdateAUserCommandHandler - User ${command.uuid} not found.`);
     const updatedUser: UserInterface = this.updateUserFromCommand(command, user);
     await this.saveUpdatedUser(updatedUser);

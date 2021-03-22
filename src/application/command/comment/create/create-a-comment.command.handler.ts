@@ -29,6 +29,7 @@ export class CreateACommentCommandHandler implements CommandHandlerInterface {
 
   public async handle(command: CreateACommentCommand): Promise<void> {
     const ticket: TicketInterface | null = await this.findOneTicketByUuid(command.ticketUuid);
+    if (!ticket) throw new CreateACommentCommandHandlerException(`CreateACommentCommandHandler - Ticket ${command.ticketUuid} not found.`);
     const comment: CommentInterface = this.generateCommentFromCommand(command, ticket);
     await this.registerComment(comment);
     await this.updateParent(comment, ticket);
@@ -64,7 +65,7 @@ export class CreateACommentCommandHandler implements CommandHandlerInterface {
     }
   }
 
-  private async findOneTicketByUuid(uuid: string): Promise<TicketInterface> {
+  private async findOneTicketByUuid(uuid: string): Promise<TicketInterface | null> {
     try {
       return await this._ticketQueryRepository.findOne(uuid);
     } catch (e) {

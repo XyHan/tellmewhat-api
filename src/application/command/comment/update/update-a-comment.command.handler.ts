@@ -28,7 +28,8 @@ export class UpdateACommentCommandHandler implements CommandHandlerInterface {
   }
 
   async handle(command: UpdateACommentCommand): Promise<void> {
-    const comment: CommentInterface = await this.findOneCommentByUuid(command.uuid);
+    const comment: CommentInterface | null = await this.findOneCommentByUuid(command.uuid);
+    if (!comment) throw new UpdateACommentCommandHandlerException(`UpdateACommentCommandHandler - Comment ${command.uuid} not found.`);
     const updatedComment: CommentInterface = this.updateCommentFromCommand(command, comment);
     await this.updateComment(updatedComment);
     await this.updateParent(updatedComment);
@@ -64,7 +65,7 @@ export class UpdateACommentCommandHandler implements CommandHandlerInterface {
     }
   }
 
-  private async findOneCommentByUuid(uuid: string): Promise<CommentInterface> {
+  private async findOneCommentByUuid(uuid: string): Promise<CommentInterface | null> {
     try {
       return await this._queryRepository.findOne(uuid);
     } catch (e) {

@@ -23,7 +23,8 @@ export class UpdateATicketCommandHandler implements CommandHandlerInterface {
   }
 
   async handle(command: UpdateATicketCommand): Promise<void> {
-    const ticket: TicketInterface = await this.findOneTicketByUuid(command.uuid);
+    const ticket: TicketInterface | null = await this.findOneTicketByUuid(command.uuid);
+    if (!ticket) throw new UpdateATicketCommandHandlerException(`UpdateATicketCommandHandler - Ticket ${command.uuid} not found`);
     const updatedTicket: TicketInterface = this.updateTicketFromCommand(command, ticket);
     await this.updateTicket(updatedTicket);
   }
@@ -58,7 +59,7 @@ export class UpdateATicketCommandHandler implements CommandHandlerInterface {
     }
   }
 
-  private async findOneTicketByUuid(uuid: string): Promise<TicketInterface> {
+  private async findOneTicketByUuid(uuid: string): Promise<TicketInterface | null> {
     try {
       return await this._queryRepository.findOne(uuid);
     } catch (e) {
