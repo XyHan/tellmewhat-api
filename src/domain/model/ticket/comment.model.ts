@@ -15,11 +15,11 @@ export class CommentModel implements CommentInterface {
   protected _createdAt: Date;
   protected _createdBy: string;
   protected _status: number;
-  private _content: string;
+  protected _content: string;
   protected _updatedAt: Date;
   protected _updatedBy: string;
   protected _uuid: string;
-  private _ticket: TicketModel;
+  protected _ticket: TicketModel;
 
   get createdAt(): Date {
     return this._createdAt;

@@ -3,7 +3,7 @@ export interface TokenInterface {
 }
 
 export class TokenModel implements TokenInterface {
-  private readonly _token: string;
+  protected readonly _token: string;
 
   constructor(token?: string) {
     this._token = token;

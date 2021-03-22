@@ -21,7 +21,7 @@ export class TicketModel implements TicketInterface {
   protected _updatedAt: Date;
   protected _updatedBy: string;
   protected _uuid: string;
-  private _comments: CommentModel[];
+  protected _comments: CommentModel[];
 
   get createdAt(): Date {
     return this._createdAt;

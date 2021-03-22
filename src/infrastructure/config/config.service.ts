@@ -4,6 +4,7 @@ import { ConfigInterface } from './config.interface';
 import { TicketEntity } from '../ticket/entity/ticket.entity';
 import { UserEntity } from '../security/entity/user.entity';
 import { CommentEntity } from '../ticket/entity/comment.entity';
+import { HistoryEntity } from '../ticket/entity/history.entity';
 
 @Injectable()
 export class ConfigService implements ConfigInterface {
@@ -15,7 +16,7 @@ export class ConfigService implements ConfigInterface {
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [TicketEntity, UserEntity, CommentEntity],
+      entities: [TicketEntity, UserEntity, CommentEntity, HistoryEntity],
       synchronize: true,
       keepConnectionAlive: true,
       debug: false,

@@ -6,10 +6,10 @@ export interface DecodedTokenInterface {
 }
 
 export class DecodedTokenModel implements DecodedTokenInterface {
-  private _uuid: string;
-  private _email: string;
-  private _iat: string;
-  private _exp: string;
+  protected _uuid: string;
+  protected _email: string;
+  protected _iat: string;
+  protected _exp: string;
 
   get uuid(): string {
     return this._uuid;

@@ -12,16 +12,16 @@ export interface UserInterface {
 }
 
 export class UserModel implements UserInterface {
-  private _email: string;
-  private _password: string;
-  private _salt: string;
-  private _uuid: string;
-  private _createdAt: Date;
-  private _createdBy: string;
-  private _updatedAt: Date;
-  private _updatedBy: string;
-  private _status: number;
-  private _roles: string[];
+  protected _email: string;
+  protected _password: string;
+  protected _salt: string;
+  protected _uuid: string;
+  protected _createdAt: Date;
+  protected _createdBy: string;
+  protected _updatedAt: Date;
+  protected _updatedBy: string;
+  protected _status: number;
+  protected _roles: string[];
 
   get email(): string {
     return this._email;
