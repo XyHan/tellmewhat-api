@@ -5,7 +5,7 @@ import { AuthServiceException } from './auth.service.exception';
 import { AuthManagerInterface } from '../../../../domain/utils/security/auth-manager.interface';
 import { JsonWebTokenAdapter } from '../../adapter/jwt/json-web-token.adapter';
 import { TokenInterface, TokenModel } from '../../../../domain/model/auth/token.model';
-import { UserInterface } from '../../../../domain/model/user/user.model';
+import { UserInterface} from '../../../../domain/model/user/user.model';
 import { IQueryBus, QueryBus } from "@nestjs/cqrs/dist";
 import { DecodedTokenInterface } from '../../../../domain/model/auth/decodedToken.model';
 import { plainToClass } from "class-transformer";
@@ -32,7 +32,7 @@ export class AuthService implements AuthManagerInterface {
     try {
       return await this._encrypter.compare(passwordToCompare, passwordToCompareWith);
     } catch (e) {
-      throw new AuthServiceException(`AuthService - validate - Password validation error: ${e.message}\n`);
+      throw new AuthServiceException(`AuthService - validate - Password validation error: ${e.message}`);
     }
   }
 
@@ -41,11 +41,11 @@ export class AuthService implements AuthManagerInterface {
       const token: string = this._jwtAdapter.sign(user);
       return new TokenModel(token);
     } catch (e) {
-      throw new AuthServiceException(`AuthService - generateToken - Token generation for user ${user.email} error: ${e.message}\n`);
+      throw new AuthServiceException(`AuthService - generateToken - Token generation for user ${user.email} error: ${e.message}`);
     }
   }
 
-  public async isValidUser(token: TokenInterface): Promise<UserInterface | boolean> {
+  public async isValidUser(token: TokenInterface): Promise<UserInterface | undefined> {
     try {
       const verifiedToken: string | object = this._jwtAdapter.verify(token);
       const decodedToken: DecodedTokenInterface = plainToClass(DecodedTokenTransformer, verifiedToken);
@@ -54,9 +54,8 @@ export class AuthService implements AuthManagerInterface {
         const user: UserInterface | null = await this._queryBus.execute(query);
         if (user) return user;
       }
-      return false;
     } catch (e) {
-      throw new AuthServiceException(`AuthService - isGrantedUser - Error: ${e.message}\n`);
+      throw new AuthServiceException(`AuthService - isGrantedUser - Error: ${e.message}`);
     }
   }
 }

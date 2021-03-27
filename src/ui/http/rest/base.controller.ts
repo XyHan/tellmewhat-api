@@ -37,4 +37,9 @@ export abstract class BaseController {
     this._logger.error(message);
     throw new HttpException(message, HttpStatus.BAD_REQUEST);
   }
+
+  protected http401Response(message: string): HttpException {
+    this._logger.error(message);
+    throw new HttpException(message, HttpStatus.UNAUTHORIZED);
+  }
 }

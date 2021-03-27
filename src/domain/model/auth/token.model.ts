@@ -1,5 +1,6 @@
 export interface TokenInterface {
   readonly token: string;
+  toString(): string;
 }
 
 export class TokenModel implements TokenInterface {
@@ -10,6 +11,10 @@ export class TokenModel implements TokenInterface {
   }
 
   get token(): string {
+    return this._token;
+  }
+
+  toString(): string {
     return this._token;
   }
 }

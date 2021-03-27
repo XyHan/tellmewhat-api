@@ -17,6 +17,7 @@ import { getOneUserByUuidQueryHandlerProvider } from './provider/query/get-one-u
 import { createAUserCommandHandlerProvider } from './provider/command/create-a-user-command-handler.provider';
 import { updateAUserCommandHandlerProvider } from './provider/command/update-a-user-command-handler.provider';
 import { deleteAUserCommandHandlerProvider } from './provider/command/delete-a-user-command-handler.provider';
+import { refreshTokenQueryHandlerProvider } from './provider/query/refresh-token-query-handler.provider';
 
 @Module({
   imports: [
@@ -38,7 +39,8 @@ import { deleteAUserCommandHandlerProvider } from './provider/command/delete-a-u
     JsonWebTokenAdapter,
     AuthService,
     ...AuthQueryHandlers,
-    loginQueryHandlerProvider
+    loginQueryHandlerProvider,
+    refreshTokenQueryHandlerProvider
   ],
   exports: [
     UserQueryRepository,

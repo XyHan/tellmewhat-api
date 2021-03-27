@@ -11,6 +11,13 @@ export class DecodedTokenModel implements DecodedTokenInterface {
   protected _iat: string;
   protected _exp: string;
 
+  constructor(attributes: { uuid?: string; email?: string; iat?: string; exp?: string }) {
+    if (attributes.uuid) this._uuid = attributes.uuid;
+    if (attributes.email) this._email = attributes.email;
+    if (attributes.iat) this._iat = attributes.iat;
+    if (attributes.exp) this._exp = attributes.exp;
+  }
+
   get uuid(): string {
     return this._uuid;
   }

@@ -88,4 +88,33 @@ describe('AuthController tests suite', () => {
     const response = await request(app.getHttpServer()).post('/login').send({});
     expect(response.status).toBe(400);
   });
+
+  it('GET - should return a TokenInterface', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/refresh-token')
+      .set(
+        'Authorization',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.C8yboJRqQNelrZiI7R_J5AgUFLbWqlzOTAfoqAKUR5A'
+      );
+    expect(response.status).toBe(200);
+    expect(response.body.token).toContain('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.');
+  });
+
+  it('GET - with auth - should return an error', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/refresh-token')
+      .set(
+        'Authorization',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+      );
+    expect(response.status).toBe(400);
+    expect(response.body.message).toContain('AuthController - login error: RefreshTokenQueryHandler - Invalid token');
+  });
+
+  it('GET - without auth - should return an error', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/refresh-token');
+    expect(response.status).toBe(401);
+    expect(response.body.message).toContain('Invalid token');
+  });
 });
