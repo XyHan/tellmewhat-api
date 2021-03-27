@@ -18,6 +18,8 @@ import { createAUserCommandHandlerProvider } from './provider/command/create-a-u
 import { updateAUserCommandHandlerProvider } from './provider/command/update-a-user-command-handler.provider';
 import { deleteAUserCommandHandlerProvider } from './provider/command/delete-a-user-command-handler.provider';
 import { refreshTokenQueryHandlerProvider } from './provider/query/refresh-token-query-handler.provider';
+import { jwtProvider } from './provider/utils/jwt.provider';
+import { bcryptProvider } from './provider/utils/bcrypt.provider';
 
 @Module({
   imports: [
@@ -40,7 +42,9 @@ import { refreshTokenQueryHandlerProvider } from './provider/query/refresh-token
     AuthService,
     ...AuthQueryHandlers,
     loginQueryHandlerProvider,
-    refreshTokenQueryHandlerProvider
+    refreshTokenQueryHandlerProvider,
+    jwtProvider,
+    bcryptProvider
   ],
   exports: [
     UserQueryRepository,

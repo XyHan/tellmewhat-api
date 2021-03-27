@@ -39,7 +39,7 @@ export class LoginQueryHandler implements QueryHandlerInterface {
     try {
       return await this._userRepository.findOneByEmail(email);
     } catch (e) {
-      const message: string = `LoginQueryHandler - findOneUserByEmail - Error for user email ${email}: ${e.message}\n`;
+      const message: string = `LoginQueryHandler - findOneUserByEmail - Error for user email ${email}: ${e.message}`;
       this._logger.error(message);
       throw new LoginQueryHandlerException(message);
     }

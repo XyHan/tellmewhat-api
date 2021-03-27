@@ -26,15 +26,15 @@ export class AuthManagerMock implements AuthManagerInterface {
     return tokenNumber;
   }
 
-  generateToken(user: UserInterface): TokenInterface {
+  public generateToken(user: UserInterface): TokenInterface {
     return new TokenModel(this.tokenCollection[this.getTokenNumber()]);
   }
 
-  isValidPassword(passwordToCompare: string, passwordToCompareWith: string): Promise<boolean> {
+  public isValidPassword(passwordToCompare: string, passwordToCompareWith: string): Promise<boolean> {
     return passwordToCompare === passwordToCompareWith ? Promise.resolve(true) : Promise.resolve(false);
   }
 
-  async isValidUser(token: TokenInterface): Promise<UserInterface | undefined> {
+  public async isValidUser(token: TokenInterface): Promise<UserInterface | undefined> {
     const isValidToken: boolean = this.tokenCollection.some((tokenAsString: string) => tokenAsString === token.toString());
     if (isValidToken) return Promise.resolve(UserFixtures.userCollection[0]);
   }
