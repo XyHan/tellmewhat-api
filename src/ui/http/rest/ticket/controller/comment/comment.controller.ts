@@ -11,25 +11,25 @@ import {
 } from '@nestjs/common';
 import { CommentInterface } from '../../../../../../domain/model/ticket/comment.model';
 import { CommandBus, ICommandBus, IQueryBus, QueryBus } from '@nestjs/cqrs';
-import { GetOneCommentQuery } from '../../../../../../application/query/comment/get-one-comment/get-one-comment.query';
-import { ListAllCommentsQuery } from '../../../../../../application/query/comment/list-all-comments/list-all-comments.query';
+import { GetOneCommentQuery } from '../../../../../../application/query/ticket/comment/get-one-comment/get-one-comment.query';
+import { ListAllCommentsQuery } from '../../../../../../application/query/ticket/comment/list-all-comments/list-all-comments.query';
 import { LoggerAdapterService } from '../../../../../../infrastructure/logger/logger-adapter.service';
 import { LoggerInterface } from '../../../../../../domain/utils/logger/logger.interface';
 import { CreateACommentDto } from '../../dto/comment/create-a-comment.dto';
-import { CreateACommentCommand } from '../../../../../../application/command/comment/create/create-a-comment.command';
+import { CreateACommentCommand } from '../../../../../../application/command/ticket/comment/create/create-a-comment.command';
 import { v4 } from 'uuid';
 import { plainToClass} from 'class-transformer';
 import { BaseController, PaginatedResponse } from '../../../base.controller';
 import { UpdateACommentDto } from '../../dto/comment/update-a-comment.dto';
-import { UpdateACommentCommand } from '../../../../../../application/command/comment/update/update-a-comment.command';
-import { DeleteACommentCommand } from '../../../../../../application/command/comment/delete/delete-a-comment.command';
+import { UpdateACommentCommand } from '../../../../../../application/command/ticket/comment/update/update-a-comment.command';
+import { DeleteACommentCommand } from '../../../../../../application/command/ticket/comment/delete/delete-a-comment.command';
 import { CommentEntity } from '../../../../../../infrastructure/ticket/entity/comment.entity';
 import { AuthGuard } from '../../../../guard/auth.guard';
 import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
 import { UserInterface } from '../../../../../../domain/model/user/user.model';
 import { Roles } from '../../../../../../infrastructure/security/decorator/role.decorator';
 
-@Controller('/comments')
+@Controller('/tickets/:ticketUuid/comments')
 export class CommentController extends BaseController {
   private readonly _queryBus: IQueryBus;
   private readonly _commandBus: ICommandBus;
@@ -85,12 +85,13 @@ export class CommentController extends BaseController {
   @Roles('USER', 'ADMIN', 'SUPER_ADMIN')
   @UsePipes(new ValidationPipe({ transform: true }))
   public async post(
+    @Param('ticketUuid') ticketUuid: string,
     @Body() createACommentDto: CreateACommentDto,
     @CurrentUser() user: UserInterface,
   ): Promise<CommentInterface> {
     try {
       const uuid: string = v4();
-      const command = new CreateACommentCommand(uuid, createACommentDto.content, user.uuid, createACommentDto.ticketUuid);
+      const command = new CreateACommentCommand(uuid, createACommentDto.content, user.uuid, ticketUuid);
       await this._commandBus.execute(command);
       return await this.findOneCommentByUuid(uuid);
     } catch (e) {

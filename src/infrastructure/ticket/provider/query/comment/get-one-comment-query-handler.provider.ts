@@ -1,7 +1,7 @@
 import { FactoryProvider } from '@nestjs/common';
 import { LoggerInterface } from '../../../../../domain/utils/logger/logger.interface';
 import { LoggerAdapterService } from '../../../../logger/logger-adapter.service';
-import { GetOneCommentQueryHandler } from '../../../../../application/query/comment/get-one-comment/get-one-comment.query.handler';
+import { GetOneCommentQueryHandler } from '../../../../../application/query/ticket/comment/get-one-comment/get-one-comment.query.handler';
 import { CommentQueryRepository } from '../../../repository/comment/comment.query-repository';
 import { CommentQueryRepositoryInterface } from '../../../../../domain/repository/comment/comment.query-repository.interface';
 

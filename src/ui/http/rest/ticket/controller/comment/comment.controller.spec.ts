@@ -79,7 +79,10 @@ describe('CommentController tests suite', () => {
   });
 
   it('GET - LISTALL - should return an array of CommentInterface', async () => {
-    const response = await request(app.getHttpServer()).get('/comments').set({ 'Authorization': `Bearer ${token}` });
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/comments`)
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
     expect(response.status).toBe(200);
     expect(response.body.page).toBe(1);
     expect(response.body.pages).toBe(1);
@@ -90,18 +93,24 @@ describe('CommentController tests suite', () => {
   });
 
   it('GET - LISTALL - should return a 401', async () => {
-    const response = await request(app.getHttpServer()).get('/comments').set({ 'Authorization': `Bearer ${wrongToken}` });
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/comments`)
+      .set({ 'Authorization': `Bearer ${wrongToken}` })
+    ;
     expect(response.status).toBe(401);
   });
 
   it('GET - LISTALL - should return a 403', async () => {
-    const response = await request(app.getHttpServer()).get('/comments').set({ 'Authorization': `Bearer ${badRoleToken}` });
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/comments`)
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
     expect(response.status).toBe(403);
   });
 
   it('GET - FINDONE - should return a CommentInterface', async () => {
     const response = await request(app.getHttpServer())
-      .get(`/comments/${UUID}`)
+      .get(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.body.uuid).toBe(UUID);
@@ -109,7 +118,7 @@ describe('CommentController tests suite', () => {
 
   it('GET - FINDONE - should return a 401', async () => {
     const response = await request(app.getHttpServer())
-      .get(`/comments/${UUID}`)
+      .get(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
@@ -117,7 +126,7 @@ describe('CommentController tests suite', () => {
 
   it('GET - FINDONE - should return a 403', async () => {
     const response = await request(app.getHttpServer())
-      .get(`/comments/${UUID}`)
+      .get(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
     expect(response.status).toBe(403);
@@ -125,8 +134,8 @@ describe('CommentController tests suite', () => {
 
   it('POST - should return a CommentInterface', async () => {
     const response = await request(app.getHttpServer())
-      .post('/comments')
-      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
+      .post(`/tickets/${TICKET_UUID}/comments`)
+      .send({ content: CONTENT })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(201);
@@ -136,8 +145,8 @@ describe('CommentController tests suite', () => {
 
   it('POST - should return a 401', async () => {
     const response = await request(app.getHttpServer())
-      .post('/comments')
-      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
+      .post(`/tickets/${TICKET_UUID}/comments`)
+      .send({ content: CONTENT })
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
@@ -145,8 +154,8 @@ describe('CommentController tests suite', () => {
 
   it('POST - should return 403', async () => {
     const response = await request(app.getHttpServer())
-      .post('/comments')
-      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
+      .post(`/tickets/${TICKET_UUID}/comments`)
+      .send({ content: CONTENT })
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
     expect(response.status).toBe(403);
@@ -154,12 +163,12 @@ describe('CommentController tests suite', () => {
 
   it('UPDATE - should return a CommentInterface', async () => {
     const postResponse = await request(app.getHttpServer())
-      .post('/comments')
-      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
+      .post(`/tickets/${TICKET_UUID}/comments`)
+      .send({ content: CONTENT })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     const response = await request(app.getHttpServer())
-      .put(`/comments/${postResponse.body.uuid}`)
+      .put(`/tickets/${TICKET_UUID}/comments/${postResponse.body.uuid}`)
       .send({
         status: 3,
         content: `${CONTENT} Sed ac ultricies est. Donec egestas laoreet urna eget hendrerit.`,
@@ -173,7 +182,7 @@ describe('CommentController tests suite', () => {
 
   it('UPDATE - should return a 401', async () => {
     const response = await request(app.getHttpServer())
-      .put(`/comments/${UUID}`)
+      .put(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .send({
         status: 3,
         content: CONTENT
@@ -185,7 +194,7 @@ describe('CommentController tests suite', () => {
 
   it('UPDATE - should return a 403', async () => {
     const response = await request(app.getHttpServer())
-      .put(`/comments/${UUID}`)
+      .put(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .send({
         status: 3,
         content: CONTENT,
@@ -197,12 +206,12 @@ describe('CommentController tests suite', () => {
 
   it('DELETE - should return a CommentInterface', async () => {
     const postResponse = await request(app.getHttpServer())
-      .post('/comments')
-      .send({ content: CONTENT, ticketUuid: TICKET_UUID })
+      .post(`/tickets/${TICKET_UUID}/comments`)
+      .send({ content: CONTENT })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     const response = await request(app.getHttpServer())
-      .delete(`/comments/${postResponse.body.uuid}`)
+      .delete(`/tickets/${TICKET_UUID}/comments/${postResponse.body.uuid}`)
       .send()
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -212,7 +221,7 @@ describe('CommentController tests suite', () => {
 
   it('DELETE - should return a 401', async () => {
     const response = await request(app.getHttpServer())
-      .delete(`/comments/${UUID}`)
+      .delete(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .send()
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
@@ -221,7 +230,7 @@ describe('CommentController tests suite', () => {
 
   it('DELETE - should return a 403', async () => {
     const response = await request(app.getHttpServer())
-      .delete(`/comments/${UUID}`)
+      .delete(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .send()
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
@@ -230,7 +239,7 @@ describe('CommentController tests suite', () => {
 
   it('GET - FINDONE - should return a 404', async () => {
     const response = await request(app.getHttpServer())
-      .get(`/comments/bad-uuid`)
+      .get(`/tickets/${TICKET_UUID}/comments/bad-uuid`)
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(404);
@@ -238,7 +247,7 @@ describe('CommentController tests suite', () => {
 
   it('POST - should return 400 bad subject attribute', async () => {
     const response = await request(app.getHttpServer())
-      .post('/comments')
+      .post(`/tickets/${TICKET_UUID}/comments`)
       .send({ content: 1 })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -247,7 +256,7 @@ describe('CommentController tests suite', () => {
 
   it('POST - should return 400 missing attributes', async () => {
     const response = await request(app.getHttpServer())
-      .post('/comments')
+      .post(`/tickets/${TICKET_UUID}/comments`)
       .send({})
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -256,7 +265,7 @@ describe('CommentController tests suite', () => {
 
   it('UPDATE - should return 400 bad status attribute', async () => {
     const response = await request(app.getHttpServer())
-      .put(`/comments/${UUID}`)
+      .put(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .send({
         status: '3',
         content: CONTENT,
@@ -268,7 +277,7 @@ describe('CommentController tests suite', () => {
 
   it('UPDATE - should return 400 bad content attribute', async () => {
     const response = await request(app.getHttpServer())
-      .put(`/comments/${UUID}`)
+      .put(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .send({
         status: 3,
         content: 0,
@@ -280,7 +289,7 @@ describe('CommentController tests suite', () => {
 
   it('UPDATE - should return 400 missing attributes', async () => {
     const response = await request(app.getHttpServer())
-      .put(`/comments/${UUID}`)
+      .put(`/tickets/${TICKET_UUID}/comments/${UUID}`)
       .send({})
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -289,7 +298,7 @@ describe('CommentController tests suite', () => {
 
   it('DELETE - should return a bad request status', async () => {
     const response = await request(app.getHttpServer())
-      .delete(`/comments/bad-uuid`)
+      .delete(`/tickets/${TICKET_UUID}/comments/bad-uuid`)
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(400);

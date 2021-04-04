@@ -1,7 +1,7 @@
 import { FactoryProvider } from '@nestjs/common';
 import { LoggerInterface } from '../../../../../domain/utils/logger/logger.interface';
 import { LoggerAdapterService } from '../../../../logger/logger-adapter.service';
-import { GetOneTicketQueryHandler } from '../../../../../application/query/ticket/get-one-ticket/get-one-ticket.query.handler';
+import { GetOneTicketQueryHandler } from '../../../../../application/query/ticket/ticket/get-one-ticket/get-one-ticket.query.handler';
 import { TicketQueryRepository } from '../../../repository/ticket/ticket.query-repository';
 import { TicketQueryRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.query-repository.interface';
 

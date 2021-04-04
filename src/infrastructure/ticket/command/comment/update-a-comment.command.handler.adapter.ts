@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
-import { UpdateACommentCommand } from '../../../../application/command/comment/update/update-a-comment.command';
+import { UpdateACommentCommand } from '../../../../application/command/ticket/comment/update/update-a-comment.command';
 import { CommandHandlerInterface } from '../../../../application/command/command-handler.interface';
 
 @CommandHandler(UpdateACommentCommand)

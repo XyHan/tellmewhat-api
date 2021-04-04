@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
-import { CreateAMediaCommand } from '../../../../application/command/media/create/create-a-media.command';
+import { CreateAMediaCommand } from '../../../../application/command/ticket/media/create/create-a-media.command';
 import { CommandHandlerInterface } from '../../../../application/command/command-handler.interface';
 
 @CommandHandler(CreateAMediaCommand)

@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
-import { CreateATicketCommand } from '../../../../application/command/ticket/create/create-a-ticket.command';
+import { CreateATicketCommand } from '../../../../application/command/ticket/ticket/create/create-a-ticket.command';
 import { CommandHandlerInterface } from '../../../../application/command/command-handler.interface';
 
 @CommandHandler(CreateATicketCommand)

@@ -4,7 +4,7 @@ import { LoggerAdapterService } from '../../../../logger/logger-adapter.service'
 import { TicketCommandRepository } from '../../../repository/ticket/ticket.command-repository';
 import { TicketCommandRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.command-repository.interface';
 import { TicketQueryRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.query-repository.interface';
-import { DeleteATicketCommandHandler } from '../../../../../application/command/ticket/delete/delete-a-ticket.command.handler';
+import { DeleteATicketCommandHandler } from '../../../../../application/command/ticket/ticket/delete/delete-a-ticket.command.handler';
 import { TicketQueryRepository } from '../../../repository/ticket/ticket.query-repository';
 
 export const deleteATicketCommandHandlerProvider: FactoryProvider = {

@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
-import { GetOneCommentQuery } from '../../../../application/query/comment/get-one-comment/get-one-comment.query';
+import { GetOneCommentQuery } from '../../../../application/query/ticket/comment/get-one-comment/get-one-comment.query';
 import { CommentInterface } from '../../../../domain/model/ticket/comment.model';
 import { Inject } from '@nestjs/common';
 import { QueryHandlerInterface } from '../../../../application/query/query-handler.interface';

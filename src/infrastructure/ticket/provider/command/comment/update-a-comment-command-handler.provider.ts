@@ -3,7 +3,7 @@ import { LoggerInterface } from '../../../../../domain/utils/logger/logger.inter
 import { LoggerAdapterService } from '../../../../logger/logger-adapter.service';
 import { CommentCommandRepository } from '../../../repository/comment/comment.command-repository';
 import { CommentCommandRepositoryInterface } from '../../../../../domain/repository/comment/comment.command-repository.interface';
-import { UpdateACommentCommandHandler } from '../../../../../application/command/comment/update/update-a-comment.command.handler';
+import { UpdateACommentCommandHandler } from '../../../../../application/command/ticket/comment/update/update-a-comment.command.handler';
 import { CommentQueryRepositoryInterface } from '../../../../../domain/repository/comment/comment.query-repository.interface';
 import { CommentQueryRepository } from '../../../repository/comment/comment.query-repository';
 import { TicketCommandRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.command-repository.interface';

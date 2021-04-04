@@ -5,9 +5,4 @@ export class CreateACommentDto {
   @IsNotEmpty()
   @IsDefined()
   content: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsDefined()
-  ticketUuid: string;
 }

@@ -22,12 +22,12 @@ export class AuthGuard implements CanActivate {
     private readonly reflector: Reflector,
   ) {}
 
-  async canActivate(context: ExecutionContext) {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
       const headers = this.validHeaders(context);
       const token: TokenInterface = new TokenModel(headers.headers.authorization);
-      const user: UserInterface | boolean = await this.authService.isValidUser(token);
-      if (user && typeof user !== 'boolean' && this.areValidRoles(user, context)) {
+      const user: UserInterface | undefined = await this.authService.isValidUser(token);
+      if (user && this.areValidRoles(user, context)) {
         Reflect.defineMetadata('currentUser', user, BaseController);
         return true;
       }
@@ -39,11 +39,7 @@ export class AuthGuard implements CanActivate {
 
   private validHeaders(context: ExecutionContext): IncomingMessage {
     const headers = _.find(context.getArgs(), 'headers');
-    if (
-      typeof headers === 'undefined' ||
-      typeof headers.headers === 'undefined' ||
-      typeof headers.headers.authorization === 'undefined'
-    ) {
+    if (!headers || !headers.headers || !headers.headers.authorization) {
       throw new UnauthorizedException('[AuthGuard] A valid token is required');
     }
     return headers;

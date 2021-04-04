@@ -8,7 +8,7 @@ import { MediaEntity } from '../ticket/entity/media.entity';
 
 @Injectable()
 export class ConfigService implements ConfigInterface {
-  private _storageDir: string = process.env.STORAGE_DIR || `${__dirname}/../../upload`;
+  private _storageDir: string = process.env.STORAGE_DIR;
 
   get storageDir(): string {
     return this._storageDir;

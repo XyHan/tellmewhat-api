@@ -106,5 +106,5 @@ dist
 .idea
 .idea/
 var/
-src/upload
 src/upload/
+uploads/

@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
-import { GetOneMediaQuery } from '../../../../application/query/media/get-one-media/get-one-media.query';
+import { GetOneMediaQuery } from '../../../../application/query/ticket/media/get-one-media/get-one-media.query';
 import { MediaInterface } from '../../../../domain/model/ticket/media.model';
 import { Inject } from '@nestjs/common';
 import { QueryHandlerInterface } from '../../../../application/query/query-handler.interface';

@@ -22,6 +22,7 @@ import { ConfigService } from '../../infrastructure/config/config.service';
     TicketModule,
     SecurityModule,
     LoggerModule,
+    ConfigModule,
     MulterModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({

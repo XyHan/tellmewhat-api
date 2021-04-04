@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
 import { CommentInterface } from '../../../../domain/model/ticket/comment.model';
 import { Inject } from '@nestjs/common';
-import { ListAllCommentsQuery } from '../../../../application/query/comment/list-all-comments/list-all-comments.query';
+import { ListAllCommentsQuery } from '../../../../application/query/ticket/comment/list-all-comments/list-all-comments.query';
 import { QueryHandlerInterface } from '../../../../application/query/query-handler.interface';
 
 @QueryHandler(ListAllCommentsQuery)

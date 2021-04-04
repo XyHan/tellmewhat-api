@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs/dist';
 import { Inject } from '@nestjs/common';
-import { DeleteAMediaCommand } from '../../../../application/command/media/delete/delete-a-media.command';
+import { DeleteAMediaCommand } from '../../../../application/command/ticket/media/delete/delete-a-media.command';
 import { CommandHandlerInterface } from '../../../../application/command/command-handler.interface';
 
 @CommandHandler(DeleteAMediaCommand)

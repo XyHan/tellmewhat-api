@@ -15,13 +15,13 @@ export class MediaEntity implements MediaInterface {
   @Column({ type: 'varchar', length: 38, name: 'created_by', nullable: false }) public createdBy: string;
 
   @Expose()
-  @Column({ type: 'text', name: 'filename' , nullable: false }) public filename: string;
+  @Column({ type: 'varchar', name: 'filename' , nullable: false }) public filename: string;
 
   @Expose()
-  @Column({ type: 'text', name: 'original_filename' , nullable: false }) public originalFilename: string;
+  @Column({ type: 'varchar', name: 'original_filename' , nullable: false }) public originalFilename: string;
 
   @Expose()
-  @Column({ type: 'text', name: 'mime_type' , nullable: false }) public mimeType: string;
+  @Column({ type: 'varchar', name: 'mime_type' , nullable: false }) public mimeType: string;
 
   @Expose()
   @Index('IDX_COMMENT_UUID')

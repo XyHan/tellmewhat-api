@@ -3,7 +3,7 @@ import { LoggerInterface } from '../../../../../domain/utils/logger/logger.inter
 import { LoggerAdapterService } from '../../../../logger/logger-adapter.service';
 import { TicketQueryRepository } from '../../../repository/ticket/ticket.query-repository';
 import { TicketQueryRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.query-repository.interface';
-import { ListAllTicketsQueryHandler } from '../../../../../application/query/ticket/list-all-tickets/list-all-tickets.query.handler';
+import { ListAllTicketsQueryHandler } from '../../../../../application/query/ticket/ticket/list-all-tickets/list-all-tickets.query.handler';
 
 export const listAllTicketsQueryHandlerProvider: FactoryProvider = {
   provide: 'LIST_ALL_TICKETS_QUERY_HANDLER',

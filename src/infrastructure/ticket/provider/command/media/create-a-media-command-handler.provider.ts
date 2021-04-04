@@ -1,7 +1,7 @@
 import { FactoryProvider } from '@nestjs/common';
 import { LoggerInterface } from '../../../../../domain/utils/logger/logger.interface';
 import { LoggerAdapterService } from '../../../../logger/logger-adapter.service';
-import { CreateAMediaCommandHandler } from '../../../../../application/command/media/create/create-a-media.command.handler';
+import { CreateAMediaCommandHandler } from '../../../../../application/command/ticket/media/create/create-a-media.command.handler';
 import { MediaCommandRepository } from '../../../repository/media/media.command-repository';
 import { MediaCommandRepositoryInterface } from '../../../../../domain/repository/media/media.command-repository.interface';
 import { TicketQueryRepository } from '../../../repository/ticket/ticket.query-repository';

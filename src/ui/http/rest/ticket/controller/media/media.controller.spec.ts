@@ -79,7 +79,10 @@ describe('MediaController tests suite', () => {
   });
 
   it('GET - LISTALL - should return an array of MediaInterface', async () => {
-    const response = await request(app.getHttpServer()).get('/media').set({ 'Authorization': `Bearer ${token}` });
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/media`)
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
     expect(response.status).toBe(200);
     expect(response.body.page).toBe(1);
     expect(response.body.pages).toBe(1);
@@ -90,18 +93,24 @@ describe('MediaController tests suite', () => {
   });
 
   it('GET - LISTALL - should return a 401', async () => {
-    const response = await request(app.getHttpServer()).get('/media').set({ 'Authorization': `Bearer ${wrongToken}` });
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/media`)
+      .set({ 'Authorization': `Bearer ${wrongToken}` })
+    ;
     expect(response.status).toBe(401);
   });
 
   it('GET - LISTALL - should return a 403', async () => {
-    const response = await request(app.getHttpServer()).get('/media').set({ 'Authorization': `Bearer ${badRoleToken}` });
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/media`)
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
     expect(response.status).toBe(403);
   });
 
   it('GET - FINDONE - should return a MediaInterface', async () => {
     const response = await request(app.getHttpServer())
-      .get(`/media/${UUID}`)
+      .get(`/tickets/${TICKET_UUID}/media/${UUID}`)
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.body.uuid).toBe(UUID);
@@ -109,7 +118,7 @@ describe('MediaController tests suite', () => {
 
   it('GET - FINDONE - should return a 401', async () => {
     const response = await request(app.getHttpServer())
-      .get(`/media/${UUID}`)
+      .get(`/tickets/${TICKET_UUID}/media/${UUID}`)
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
@@ -117,7 +126,7 @@ describe('MediaController tests suite', () => {
 
   it('GET - FINDONE - should return a 403', async () => {
     const response = await request(app.getHttpServer())
-      .get(`/media/${UUID}`)
+      .get(`/tickets/${TICKET_UUID}/media/${UUID}`)
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
     expect(response.status).toBe(403);
@@ -125,9 +134,8 @@ describe('MediaController tests suite', () => {
 
   it('POST - should return a MediaInterface', async () => {
     const response = await request(app.getHttpServer())
-      .post('/media')
+      .post(`/tickets/${TICKET_UUID}/media`)
       .attach('file', FILE)
-      .field({ ticketUuid: TICKET_UUID })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(201);
@@ -136,9 +144,8 @@ describe('MediaController tests suite', () => {
 
   it('POST - should return a 401', async () => {
     const response = await request(app.getHttpServer())
-      .post('/media')
+      .post(`/tickets/${TICKET_UUID}/media`)
       .attach('file', FILE)
-      .field({ ticketUuid: TICKET_UUID })
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
@@ -146,9 +153,8 @@ describe('MediaController tests suite', () => {
 
   it('POST - should return 403', async () => {
     const response = await request(app.getHttpServer())
-      .post('/media')
+      .post(`/tickets/${TICKET_UUID}/media`)
       .attach('file', FILE)
-      .field({ ticketUuid: TICKET_UUID })
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
     expect(response.status).toBe(403);
@@ -156,13 +162,12 @@ describe('MediaController tests suite', () => {
 
   it('DELETE - should return a MediaInterface', async () => {
     const postResponse = await request(app.getHttpServer())
-      .post('/media')
+      .post(`/tickets/${TICKET_UUID}/media`)
       .attach('file', FILE)
-      .field({ ticketUuid: TICKET_UUID })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     const response = await request(app.getHttpServer())
-      .delete(`/media/${postResponse.body.uuid}`)
+      .delete(`/tickets/${TICKET_UUID}/media/${postResponse.body.uuid}`)
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(204);
@@ -170,7 +175,7 @@ describe('MediaController tests suite', () => {
 
   it('DELETE - should return a 401', async () => {
     const response = await request(app.getHttpServer())
-      .delete(`/media/${UUID}`)
+      .delete(`/tickets/${TICKET_UUID}/media/${UUID}`)
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
     expect(response.status).toBe(401);
@@ -178,7 +183,7 @@ describe('MediaController tests suite', () => {
 
   it('DELETE - should return a 403', async () => {
     const response = await request(app.getHttpServer())
-      .delete(`/media/${UUID}`)
+      .delete(`/tickets/${TICKET_UUID}/media/${UUID}`)
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
     expect(response.status).toBe(403);
@@ -186,7 +191,7 @@ describe('MediaController tests suite', () => {
 
   it('GET - FINDONE - should return a 404', async () => {
     const response = await request(app.getHttpServer())
-      .get(`/media/bad-uuid`)
+      .get(`/tickets/${TICKET_UUID}/media/bad-uuid`)
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(404);
@@ -194,7 +199,7 @@ describe('MediaController tests suite', () => {
 
   it('POST - should return 400 bad subject attribute', async () => {
     const response = await request(app.getHttpServer())
-      .post('/media')
+      .post(`/tickets/${TICKET_UUID}/media`)
       .send({ content: 1 })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -203,7 +208,7 @@ describe('MediaController tests suite', () => {
 
   it('POST - should return 400 missing attributes', async () => {
     const response = await request(app.getHttpServer())
-      .post('/media')
+      .post(`/tickets/${TICKET_UUID}/media`)
       .send({})
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -212,7 +217,7 @@ describe('MediaController tests suite', () => {
 
   it('DELETE - should return a bad request status', async () => {
     const response = await request(app.getHttpServer())
-      .delete(`/media/bad-uuid`)
+      .delete(`/tickets/${TICKET_UUID}/media/bad-uuid`)
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(400);

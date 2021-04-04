@@ -6,7 +6,6 @@ export class RolesValueObject {
   ]
 
   public static isValidRole(role: string): boolean {
-    const index: number = this.availableUserRoles.findIndex((availableRole: string) => availableRole === role);
-    return !!index;
+    return this.availableUserRoles.some((availableRole: string) => availableRole === role);
   }
 }

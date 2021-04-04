@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs/dist';
 import { MediaInterface } from '../../../../domain/model/ticket/media.model';
 import { Inject } from '@nestjs/common';
-import { ListAllMediaQuery } from '../../../../application/query/media/list-all-media/list-all-media.query';
+import { ListAllMediaQuery } from '../../../../application/query/ticket/media/list-all-media/list-all-media.query';
 import { QueryHandlerInterface } from '../../../../application/query/query-handler.interface';
 
 @QueryHandler(ListAllMediaQuery)
