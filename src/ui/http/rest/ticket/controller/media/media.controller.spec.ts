@@ -222,4 +222,45 @@ describe('MediaController tests suite', () => {
     ;
     expect(response.status).toBe(400);
   });
+
+  it('GET - should download a media', async () => {
+    const postResponse = await request(app.getHttpServer())
+      .post(`/tickets/${TICKET_UUID}/media`)
+      .attach('file', FILE)
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
+
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/media/${postResponse.body.uuid}/download`)
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
+    expect(response.status).toBe(200);
+    expect(response.headers['content-type']).toBe('text/plain; charset=utf-8');
+    expect(response.headers['content-disposition']).toBe('attachment; filename=test.txt');
+    expect(response.text).toBe('Test file.\n');
+  });
+
+  it('GET - should return a 404 media download', async () => {
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/media/bad-uuid/download`)
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
+    expect(response.status).toBe(404);
+  });
+
+  it('GET - should return a 400 media download', async () => {
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/media/204df646-3b8a-450b-b15c-fab854149136/download`)
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
+    expect(response.status).toBe(400);
+  });
+
+  it('GET - should return a 403 media download', async () => {
+    const response = await request(app.getHttpServer())
+      .get(`/tickets/${TICKET_UUID}/media/204df646-3b8a-450b-b15c-fab854149136/download`)
+      .set({ 'Authorization': `Bearer ${badRoleToken}` })
+    ;
+    expect(response.status).toBe(403);
+  });
 });

@@ -32,7 +32,7 @@ import { CurrentUser } from '../../../../../../infrastructure/security/decorator
 import { UserInterface } from '../../../../../../domain/model/user/user.model';
 import { Roles } from '../../../../../../infrastructure/security/decorator/role.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { createReadStream } from 'fs';
+import { createReadStream, ReadStream } from 'fs';
 import { ConfigService } from '../../../../../../infrastructure/config/config.service';
 
 @Controller('/tickets/:ticketUuid/media')
@@ -103,12 +103,18 @@ export class MediaController extends BaseController {
   public async download(
     @Param('uuid') uuid: string,
     @Res() response: Response
-  ): Promise<void> {
+  ): Promise<Response> {
+    const media: MediaInterface = await this.findOneMediaByUuid(uuid);
     try {
-      const media: MediaInterface = await this.findOneMediaByUuid(uuid);
+      const stream: ReadStream = createReadStream(`${this._config.storageDir}/${media.filename}`, { autoClose: true });
+      stream.on('error', err => {
+        response.status(400);
+        response.json({ statusCode: 400, message: err.message });
+      });
+      stream.pipe(response);
       response.set({ 'Content-Type': media.mimeType });
       response.set({ 'Content-Disposition': `attachment; filename=${media.originalFilename}` })
-      createReadStream(`${this._config.storageDir}/${media.filename}`).pipe(response);
+      return response;
     } catch (e) {
       const message: string = `MediaController - download media ${uuid} error. Previous: ${e.message}`;
       this.http400Response(message);
