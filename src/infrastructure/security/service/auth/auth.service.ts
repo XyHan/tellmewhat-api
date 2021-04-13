@@ -7,7 +7,7 @@ import { JsonWebTokenAdapter } from '../../adapter/jwt/json-web-token.adapter';
 import { TokenInterface, TokenModel } from '../../../../domain/model/auth/token.model';
 import { UserInterface} from '../../../../domain/model/user/user.model';
 import { IQueryBus, QueryBus } from "@nestjs/cqrs/dist";
-import { DecodedTokenInterface } from '../../../../domain/model/auth/decodedToken.model';
+import { DecodedTokenInterface } from '../../../../domain/model/auth/decoded-token.model';
 import { plainToClass } from "class-transformer";
 import { GetOneUserByUuidQuery } from '../../../../application/query/user/get-one-user-by-uuid/get-one-user-by-uuid.query';
 import { DecodedTokenTransformer } from '../../transformer/decodedToken.transformer';

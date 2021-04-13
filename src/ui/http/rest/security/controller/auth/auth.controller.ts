@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Inject,
   Post,
   Req,
@@ -35,6 +36,7 @@ export class AuthController extends BaseController {
   }
 
   @Post('login')
+  @HttpCode(200)
   public async login(@Body() loginDto: LoginDto): Promise<TokenInterface> {
     try {
       const query = new LoginQuery(loginDto.email, loginDto.password);

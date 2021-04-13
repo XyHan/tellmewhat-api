@@ -48,7 +48,7 @@ describe('AuthController tests suite', () => {
       email: EMAIL,
       password: PASSWORD,
     });
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
     expect(response.body.token).toContain('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.');
   });
 

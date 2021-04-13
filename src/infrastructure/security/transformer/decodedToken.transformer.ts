@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { DecodedTokenInterface } from '../../../domain/model/auth/decodedToken.model';
+import { DecodedTokenInterface } from '../../../domain/model/auth/decoded-token.model';
 
 export class DecodedTokenTransformer implements DecodedTokenInterface {
   @Expose()
