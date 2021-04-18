@@ -16,7 +16,7 @@ export class TicketEntity implements TicketInterface {
   @Column({ type: 'varchar', length: 38, name: 'created_by', nullable: false }) public createdBy: string;
 
   @Expose()
-  @Column({ type: 'text', name: 'description' , nullable: false }) public description: string;
+  @Column({ type: 'text', name: 'description' , nullable: true }) public description: string | null;
 
   @Expose()
   @Column({ type: 'int', name: 'status' , nullable: false }) public status: number;

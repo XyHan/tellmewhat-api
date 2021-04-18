@@ -5,18 +5,15 @@ export class CreateATicketCommand implements CommandInterface {
   private readonly _name: string;
   private readonly _version: number;
   private readonly _subject: string;
-  private readonly _description: string;
   private readonly _createdBy: string;
 
   constructor(
     uuid: string,
     subject: string,
-    description: string,
     createdBy: string,
   ) {
     this._uuid = uuid;
     this._subject = subject;
-    this._description = description;
     this._createdBy = createdBy;
   }
 
@@ -34,10 +31,6 @@ export class CreateATicketCommand implements CommandInterface {
 
   get subject(): string {
     return this._subject;
-  }
-
-  get description(): string {
-    return this._description;
   }
 
   get createdBy(): string {

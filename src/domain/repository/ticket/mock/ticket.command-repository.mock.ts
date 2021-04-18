@@ -37,7 +37,7 @@ export class TicketCommandRepositoryMock implements TicketCommandRepositoryInter
   }
 
   private isValidTicket(ticket: TicketInterface): boolean {
-    if (!ticket.subject.length || !ticket.uuid.length || !ticket.description.length) {
+    if (!ticket.subject.length || !ticket.uuid.length) {
       const message: string = `TicketCommandRepository - Error on create ticket '${ticket.uuid}' - subject, uuid and description cannot be empty`;
       throw new TicketRepositoryException(message);
     }

@@ -119,22 +119,19 @@ describe('TicketController tests suite', () => {
     const response = await request(app.getHttpServer())
       .post('/tickets')
       .send({
-        subject: SUBJECT,
-        description: DESCRIPTION
+        subject: SUBJECT
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(201);
     expect(response.body.subject).toBe(SUBJECT);
-    expect(response.body.description).toBe(DESCRIPTION);
   });
 
   it('POST - should return a 401', async () => {
     const response = await request(app.getHttpServer())
       .post('/tickets')
       .send({
-        subject: SUBJECT,
-        description: DESCRIPTION
+        subject: SUBJECT
       })
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
@@ -145,8 +142,7 @@ describe('TicketController tests suite', () => {
     const response = await request(app.getHttpServer())
       .post('/tickets')
       .send({
-        subject: SUBJECT,
-        description: DESCRIPTION
+        subject: SUBJECT
       })
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
@@ -235,20 +231,7 @@ describe('TicketController tests suite', () => {
     const response = await request(app.getHttpServer())
       .post('/tickets')
       .send({
-        subject: 1,
-        description: DESCRIPTION
-      })
-      .set({ 'Authorization': `Bearer ${token}` })
-    ;
-    expect(response.status).toBe(400);
-  });
-
-  it('POST - should return 400 bad description attribute', async () => {
-    const response = await request(app.getHttpServer())
-      .post('/tickets')
-      .send({
-        subject: SUBJECT,
-        description: 1
+        subject: 1
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;

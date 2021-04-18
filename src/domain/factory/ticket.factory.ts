@@ -9,7 +9,7 @@ export interface TicketFactoryInterface {
     updatedAt: Date,
     updatedBy: string,
     subject: string,
-    description: string,
+    description: string | null,
   ): TicketInterface;
 }
 
@@ -28,7 +28,7 @@ export class TicketFactory implements TicketFactoryInterface {
     updatedAt: Date,
     updatedBy: string,
     subject: string,
-    description: string,
+    description: string | null,
   ): TicketInterface {
     this._instance.uuid = uuid;
     this._instance.status = status;

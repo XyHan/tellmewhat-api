@@ -33,7 +33,7 @@ export class CreateATicketCommandHandler implements CommandHandlerInterface {
         new Date(),
         command.createdBy,
         command.subject,
-        command.description,
+        null
       );
     } catch (e) {
       const message: string = `CreateATicketCommandHandler - generateTicketFromCommand - Ticket generation error: ${e.message}`;

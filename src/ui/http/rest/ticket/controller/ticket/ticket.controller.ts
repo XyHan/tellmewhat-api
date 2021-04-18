@@ -90,7 +90,7 @@ export class TicketController extends BaseController {
   ): Promise<TicketInterface> {
     try {
       const uuid: string = v4();
-      const command = new CreateATicketCommand(uuid, createATicketDto.subject, createATicketDto.description, user.uuid);
+      const command = new CreateATicketCommand(uuid, createATicketDto.subject, user.uuid);
       await this._commandBus.execute(command);
       return await this.findOneTicketByUuid(uuid);
     } catch (e) {

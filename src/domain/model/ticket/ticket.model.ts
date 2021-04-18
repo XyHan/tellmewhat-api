@@ -8,14 +8,14 @@ export interface TicketInterface {
   updatedAt: Date;
   updatedBy: string;
   subject: string;
-  description: string;
+  description: string | null;
   comments: CommentInterface[];
 }
 
 export class TicketModel implements TicketInterface {
   protected _createdAt: Date;
   protected _createdBy: string;
-  protected _description: string;
+  protected _description: string | null;
   protected _status: number;
   protected _subject: string;
   protected _updatedAt: Date;
@@ -39,11 +39,11 @@ export class TicketModel implements TicketInterface {
     this._createdBy = value;
   }
 
-  get description(): string {
+  get description(): string | null {
     return this._description;
   }
 
-  set description(value: string) {
+  set description(value: string | null) {
     this._description = value;
   }
 
