@@ -60,7 +60,7 @@ export class MediaController extends BaseController {
   public async listAll(
     @Query('size') size: string | undefined = '10',
     @Query('page') page: string | undefined = '0',
-  ): Promise<PaginatedResponse> {
+  ): Promise<PaginatedResponse<MediaInterface>> {
     try {
       const query = new ListAllMediaQuery(parseInt(size, 10), parseInt(page, 10));
       const results: [MediaInterface[] , number] = await this._queryBus.execute(query);

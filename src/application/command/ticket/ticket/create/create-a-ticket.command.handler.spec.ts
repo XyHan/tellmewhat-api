@@ -12,6 +12,8 @@ import { CreateATicketCommandHandlerException } from './create-a-ticket.command.
 const UUID = '31dd20e0-9a1d-4734-b0af-d9cc3aff4028';
 const SUBJECT = 'Yoda';
 const CREATEDBY = '08ee082c-be8c-4a50-8533-83c7e774cbff';
+const TYPE = 'feature';
+const PROJECT = 'Project T';
 
 describe('create a ticket handler test', () => {
   const logger: LoggerInterface = new LoggerMock();
@@ -24,7 +26,7 @@ describe('create a ticket handler test', () => {
   })
 
   it ('create a ticket success', async () => {
-    const command = new CreateATicketCommand(UUID, SUBJECT, CREATEDBY);
+    const command = new CreateATicketCommand(UUID, SUBJECT, CREATEDBY, TYPE, PROJECT);
     const handler = new CreateATicketCommandHandler(commandRepository, logger);
     await handler.handle(command);
     const ticket: TicketInterface | null = await queryRepository.findOne(UUID);
@@ -39,7 +41,7 @@ describe('create a ticket handler test', () => {
   });
 
   it('create a ticket error', async () => {
-    const command = new CreateATicketCommand('', '', '');
+    const command = new CreateATicketCommand('', '', '', '', '');
     const handler = new CreateATicketCommandHandler(commandRepository, logger);
     await expect(handler.handle(command)).rejects.toThrowError(CreateATicketCommandHandlerException);
   });

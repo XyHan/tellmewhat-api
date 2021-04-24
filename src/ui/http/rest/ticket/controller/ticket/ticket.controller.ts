@@ -51,7 +51,7 @@ export class TicketController extends BaseController {
   public async listAll(
     @Query('size') size: string | undefined = '10',
     @Query('page') page: string | undefined = '0',
-  ): Promise<PaginatedResponse> {
+  ): Promise<PaginatedResponse<TicketInterface>> {
     try {
       const query = new ListAllTicketsQuery(parseInt(size, 10), parseInt(page, 10));
       const results: [TicketInterface[] , number] = await this._queryBus.execute(query);
@@ -90,7 +90,7 @@ export class TicketController extends BaseController {
   ): Promise<TicketInterface> {
     try {
       const uuid: string = v4();
-      const command = new CreateATicketCommand(uuid, createATicketDto.subject, user.uuid);
+      const command = new CreateATicketCommand(uuid, createATicketDto.subject, user.uuid, createATicketDto.type, createATicketDto.project);
       await this._commandBus.execute(command);
       return await this.findOneTicketByUuid(uuid);
     } catch (e) {
@@ -114,7 +114,9 @@ export class TicketController extends BaseController {
         updateATicketDto.status,
         user.uuid,
         updateATicketDto.description,
-        updateATicketDto.subject
+        updateATicketDto.subject,
+        updateATicketDto.type,
+        updateATicketDto.project
       );
       await this._commandBus.execute(command);
       return await this.findOneTicketByUuid(uuid);

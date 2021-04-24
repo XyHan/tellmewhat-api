@@ -40,6 +40,8 @@ export class UpdateATicketCommandHandler implements CommandHandlerInterface {
         command.updatedBy,
         command.subject,
         command.description,
+        command.type,
+        command.project
       );
     } catch (e) {
       const message: string = `UpdateATicketCommandHandler - updateTicketFromCommand - Ticket update error: ${e.message}`;

@@ -10,7 +10,9 @@ export const TICKET_COLLECTION: TicketInterface[] = [
     new Date(),
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
     'toto',
-    'toto toto totototototo'
+    'toto toto totototototo',
+    'feature',
+    'Project A'
   ),
   new TicketFactory(new TicketModel()).generate(
     '0d66db91-4441-4563-967c-797d767c7288',
@@ -20,7 +22,9 @@ export const TICKET_COLLECTION: TicketInterface[] = [
     new Date(),
     'c9f63e25-bd06-42ae-993c-20b6b236cb84',
     'toto',
-    'toto toto totototototo'
+    'toto toto totototototo',
+    'bug',
+    'Project B'
   )
 ];
 

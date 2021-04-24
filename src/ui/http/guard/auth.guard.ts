@@ -10,10 +10,10 @@ import { AuthService } from '../../../infrastructure/security/service/auth/auth.
 import { AuthManagerInterface } from '../../../domain/utils/security/auth-manager.interface';
 import { TokenInterface, TokenModel } from '../../../domain/model/auth/token.model';
 import { UserInterface } from '../../../domain/model/user/user.model';
-import { BaseController } from '../rest/base.controller';
 import { RolesValueObject } from '../../../infrastructure/security/value-object/roles.value-object';
 import { Reflector } from '@nestjs/core';
 import { IncomingMessage } from 'http';
+import { SecurityModule } from '../../../infrastructure/security/security.module';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
       const token: TokenInterface = new TokenModel(headers.headers.authorization);
       const user: UserInterface | undefined = await this.authService.isValidUser(token);
       if (user && this.areValidRoles(user, context)) {
-        Reflect.defineMetadata('currentUser', user, BaseController);
+        Reflect.defineMetadata('currentUser', user, SecurityModule);
         return true;
       }
       return false;

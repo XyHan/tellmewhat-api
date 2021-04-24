@@ -1,4 +1,4 @@
-import { TicketInterface, TicketModel } from '../../../../../domain/model/ticket/ticket.model';
+import { TicketInterface } from '../../../../../domain/model/ticket/ticket.model';
 import { TicketCommandRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.command-repository.interface';
 import { LoggerInterface } from '../../../../../domain/utils/logger/logger.interface';
 import { TicketQueryRepositoryInterface } from '../../../../../domain/repository/ticket/ticket.query-repository.interface';
@@ -14,6 +14,8 @@ const STATUS = 2;
 const UPDATED_BY = '31dd20e0-9a1d-4734-xxxx-d9cc3aff4028';
 const SUBJECT = 'Yoda';
 const DESCRIPTION = 'N\'essaie pas! Fais-le ou ne le fais pas! Il n\'y a pas d\'essai.';
+const TYPE = 'feature';
+const PROJECT = 'Project T';
 
 describe('update a ticket handler test', () => {
   const logger: LoggerInterface = new LoggerMock();
@@ -26,7 +28,7 @@ describe('update a ticket handler test', () => {
   })
 
   it ('update a ticket success', async () => {
-    const command = new UpdateATicketCommand(UUID, STATUS, UPDATED_BY, SUBJECT, DESCRIPTION);
+    const command = new UpdateATicketCommand(UUID, STATUS, UPDATED_BY, SUBJECT, DESCRIPTION, TYPE, PROJECT);
     const handler = new UpdateATicketCommandHandler(commandRepository, queryRepository, logger);
     await handler.handle(command);
     const ticket: TicketInterface = await queryRepository.findOne(UUID);
@@ -41,7 +43,7 @@ describe('update a ticket handler test', () => {
   });
 
   it('create a ticket error', async () => {
-    const command = new UpdateATicketCommand('', 2, '', '', '');
+    const command = new UpdateATicketCommand('', 2, '', '', '', '', '');
     const handler = new UpdateATicketCommandHandler(commandRepository, queryRepository, logger);
     await expect(handler.handle(command)).rejects.toThrowError(UpdateATicketCommandHandlerException);
   });

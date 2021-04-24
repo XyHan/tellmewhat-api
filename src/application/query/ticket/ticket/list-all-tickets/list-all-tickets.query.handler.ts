@@ -19,7 +19,8 @@ export class ListAllTicketsQueryHandler implements QueryHandlerInterface {
 
   async handle(query: ListAllTicketsQuery): Promise<[TicketInterface[], number]> {
     try {
-      return await this._repository.findAll({ size: query.size, offsetStart: query.offsetStart });
+      const offsetStart = (query.page ? Number(query.page) - 1 : 0) * Number(query.size);
+      return await this._repository.findAll({ size: query.size, offsetStart });
     } catch (e) {
       const message: string = `ListAllTicketsQueryHandler - error: ${e.message}`;
       this._logger.error(message);

@@ -21,6 +21,8 @@ import { UserCommandRepository } from '../../../../../../infrastructure/security
 const UUID = '5e4e03a6-6e6f-4b39-a158-307d1e9082d8';
 const SUBJECT = 'Integer sit amet purus a lacus fermentum consectetur nec quis leo.';
 const DESCRIPTION = 'Integer sit amet purus a lacus fermentum consectetur nec quis leo. Sed ac ultricies est. Donec egestas laoreet urna eget hendrerit.';
+const TYPE = 'feature';
+const PROJECT = 'Project T';
 
 describe('TicketController tests suite', () => {
   let app: INestApplication;
@@ -119,7 +121,9 @@ describe('TicketController tests suite', () => {
     const response = await request(app.getHttpServer())
       .post('/tickets')
       .send({
-        subject: SUBJECT
+        subject: SUBJECT,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -131,7 +135,9 @@ describe('TicketController tests suite', () => {
     const response = await request(app.getHttpServer())
       .post('/tickets')
       .send({
-        subject: SUBJECT
+        subject: SUBJECT,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
@@ -142,7 +148,9 @@ describe('TicketController tests suite', () => {
     const response = await request(app.getHttpServer())
       .post('/tickets')
       .send({
-        subject: SUBJECT
+        subject: SUBJECT,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
@@ -155,7 +163,9 @@ describe('TicketController tests suite', () => {
       .send({
         status: 3,
         subject: SUBJECT,
-        description: DESCRIPTION
+        description: DESCRIPTION,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -171,7 +181,9 @@ describe('TicketController tests suite', () => {
       .send({
         status: 3,
         subject: SUBJECT,
-        description: DESCRIPTION
+        description: DESCRIPTION,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${wrongToken}` })
     ;
@@ -184,7 +196,9 @@ describe('TicketController tests suite', () => {
       .send({
         status: 3,
         subject: SUBJECT,
-        description: DESCRIPTION
+        description: DESCRIPTION,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${badRoleToken}` })
     ;
@@ -231,7 +245,35 @@ describe('TicketController tests suite', () => {
     const response = await request(app.getHttpServer())
       .post('/tickets')
       .send({
-        subject: 1
+        subject: 1,
+        type: TYPE,
+        project: PROJECT,
+      })
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
+    expect(response.status).toBe(400);
+  });
+
+  it('POST - should return 400 bad type attribute', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/tickets')
+      .send({
+        subject: 1,
+        type: 1,
+        project: PROJECT,
+      })
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
+    expect(response.status).toBe(400);
+  });
+
+  it('POST - should return 400 bad project attribute', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/tickets')
+      .send({
+        subject: 1,
+        type: TYPE,
+        project: 1,
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -253,7 +295,9 @@ describe('TicketController tests suite', () => {
       .send({
         status: '3',
         subject: SUBJECT,
-        description: DESCRIPTION
+        description: DESCRIPTION,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -266,7 +310,9 @@ describe('TicketController tests suite', () => {
       .send({
         status: 3,
         subject: 0,
-        description: DESCRIPTION
+        description: DESCRIPTION,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
@@ -279,12 +325,45 @@ describe('TicketController tests suite', () => {
       .send({
         status: 3,
         subject: SUBJECT,
-        description: 0
+        description: 0,
+        type: TYPE,
+        project: PROJECT,
       })
       .set({ 'Authorization': `Bearer ${token}` })
     ;
     expect(response.status).toBe(400);
   });
+
+  it('UPDATE - should return 400 bad type attribute', async () => {
+    const response = await request(app.getHttpServer())
+      .put(`/tickets/${UUID}`)
+      .send({
+        status: 3,
+        subject: SUBJECT,
+        description: DESCRIPTION,
+        type: 1,
+        project: PROJECT,
+      })
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
+    expect(response.status).toBe(400);
+  });
+
+  it('UPDATE - should return 400 bad project attribute', async () => {
+    const response = await request(app.getHttpServer())
+      .put(`/tickets/${UUID}`)
+      .send({
+        status: 3,
+        subject: SUBJECT,
+        description: DESCRIPTION,
+        type: TYPE,
+        project: 1,
+      })
+      .set({ 'Authorization': `Bearer ${token}` })
+    ;
+    expect(response.status).toBe(400);
+  });
+
 
   it('UPDATE - should return 400 missing attributes', async () => {
     const response = await request(app.getHttpServer())

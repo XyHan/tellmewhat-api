@@ -5,4 +5,14 @@ export class CreateATicketDto {
   @IsNotEmpty()
   @IsDefined()
   subject: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsDefined()
+  type: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsDefined()
+  project: string;
 }

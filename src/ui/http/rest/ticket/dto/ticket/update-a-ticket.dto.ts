@@ -15,4 +15,14 @@ export class UpdateATicketDto {
   @IsNotEmpty()
   @IsDefined()
   description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsDefined()
+  type: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsDefined()
+  project: string;
 }

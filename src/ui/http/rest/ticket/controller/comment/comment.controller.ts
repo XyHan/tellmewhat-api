@@ -51,7 +51,7 @@ export class CommentController extends BaseController {
   public async listAll(
     @Query('size') size: string | undefined = '10',
     @Query('page') page: string | undefined = '0',
-  ): Promise<PaginatedResponse> {
+  ): Promise<PaginatedResponse<CommentInterface>> {
     try {
       const query = new ListAllCommentsQuery(parseInt(size, 10), parseInt(page, 10));
       const results: [CommentInterface[] , number] = await this._queryBus.execute(query);

@@ -8,6 +8,8 @@ export class UpdateATicketCommand implements CommandInterface {
   private readonly _updatedBy: string;
   private readonly _subject: string;
   private readonly _description: string;
+  private readonly _type: string;
+  private readonly _project: string;
 
   constructor(
     uuid: string,
@@ -15,12 +17,16 @@ export class UpdateATicketCommand implements CommandInterface {
     updatedBy: string,
     subject: string,
     description: string,
+    type: string,
+    project: string
   ) {
     this._uuid = uuid;
     this._status = status;
     this._updatedBy = updatedBy;
     this._subject = subject;
     this._description = description;
+    this._type = type;
+    this._project = project;
   }
 
   get name(): string {
@@ -49,5 +55,13 @@ export class UpdateATicketCommand implements CommandInterface {
 
   get description(): string {
     return this._description;
+  }
+
+  get type(): string {
+    return this._type;
+  }
+
+  get project(): string {
+    return this._project;
   }
 }

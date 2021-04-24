@@ -31,6 +31,12 @@ export class TicketEntity implements TicketInterface {
   @Column({ type: 'varchar', length: 38, name: 'updated_by', nullable: false }) public updatedBy: string;
 
   @Expose()
+  @Column({ type: 'varchar', length: 38, name: 'type', nullable: false }) public type: string
+
+  @Expose()
+  @Column({ type: 'varchar', length: 38, name: 'project', nullable: false }) public project: string
+
+  @Expose()
   @Index('IDX_TICKET_UUID')
   @Column({ type: 'varchar', length: 38, name: 'uuid' , nullable: false, unique: true }) public uuid: string;
 

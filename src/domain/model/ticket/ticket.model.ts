@@ -10,6 +10,8 @@ export interface TicketInterface {
   subject: string;
   description: string | null;
   comments: CommentInterface[];
+  type: string;
+  project: string;
 }
 
 export class TicketModel implements TicketInterface {
@@ -22,6 +24,8 @@ export class TicketModel implements TicketInterface {
   protected _updatedBy: string;
   protected _uuid: string;
   protected _comments: CommentModel[];
+  protected _type: string;
+  protected _project: string;
 
   get createdAt(): Date {
     return this._createdAt;
@@ -93,5 +97,21 @@ export class TicketModel implements TicketInterface {
 
   set comments(value: CommentModel[]) {
     this._comments = value;
+  }
+
+  get type(): string {
+    return this._type;
+  }
+
+  set type(value: string) {
+    this._type = value;
+  }
+
+  get project(): string {
+    return this._project;
+  }
+
+  set project(value: string) {
+    this._project = value;
   }
 }

@@ -1,17 +1,11 @@
 import { LoggerInterface } from '../../../domain/utils/logger/logger.interface';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { TicketInterface } from '../../../domain/model/ticket/ticket.model';
-import { UserInterface } from '../../../domain/model/user/user.model';
-import { CommentInterface } from '../../../domain/model/ticket/comment.model';
-import { MediaInterface } from '../../../domain/model/ticket/media.model';
 
-export type result = TicketInterface | UserInterface | CommentInterface | MediaInterface;
-
-export interface PaginatedResponse {
+export interface PaginatedResponse<T> {
   page: number;
   pages: number;
   total: number;
-  collection: any[];
+  collection: T[];
 }
 
 export abstract class BaseController {
@@ -21,11 +15,11 @@ export abstract class BaseController {
     this._logger = logger;
   }
 
-  protected paginateResponse(size: number, page: number, collection: result[], total: number): PaginatedResponse {
+  protected paginateResponse<T>(size: number, page: number, collection: T[], total: number): PaginatedResponse<T> {
     const pages: number = Math.ceil(total / size) || 1;
     page === 0 ? page++ : page;
 
-    return { page, pages, total, collection};
+    return { page, pages, total, collection };
   }
 
   protected http404Response(message: string): HttpException {
