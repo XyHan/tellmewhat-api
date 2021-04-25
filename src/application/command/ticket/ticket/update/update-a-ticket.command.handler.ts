@@ -63,7 +63,7 @@ export class UpdateATicketCommandHandler implements CommandHandlerInterface {
 
   private async findOneTicketByUuid(uuid: string): Promise<TicketInterface | null> {
     try {
-      return await this._queryRepository.findOne(uuid);
+      return await this._queryRepository.findOne(uuid, []);
     } catch (e) {
       throw new UpdateATicketCommandHandlerException(e.message);
     }

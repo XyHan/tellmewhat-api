@@ -30,11 +30,14 @@ import { deleteAMediaCommandHandlerProvider } from './provider/command/media/del
 import { getOneMediaQueryHandlerProvider } from './provider/query/media/get-one-media-query-handler.provider';
 import { MediaQueryHandlers } from './query/media';
 import { listAllMediaQueryHandlerProvider } from './provider/query/media/list-all-media-query-handler.provider';
+import { TicketTransformer } from './transformer/ticket.transformer';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([TicketRepository, CommentRepository, MediaRepository]),
     LoggerModule,
+    CqrsModule
   ],
   providers: [
     TicketQueryRepository,
@@ -62,14 +65,15 @@ import { listAllMediaQueryHandlerProvider } from './provider/query/media/list-al
     ...MediaCommandHandlers,
     getOneMediaQueryHandlerProvider,
     listAllMediaQueryHandlerProvider,
-    ...MediaQueryHandlers
-
+    ...MediaQueryHandlers,
+    TicketTransformer
   ],
   exports: [
     TicketQueryRepository,
     TicketCommandRepository,
     CommentQueryRepository,
     CommentCommandRepository,
+    TicketTransformer
   ]
 })
 export class TicketModule {}

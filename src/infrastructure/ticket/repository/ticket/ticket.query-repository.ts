@@ -6,6 +6,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { findAllOptions } from '../../../../domain/repository/find-all-options.type';
 import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
 import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
+import { FindOneOptions } from 'typeorm/find-options/FindOneOptions';
+import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
+import { TicketEntity } from '../../entity/ticket.entity';
+import {find} from "rxjs/operators";
 
 @Injectable()
 export class TicketQueryRepository implements TicketQueryRepositoryInterface {
@@ -20,7 +24,10 @@ export class TicketQueryRepository implements TicketQueryRepositoryInterface {
 
   public async findAll(options: findAllOptions): Promise<[TicketInterface[], number]> {
     try {
-      return await this.repository.findAndCount({ skip: options.offsetStart, take: options.size });
+      let findManyOptions: FindManyOptions<TicketEntity> = { skip: options.offsetStart, take: options.size };
+      if (options.sources && options.sources.length) { findManyOptions.select = options.sources }
+      if (options.sort) { findManyOptions.order = { updatedAt: options.sort === 'ASC' ? 'ASC' : 'DESC' }; }
+      return await this.repository.findAndCount(findManyOptions);
     } catch (e) {
       const message: string = `TicketQueryRepository - Error on findAll tickets`;
       this._logger.error(message);
@@ -28,9 +35,11 @@ export class TicketQueryRepository implements TicketQueryRepositoryInterface {
     }
   }
 
-  public async findOne(uuid: string): Promise<TicketInterface | null> {
+  public async findOne(uuid: string, sources: any[]): Promise<TicketInterface | null> {
     try {
-      return await this.repository.findOneOrFail({ uuid });
+      let options: FindOneOptions<TicketEntity> = {};
+      if (sources && sources.length) { options.select = sources; }
+      return await this.repository.findOneOrFail({ uuid }, options);
     } catch (e) {
       if (e.name === 'EntityNotFound') {
         this._logger.warn(`TicketQueryRepository - findOne - Ticket ${uuid} not found`);

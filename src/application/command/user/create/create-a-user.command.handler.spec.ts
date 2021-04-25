@@ -31,7 +31,7 @@ describe('create a user handler test', () => {
     const command = new CreateAUserCommand(UUID, EMAIL, PASSWORD, UUID, ROLES);
     const handler = new CreateAUserCommandHandler(commandRepository, logger, encrypter);
     await handler.handle(command);
-    const createdUser: UserInterface = await queryRepository.findOneByUuid(UUID);
+    const createdUser: UserInterface = await queryRepository.findOneByUuid(UUID, []);
     expect(createdUser.uuid).toBe(UUID);
     expect(createdUser.status).toBe(1);
     expect(createdUser.email).toBe(EMAIL);

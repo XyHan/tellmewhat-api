@@ -64,7 +64,7 @@ export class UpdateAUserCommandHandler implements CommandHandlerInterface {
 
   private async findOneUserByUuid(uuid: string): Promise<UserInterface | null> {
     try {
-      return await this._queryRepository.findOneByUuid(uuid);
+      return await this._queryRepository.findOneByUuid(uuid, []);
     } catch (e) {
       throw new UpdateAUserCommandHandlerException(e.message);
     }

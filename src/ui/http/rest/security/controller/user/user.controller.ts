@@ -109,7 +109,7 @@ export class UserController extends BaseController {
   private async findOneUserByUuid(uuid: string, nullable: boolean = false): Promise<UserInterface | null> {
     let user: UserInterface | null = null;
     try {
-      const query = new GetOneUserByUuidQuery(uuid);
+      const query = new GetOneUserByUuidQuery(uuid, []);
       user = await this._queryBus.execute(query);
     } catch (e) {
       const message: string = ` UserController - findOneUserByUuid ${uuid} error. Previous: ${e.message}`;

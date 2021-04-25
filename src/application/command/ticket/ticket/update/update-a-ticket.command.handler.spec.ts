@@ -31,7 +31,7 @@ describe('update a ticket handler test', () => {
     const command = new UpdateATicketCommand(UUID, STATUS, UPDATED_BY, SUBJECT, DESCRIPTION, TYPE, PROJECT);
     const handler = new UpdateATicketCommandHandler(commandRepository, queryRepository, logger);
     await handler.handle(command);
-    const ticket: TicketInterface = await queryRepository.findOne(UUID);
+    const ticket: TicketInterface = await queryRepository.findOne(UUID, []);
     expect(ticket.uuid).toBe(UUID);
     expect(ticket.status).toBe(STATUS);
     expect(ticket.createdAt).toBeDefined();

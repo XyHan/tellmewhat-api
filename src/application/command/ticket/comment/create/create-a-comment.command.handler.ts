@@ -67,7 +67,7 @@ export class CreateACommentCommandHandler implements CommandHandlerInterface {
 
   private async findOneTicketByUuid(uuid: string): Promise<TicketInterface | null> {
     try {
-      return await this._ticketQueryRepository.findOne(uuid);
+      return await this._ticketQueryRepository.findOne(uuid, []);
     } catch (e) {
       const message: string = `CreateACommentCommandHandler - findOneTicketByUuid - Ticket ${uuid} error: ${e.message}`;
       this._logger.error(message);

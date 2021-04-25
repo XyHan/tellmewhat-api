@@ -29,7 +29,7 @@ describe('create a ticket handler test', () => {
     const command = new CreateATicketCommand(UUID, SUBJECT, CREATEDBY, TYPE, PROJECT);
     const handler = new CreateATicketCommandHandler(commandRepository, logger);
     await handler.handle(command);
-    const ticket: TicketInterface | null = await queryRepository.findOne(UUID);
+    const ticket: TicketInterface | null = await queryRepository.findOne(UUID, []);
     expect(ticket.uuid).toBe(UUID);
     expect(ticket.status).toBe(1);
     expect(ticket.createdAt).toBeDefined();

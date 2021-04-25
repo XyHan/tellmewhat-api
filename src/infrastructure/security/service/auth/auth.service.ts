@@ -50,7 +50,7 @@ export class AuthService implements AuthManagerInterface {
       const verifiedToken: string | object = this._jwtAdapter.verify(token);
       const decodedToken: DecodedTokenInterface = plainToClass(DecodedTokenTransformer, verifiedToken);
       if (decodedToken && decodedToken.uuid) {
-        const query = new GetOneUserByUuidQuery(decodedToken.uuid);
+        const query = new GetOneUserByUuidQuery(decodedToken.uuid, []);
         const user: UserInterface | null = await this._queryBus.execute(query);
         if (user) return user;
       }

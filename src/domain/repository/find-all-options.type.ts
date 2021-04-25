@@ -3,5 +3,5 @@ export type findAllOptions = {
   offsetStart?: number;
   size?: number;
   filters?: Map<string, string | number>;
-  source?: string[];
+  sources?: any[];
 };

@@ -28,21 +28,25 @@ import { AuthGuard } from '../../../../guard/auth.guard';
 import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
 import { UserInterface } from '../../../../../../domain/model/user/user.model';
 import { Roles } from '../../../../../../infrastructure/security/decorator/role.decorator';
+import { TicketTransformer } from '../../../../../../infrastructure/ticket/transformer/ticket.transformer';
 
 @Controller('/tickets')
 export class TicketController extends BaseController {
   private readonly _queryBus: IQueryBus;
   private readonly _commandBus: ICommandBus;
   protected readonly _logger: LoggerInterface;
+  private readonly _ticketTransformer: TicketTransformer;
 
   constructor(
     @Inject(QueryBus) queryBus: IQueryBus,
     @Inject(CommandBus) commandBus: ICommandBus,
     @Inject(LoggerAdapterService) logger: LoggerInterface,
+    @Inject(TicketTransformer) ticketTransformer: TicketTransformer,
   ) {
     super(logger);
     this._queryBus = queryBus;
     this._commandBus = commandBus;
+    this._ticketTransformer = ticketTransformer;
   }
 
   @Get('/')
@@ -51,11 +55,15 @@ export class TicketController extends BaseController {
   public async listAll(
     @Query('size') size: string | undefined = '10',
     @Query('page') page: string | undefined = '0',
+    @Query('sources') sources: string | undefined,
+    @Query('sort') sort: string | undefined,
   ): Promise<PaginatedResponse<TicketInterface>> {
     try {
-      const query = new ListAllTicketsQuery(parseInt(size, 10), parseInt(page, 10));
+      const query = new ListAllTicketsQuery(parseInt(size, 10), parseInt(page, 10), sources?.split(','), sort || 'ASC');
       const results: [TicketInterface[] , number] = await this._queryBus.execute(query);
-      const collection: TicketInterface[] = results[0].map((ticket: TicketInterface) => plainToClass(TicketEntity, ticket))
+      const collection: TicketInterface[] = await Promise.all(
+        results[0].map(async (ticket: TicketInterface) => await this._ticketTransformer.transform(ticket))
+      );
       return this.paginateResponse(
         parseInt(size, 10),
         parseInt(page, 10),

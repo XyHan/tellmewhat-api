@@ -26,7 +26,7 @@ describe('delete a ticket handler test', () => {
     const command = new DeleteATicketCommand(UUID, UPDATEDBY);
     const handler = new DeleteATicketCommandHandler(commandRepository, queryRepository, logger);
     await handler.handle(command);
-    const ticket: TicketInterface | null = await queryRepository.findOne(UUID);
+    const ticket: TicketInterface | null = await queryRepository.findOne(UUID, []);
     expect(ticket.status).toBe(0);
     expect(ticket.updatedBy).toBe(UPDATEDBY);
   });

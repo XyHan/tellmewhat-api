@@ -14,7 +14,7 @@ export class TicketQueryRepositoryMock implements TicketQueryRepositoryInterface
     }
   }
 
-  public async findOne(uuid: string): Promise<TicketInterface | null> {
+  public async findOne(uuid: string, sources: any[]): Promise<TicketInterface | null> {
     try {
       const ticket: TicketInterface | undefined = TicketFixtures.ticketCollection.find((ticket: TicketInterface) => ticket.uuid === uuid);
       return ticket ? Promise.resolve(ticket) : Promise.resolve(null);

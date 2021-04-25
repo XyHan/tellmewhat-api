@@ -26,13 +26,13 @@ describe('change user password handler test', () => {
   })
 
   it ('change user password success', async () => {
-    const user: UserInterface = await queryRepository.findOneByUuid(UUID);
+    const user: UserInterface = await queryRepository.findOneByUuid(UUID, []);
     const password: string = user.password;
     const salt: string = user.salt;
     const command = new ChangePasswordCommand(PASSWORD, UUID, UUID);
     const handler = new ChangePasswordCommandHandler(commandRepository, queryRepository, logger, encrypter);
     expect(await handler.handle(command)).toBeUndefined();
-    const updatedUser: UserInterface = await queryRepository.findOneByUuid(UUID);
+    const updatedUser: UserInterface = await queryRepository.findOneByUuid(UUID, []);
     expect(updatedUser.password.length).toBeGreaterThan(password.length);
     expect(updatedUser.salt.length).toBeGreaterThan(salt.length);
   });

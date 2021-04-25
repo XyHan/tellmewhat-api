@@ -29,7 +29,7 @@ describe('update a user handler test', () => {
     const command = new UpdateAUserCommand(UUID, STATUS, EMAIL, UPDATEDBY, ROLES);
     const handler = new UpdateAUserCommandHandler(commandRepository, queryRepository, logger);
     await handler.handle(command);
-    const updatedUser: UserInterface = await queryRepository.findOneByUuid(UUID);
+    const updatedUser: UserInterface = await queryRepository.findOneByUuid(UUID, []);
     expect(updatedUser.email).toBe(EMAIL);
     expect(updatedUser.status).toBe(STATUS);
     expect(updatedUser.updatedBy).toBe(UPDATEDBY);

@@ -19,7 +19,7 @@ export class GetOneUserByUuidQueryHandler implements QueryHandlerInterface {
 
   async handle(query: GetOneUserByUuidQuery): Promise<UserInterface | null> {
     try {
-      return await this._repository.findOneByUuid(query.uuid);
+      return await this._repository.findOneByUuid(query.uuid, query.sources);
     } catch (e) {
       const message: string = `GetOneUserByUuidQueryHandler - User ${query.uuid} error: ${e.message}`;
       this._logger.error(message);

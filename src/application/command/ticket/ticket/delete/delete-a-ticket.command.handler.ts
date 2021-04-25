@@ -30,7 +30,7 @@ export class DeleteATicketCommandHandler implements CommandHandlerInterface {
 
   private async findOneTicketByUuid(uuid: string): Promise<TicketInterface> {
     try {
-      return await this._queryRepository.findOne(uuid);
+      return await this._queryRepository.findOne(uuid, []);
     } catch (e) {
       const message: string = `DeleteATicketCommandHandler - findOneTicketByUuid - Ticket ${uuid} error: ${e.message}`;
       this._logger.error(message);

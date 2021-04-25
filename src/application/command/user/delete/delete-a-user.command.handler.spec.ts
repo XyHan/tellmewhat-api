@@ -23,13 +23,13 @@ describe('delete a user handler test', () => {
   })
 
   it ('delete a user success', async () => {
-    const user: UserInterface | null = await queryRepository.findOneByUuid(UUID);
+    const user: UserInterface | null = await queryRepository.findOneByUuid(UUID, []);
     expect(user.uuid).toBe(UUID);
 
     const command = new DeleteAUserCommand(UUID, UPDATEDBY);
     const handler = new DeleteAUserCommandHandler(commandRepository, queryRepository, logger);
     await handler.handle(command);
-    const deletedUser: UserInterface | null = await queryRepository.findOneByUuid(UUID);
+    const deletedUser: UserInterface | null = await queryRepository.findOneByUuid(UUID, []);
     expect(deletedUser.status).toBe(0);
     expect(deletedUser.updatedBy).toBe(UPDATEDBY);
   });

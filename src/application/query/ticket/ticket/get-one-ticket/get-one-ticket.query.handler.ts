@@ -19,7 +19,7 @@ export class GetOneTicketQueryHandler implements QueryHandlerInterface {
 
   async handle(query: GetOneTicketQuery): Promise<TicketInterface | null> {
     try {
-      return await this._repository.findOne(query.uuid);
+      return await this._repository.findOne(query.uuid, []);
     } catch (e) {
       const message: string = `GetOneTicketQueryHandler - Ticket ${query.uuid} error: ${e.message}`;
       this._logger.error(message);

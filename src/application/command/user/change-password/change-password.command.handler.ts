@@ -59,7 +59,7 @@ export class ChangePasswordCommandHandler implements CommandHandlerInterface {
 
   private async findOneUserByUuid(uuid: string): Promise<UserInterface> {
     try {
-      return await this._queryRepository.findOneByUuid(uuid);
+      return await this._queryRepository.findOneByUuid(uuid, []);
     } catch (e) {
       throw new ChangePasswordCommandHandlerException(e.message);
     }

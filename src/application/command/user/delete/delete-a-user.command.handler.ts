@@ -30,7 +30,7 @@ export class DeleteAUserCommandHandler implements CommandHandlerInterface {
 
   private async findOneUserByUuid(uuid: string): Promise<UserInterface> {
     try {
-      return await this._queryRepository.findOneByUuid(uuid);
+      return await this._queryRepository.findOneByUuid(uuid, []);
     } catch (e) {
       const message: string = `DeleteAUserCommandHandler - findOneUserByUuid - User ${uuid} error: ${e.message}`;
       this._logger.error(message);

@@ -19,7 +19,7 @@ describe('get one user by uuid handler test', () => {
   })
 
   it ('return a user success', async () => {
-    const query = new GetOneUserByUuidQuery(UUID);
+    const query = new GetOneUserByUuidQuery(UUID, []);
     const handler = new GetOneUserByUuidQueryHandler(repository, logger);
     const user: UserInterface = await handler.handle(query);
     expect(user.uuid).toEqual(UUID);
@@ -27,14 +27,14 @@ describe('get one user by uuid handler test', () => {
   });
 
   it('return a user null success', async () => {
-    const query = new GetOneUserByUuidQuery('uuid-not-found');
+    const query = new GetOneUserByUuidQuery('uuid-not-found', []);
     const handler = new GetOneUserByUuidQueryHandler(repository, logger);
     const user: UserInterface = await handler.handle(query);
     expect(user).toBeNull();
   });
 
   it('return a user null error', async () => {
-    const query = new GetOneUserByUuidQuery('bad-uuid');
+    const query = new GetOneUserByUuidQuery('bad-uuid', []);
     const handler = new GetOneUserByUuidQueryHandler(repository, logger);
     await expect(handler.handle(query)).rejects.toThrowError(GetOneUserByUuidQueryHandlerException);
   });

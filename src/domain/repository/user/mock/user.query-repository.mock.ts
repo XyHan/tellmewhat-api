@@ -15,7 +15,7 @@ export class UserQueryRepositoryMock implements UserQueryRepositoryInterface {
     }
   }
 
-  async findOneByUuid(uuid: string): Promise<UserInterface | null> {
+  async findOneByUuid(uuid: string, sources: any[]): Promise<UserInterface | null> {
     const message: string = `UserQueryRepository - Error on findOneByUuid user '${uuid}'`;
     if (uuid === 'bad-uuid') throw new UserRepositoryException(message);
     try {
