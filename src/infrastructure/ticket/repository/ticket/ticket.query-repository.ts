@@ -9,7 +9,7 @@ import { LoggerInterface } from '../../../../domain/utils/logger/logger.interfac
 import { FindOneOptions } from 'typeorm/find-options/FindOneOptions';
 import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
 import { TicketEntity } from '../../entity/ticket.entity';
-import {find} from "rxjs/operators";
+import { Like } from 'typeorm';
 
 @Injectable()
 export class TicketQueryRepository implements TicketQueryRepositoryInterface {
@@ -27,6 +27,12 @@ export class TicketQueryRepository implements TicketQueryRepositoryInterface {
       let findManyOptions: FindManyOptions<TicketEntity> = { skip: options.offsetStart, take: options.size };
       if (options.sources && options.sources.length) { findManyOptions.select = options.sources }
       if (options.sort) { findManyOptions.order = { updatedAt: options.sort === 'ASC' ? 'ASC' : 'DESC' }; }
+      if (options.filters?.get('search')) {
+        findManyOptions.where = [
+          { subject: Like(`%${options.filters.get('search').toString()}%`) },
+          { description: Like(`%${options.filters.get('search').toString()}%`) },
+        ];
+      }
       return await this.repository.findAndCount(findManyOptions);
     } catch (e) {
       const message: string = `TicketQueryRepository - Error on findAll tickets`;

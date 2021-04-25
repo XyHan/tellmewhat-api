@@ -57,9 +57,25 @@ export class TicketController extends BaseController {
     @Query('page') page: string | undefined = '0',
     @Query('sources') sources: string | undefined,
     @Query('sort') sort: string | undefined,
+    @Query('search') search: string | undefined,
+    @Query('type') type: string | undefined,
+    @Query('project') project: string | undefined,
+    @Query('author') author: string | undefined,
   ): Promise<PaginatedResponse<TicketInterface>> {
     try {
-      const query = new ListAllTicketsQuery(parseInt(size, 10), parseInt(page, 10), sources?.split(','), sort || 'ASC');
+      const filters: Map<string, string> = new Map([
+        ['search', search],
+        ['type', type],
+        ['project', project],
+        ['author', author],
+      ]);
+      const query = new ListAllTicketsQuery(
+        parseInt(size, 10),
+        parseInt(page, 10),
+        sources?.split(','),
+        sort || 'ASC',
+        filters
+      );
       const results: [TicketInterface[] , number] = await this._queryBus.execute(query);
       const collection: TicketInterface[] = await Promise.all(
         results[0].map(async (ticket: TicketInterface) => await this._ticketTransformer.transform(ticket))

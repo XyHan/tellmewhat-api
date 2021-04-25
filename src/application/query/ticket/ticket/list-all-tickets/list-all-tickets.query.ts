@@ -6,13 +6,15 @@ export class ListAllTicketsQuery implements QueryInterface {
   private readonly _size: number;
   private readonly _page: number;
   private readonly _sources: string[];
+  private readonly _filters: Map<string, string>;
   private readonly _sort: string;
 
-  constructor(size: number, offsetStart: number, sources: string[], sort: string) {
+  constructor(size: number, offsetStart: number, sources: string[], sort: string, filters: Map<string, string>) {
     this._size = size;
     this._page = offsetStart;
     this._sources = sources;
     this._sort = sort;
+    this._filters = filters;
     this._name = 'list-all-tickets-query';
     this._version = 1.0;
   }
@@ -39,5 +41,9 @@ export class ListAllTicketsQuery implements QueryInterface {
 
   get sort(): string {
     return this._sort;
+  }
+
+  get filters(): Map<string, string> {
+    return this._filters;
   }
 }
