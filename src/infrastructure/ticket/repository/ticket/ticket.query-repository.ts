@@ -26,7 +26,7 @@ export class TicketQueryRepository implements TicketQueryRepositoryInterface {
     try {
       let findManyOptions: FindManyOptions<TicketEntity> = { skip: options.offsetStart, take: options.size };
       if (options.sources && options.sources.length) { findManyOptions.select = options.sources }
-      if (options.sort) { findManyOptions.order = { updatedAt: options.sort === 'ASC' ? 'ASC' : 'DESC' }; }
+      if (options.sort) { findManyOptions.order = { updatedAt: options.sort === 'DESC' ? 'DESC' : 'ASC' }; }
       if (options.filters?.get('search')) {
         findManyOptions.where = [
           { subject: Like(`%${options.filters.get('search').toString()}%`) },

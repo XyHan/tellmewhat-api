@@ -24,7 +24,7 @@ describe('list all tickets handler test', () => {
         return Promise.resolve([[ticket], 1]);
       },
     };
-    const query = new ListAllTicketsQuery(10, 0, [], 'ASC');
+    const query = new ListAllTicketsQuery(10, 0, [], 'ASC', new Map());
     const handler = new ListAllTicketsQueryHandler(repository, logger);
     const tickets: [TicketInterface[], number] = await handler.handle(query);
     expect(tickets[0].length).toEqual(1);
@@ -39,7 +39,7 @@ describe('list all tickets handler test', () => {
         return Promise.reject(error);
       },
     };
-    const query = new ListAllTicketsQuery(10, 0, [], 'ASC');
+    const query = new ListAllTicketsQuery(10, 0, [], 'ASC', new Map());
     const handler = new ListAllTicketsQueryHandler(repository, logger);
     try {
       await handler.handle(query);

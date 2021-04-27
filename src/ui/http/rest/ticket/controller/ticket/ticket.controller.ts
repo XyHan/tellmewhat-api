@@ -73,7 +73,7 @@ export class TicketController extends BaseController {
         parseInt(size, 10),
         parseInt(page, 10),
         sources?.split(','),
-        sort || 'ASC',
+        sort || 'DESC',
         filters
       );
       const results: [TicketInterface[] , number] = await this._queryBus.execute(query);
