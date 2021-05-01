@@ -22,7 +22,7 @@ export class TicketEntity implements TicketInterface {
   @Column({ type: 'int', name: 'status' , nullable: false }) public status: number;
 
   @Expose()
-  @Column({ type: 'varchar', length: 200, name: 'subject' , nullable: false }) public subject: string;
+  @Column({ type: 'varchar', length: 255, name: 'subject' , nullable: false }) public subject: string;
 
   @Expose()
   @Column({ type: 'datetime', name: 'updated_at', nullable: false }) public updatedAt: Date;

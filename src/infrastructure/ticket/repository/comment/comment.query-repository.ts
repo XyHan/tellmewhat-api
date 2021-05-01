@@ -6,6 +6,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { findAllOptions } from '../../../../domain/repository/find-all-options.type';
 import { LoggerAdapterService } from '../../../logger/logger-adapter.service';
 import { LoggerInterface } from '../../../../domain/utils/logger/logger.interface';
+import { FindManyOptions } from 'typeorm/find-options/FindManyOptions';
+import { CommentEntity } from '../../entity/comment.entity';
 
 @Injectable()
 export class CommentQueryRepository implements CommentQueryRepositoryInterface {
@@ -20,7 +22,14 @@ export class CommentQueryRepository implements CommentQueryRepositoryInterface {
 
   public async findAll(options: findAllOptions): Promise<[CommentInterface[], number]> {
     try {
-      return await this.repository.findAndCount({ skip: options.offsetStart, take: options.size });
+      let findManyOptions: FindManyOptions<CommentEntity> = { skip: options.offsetStart, take: options.size };
+      if (options.sources && options.sources.length) { findManyOptions.select = options.sources }
+      if (options.filters?.get('ticket')) {
+        findManyOptions.where = [
+          { ticket: options.filters?.get('ticket') }
+        ];
+      }
+      return await this.repository.findAndCount(findManyOptions);
     } catch (e) {
       const message: string = `CommentQueryRepository - Error on findAll comments`;
       this._logger.error(message);

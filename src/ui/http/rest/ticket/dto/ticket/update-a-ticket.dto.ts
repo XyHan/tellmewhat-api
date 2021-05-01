@@ -12,7 +12,6 @@ export class UpdateATicketDto {
   subject: string;
 
   @IsString()
-  @IsNotEmpty()
   @IsDefined()
   description: string;
 

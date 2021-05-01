@@ -24,7 +24,7 @@ describe('list all comments handler test', () => {
         return Promise.resolve([[comment], 1]);
       },
     };
-    const query = new ListAllCommentsQuery(10, 0);
+    const query = new ListAllCommentsQuery(10, 0, [], new Map());
     const handler = new ListAllCommentsQueryHandler(repository, logger);
     const comments: [CommentInterface[], number] = await handler.handle(query);
     expect(comments[0].length).toEqual(1);
@@ -39,7 +39,7 @@ describe('list all comments handler test', () => {
         return Promise.reject(error);
       },
     };
-    const query = new ListAllCommentsQuery(10, 0);
+    const query = new ListAllCommentsQuery(10, 0, [], new Map());
     const handler = new ListAllCommentsQueryHandler(repository, logger);
     try {
       await handler.handle(query);

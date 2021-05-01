@@ -28,34 +28,49 @@ import { AuthGuard } from '../../../../guard/auth.guard';
 import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
 import { UserInterface } from '../../../../../../domain/model/user/user.model';
 import { Roles } from '../../../../../../infrastructure/security/decorator/role.decorator';
+import { CommentTransformer } from '../../../../../../infrastructure/ticket/transformer/comment/comment.transformer';
+import { TicketInterface } from '../../../../../../domain/model/ticket/ticket.model';
+import { GetOneTicketQuery } from '../../../../../../application/query/ticket/ticket/get-one-ticket/get-one-ticket.query';
 
 @Controller('/tickets/:ticketUuid/comments')
 export class CommentController extends BaseController {
   private readonly _queryBus: IQueryBus;
   private readonly _commandBus: ICommandBus;
   protected readonly _logger: LoggerInterface;
+  private readonly _commentTransformer: CommentTransformer;
 
   constructor(
     @Inject(QueryBus) queryBus: IQueryBus,
     @Inject(CommandBus) commandBus: ICommandBus,
     @Inject(LoggerAdapterService) logger: LoggerInterface,
+    @Inject(CommentTransformer) commentTransformer: CommentTransformer
   ) {
     super(logger);
     this._queryBus = queryBus;
     this._commandBus = commandBus;
+    this._commentTransformer = commentTransformer;
   }
 
   @Get('/')
   @UseGuards(AuthGuard)
   @Roles('USER', 'ADMIN', 'SUPER_ADMIN')
   public async listAll(
+    @Param('ticketUuid') ticketUuid: string,
     @Query('size') size: string | undefined = '10',
     @Query('page') page: string | undefined = '0',
   ): Promise<PaginatedResponse<CommentInterface>> {
     try {
-      const query = new ListAllCommentsQuery(parseInt(size, 10), parseInt(page, 10));
+      const ticket: TicketInterface = await this.findOneTicketByUuid(ticketUuid);
+      const query = new ListAllCommentsQuery(
+        parseInt(size, 10),
+        parseInt(page, 10),
+        [],
+        new Map([['ticket', ticket]])
+      );
       const results: [CommentInterface[] , number] = await this._queryBus.execute(query);
-      const collection: CommentInterface[] = results[0].map((comment: CommentInterface) => plainToClass(CommentEntity, comment))
+      const collection: CommentInterface[] = await Promise.all(
+        results[0].map(async (comment: CommentInterface) => await this._commentTransformer.transform(comment))
+      );
       return this.paginateResponse(
         parseInt(size, 10),
         parseInt(page, 10),
@@ -156,5 +171,22 @@ export class CommentController extends BaseController {
     }
 
     return plainToClass(CommentEntity, comment);
+  }
+
+  private async findOneTicketByUuid(uuid: string, nullable: boolean = false): Promise<TicketInterface | null> {
+    let ticket: TicketInterface | null = null;
+    try {
+      const query = new GetOneTicketQuery(uuid);
+      ticket = await this._queryBus.execute(query);
+    } catch (e) {
+      const message: string = `CommentController - findOneTicketByUuid ${uuid} error. Previous: ${e.message}`;
+      this.http400Response(message);
+    }
+    if (!ticket && !nullable) {
+      const message: string = `CommentController - Ticket ${uuid} not found`;
+      this.http404Response(message);
+    }
+
+    return ticket;
   }
 }

@@ -28,7 +28,7 @@ import { AuthGuard } from '../../../../guard/auth.guard';
 import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
 import { UserInterface } from '../../../../../../domain/model/user/user.model';
 import { Roles } from '../../../../../../infrastructure/security/decorator/role.decorator';
-import { TicketTransformer } from '../../../../../../infrastructure/ticket/transformer/ticket.transformer';
+import { TicketTransformer } from '../../../../../../infrastructure/ticket/transformer/ticket/ticket.transformer';
 
 @Controller('/tickets')
 export class TicketController extends BaseController {
@@ -137,8 +137,8 @@ export class TicketController extends BaseController {
         uuid,
         updateATicketDto.status,
         user.uuid,
-        updateATicketDto.description,
         updateATicketDto.subject,
+        updateATicketDto.description,
         updateATicketDto.type,
         updateATicketDto.project
       );

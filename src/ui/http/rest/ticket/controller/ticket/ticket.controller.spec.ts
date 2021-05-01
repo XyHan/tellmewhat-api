@@ -162,7 +162,7 @@ describe('TicketController tests suite', () => {
       .put(`/tickets/${UUID}`)
       .send({
         status: 3,
-        subject: SUBJECT,
+        subject: `${SUBJECT} Sed ac ultricies est. Donec egestas laoreet urna eget hendrerit.`,
         description: DESCRIPTION,
         type: TYPE,
         project: PROJECT,
@@ -172,7 +172,7 @@ describe('TicketController tests suite', () => {
     expect(response.status).toBe(200);
     expect(response.body.status).toBe(3);
     expect(response.body.subject).toBe(`${SUBJECT} Sed ac ultricies est. Donec egestas laoreet urna eget hendrerit.`);
-    expect(response.body.description).toBe('Integer sit amet purus a lacus fermentum consectetur nec quis leo.');
+    expect(response.body.description).toBe('Integer sit amet purus a lacus fermentum consectetur nec quis leo. Sed ac ultricies est. Donec egestas laoreet urna eget hendrerit.');
   });
 
   it('UPDATE - should return a 401', async () => {
@@ -325,7 +325,7 @@ describe('TicketController tests suite', () => {
       .send({
         status: 3,
         subject: SUBJECT,
-        description: 0,
+        description: 1,
         type: TYPE,
         project: PROJECT,
       })

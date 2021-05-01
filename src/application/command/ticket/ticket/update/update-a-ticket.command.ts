@@ -7,7 +7,7 @@ export class UpdateATicketCommand implements CommandInterface {
   private readonly _status: number;
   private readonly _updatedBy: string;
   private readonly _subject: string;
-  private readonly _description: string;
+  private readonly _description: string | null;
   private readonly _type: string;
   private readonly _project: string;
 
@@ -16,7 +16,7 @@ export class UpdateATicketCommand implements CommandInterface {
     status: number,
     updatedBy: string,
     subject: string,
-    description: string,
+    description: string | null,
     type: string,
     project: string
   ) {
@@ -53,7 +53,7 @@ export class UpdateATicketCommand implements CommandInterface {
     return this._subject;
   }
 
-  get description(): string {
+  get description(): string | null {
     return this._description;
   }
 

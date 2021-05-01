@@ -19,7 +19,12 @@ export class ListAllCommentsQueryHandler implements QueryHandlerInterface {
 
   async handle(query: ListAllCommentsQuery): Promise<[CommentInterface[], number]> {
     try {
-      return await this._repository.findAll({ size: query.size, offsetStart: query.offsetStart });
+      return await this._repository.findAll({
+        size: query.size,
+        offsetStart: query.offsetStart,
+        sources: query.sources,
+        filters: query.filters
+      });
     } catch (e) {
       const message: string = `ListAllCommentsQueryHandler - error: ${e.message}`;
       this._logger.error(message);
