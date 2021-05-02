@@ -39,7 +39,7 @@ export class TicketTransformer {
       const user: UserInterface = await this._queryBus.execute(query);
       return user && user.email ? user.email : '';
     } catch (e) {
-      const message: string = `TicketController - findOneUserByUuid ${uuid} error. Previous: ${e.message}`;
+      const message: string = `TicketTransformer - getUserEmail ${uuid} error. Previous: ${e.message}`;
       this._logger.error(message);
       throw new TicketTransformerException(message);
     }

@@ -18,12 +18,10 @@ import { LoggerInterface } from '../../../../../../domain/utils/logger/logger.in
 import { CreateATicketDto } from '../../dto/ticket/create-a-ticket.dto';
 import { CreateATicketCommand } from '../../../../../../application/command/ticket/ticket/create/create-a-ticket.command';
 import { v4 } from 'uuid';
-import { plainToClass} from 'class-transformer';
 import { BaseController, PaginatedResponse } from '../../../base.controller';
 import { UpdateATicketDto } from '../../dto/ticket/update-a-ticket.dto';
 import { UpdateATicketCommand } from '../../../../../../application/command/ticket/ticket/update/update-a-ticket.command';
 import { DeleteATicketCommand } from '../../../../../../application/command/ticket/ticket/delete/delete-a-ticket.command';
-import { TicketEntity } from '../../../../../../infrastructure/ticket/entity/ticket.entity';
 import { AuthGuard } from '../../../../guard/auth.guard';
 import { CurrentUser } from '../../../../../../infrastructure/security/decorator/current-user.decorator';
 import { UserInterface } from '../../../../../../domain/model/user/user.model';
@@ -181,6 +179,6 @@ export class TicketController extends BaseController {
       this.http404Response(message);
     }
 
-    return plainToClass(TicketEntity, ticket);
+    return await this._ticketTransformer.transform(ticket);
   }
 }
