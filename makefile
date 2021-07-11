@@ -1,7 +1,7 @@
 DOCKER = docker-compose -f ./docker-compose.yml -p tellmewhat
 
 .PHONY: start
-start: erase build up
+start: erase build up run-dev
 
 .PHONY: stop
 stop:
